@@ -1,1 +1,91 @@
 @import "tailwindcss";
+
+@theme {
+  --font-script: "Pinyon Script", "Alex Brush", cursive;
+  --font-pixel: "Pixelify Sans", "Silkscreen", monospace;
+  --font-display: "Syne", "Space Grotesk", sans-serif;
+  --font-body: "Space Grotesk", sans-serif;
+}
+
+/* Custom Utilities for Retro Graphic Design Poster aesthetic */
+.font-script {
+  font-family: var(--font-script);
+}
+
+.font-pixel {
+  font-family: var(--font-pixel);
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+/* Realistic Cork Texture */
+.bg-cork {
+  background-color: #ba8148;
+  background-image: 
+    radial-gradient(#97632e 15%, transparent 16%),
+    radial-gradient(#7c4e20 15%, transparent 16%),
+    radial-gradient(rgba(255, 255, 255, 0.12) 15%, transparent 20%);
+  background-size: 24px 24px, 32px 32px, 40px 40px;
+  background-position: 0 0, 12px 12px, 20px 20px;
+}
+
+/* Vintage Blue Locker Texture */
+.bg-locker {
+  background-color: #557d94;
+  background-image:
+    linear-gradient(90deg, rgba(0,0,0,0.12) 1px, transparent 1px),
+    linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px);
+  background-size: 280px 100%, 100% 20px;
+}
+
+/* Paper Crease Effect */
+.paper-crease {
+  position: relative;
+}
+.paper-crease::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 2px;
+  transform: translateX(-50%);
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.12) 0%,
+    rgba(255, 255, 255, 0.35) 50%,
+    rgba(0, 0, 0, 0.08) 100%
+  );
+  pointer-events: none;
+  z-index: 20;
+}
+
+/* Washi / Masking Tape Style */
+.tape-strip {
+  background: rgba(245, 241, 219, 0.82);
+  backdrop-filter: blur(1px);
+  border: 1px dashed rgba(212, 198, 160, 0.6);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+}
+
+/* Retro Pill Badge */
+.retro-pill {
+  border: 1.5px solid #281712;
+  border-radius: 9999px;
+  padding: 0.2rem 0.85rem;
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #281712;
+}
+
+/* Pushpin effect */
+.push-pin {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #e15554, #8b1e1e);
+  box-shadow: 0 3px 6px rgba(0,0,0,0.35), inset 0 1px 2px rgba(255,255,255,0.6);
+}

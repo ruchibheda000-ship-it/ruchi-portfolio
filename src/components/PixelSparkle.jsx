@@ -1,0 +1,27 @@
+export default function PixelSparkle({ size = 20, className = "" }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 16 16"
+      fill="currentColor"
+      className={`inline-block ${className}`}
+      shapeRendering="crispEdges"
+    >
+      {/* 8-bit pixel star / sparkle */}
+      <rect x="7" y="0" width="2" height="2" />
+      <rect x="6" y="2" width="4" height="2" />
+      <rect x="7" y="4" width="2" height="2" />
+      <rect x="0" y="7" width="2" height="2" />
+      <rect x="2" y="6" width="2" height="4" />
+      <rect x="4" y="7" width="2" height="2" />
+      <rect x="6" y="6" width="4" height="4" />
+      <rect x="10" y="7" width="2" height="2" />
+      <rect x="12" y="6" width="2" height="4" />
+      <rect x="14" y="7" width="2" height="2" />
+      <rect x="7" y="10" width="2" height="2" />
+      <rect x="6" y="12" width="4" height="2" />
+      <rect x="7" y="14" width="2" height="2" />
+    </svg>
+  )
+}
