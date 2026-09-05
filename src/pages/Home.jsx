@@ -1,5 +1,6 @@
 import Nav from '../components/Nav'
 import PosterHero from '../components/PosterHero'
+import HangingCloth from '../components/HangingCloth'
 import { Link } from 'react-router-dom'
 
 export default function Home() {
@@ -31,8 +32,13 @@ export default function Home() {
       </div>
 
       {/* Main Poster Section */}
-      <main className="relative z-10 w-full flex-grow flex items-center justify-center">
+      <main className="relative z-10 w-full flex flex-col items-center justify-center">
         <PosterHero />
+        
+        {/* Interactive Physics-Based Hanging Cloth Component */}
+        <section className="w-full flex justify-center mt-4 mb-8">
+          <HangingCloth />
+        </section>
       </main>
 
       {/* Bottom Sticky Footnote / Quick Tags */}
