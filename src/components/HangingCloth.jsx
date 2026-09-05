@@ -19,129 +19,145 @@ export default function HangingCloth() {
   const [isMuted, setIsMuted] = useState(false)
   const [isInteracting, setIsInteracting] = useState(false)
 
-  // Audio Context Ref
+  // Web Audio Refs
   const audioCtxRef = useRef(null)
-  const noiseNodeRef = useRef(null)
+  const noiseSourceRef = useRef(null)
   const filterNodeRef = useRef(null)
+  const bandpassNodeRef = useRef(null)
   const gainNodeRef = useRef(null)
-  const chimeGainRef = useRef(null)
   const audioInitializedRef = useRef(false)
-  const lastSoundTimeRef = useRef(0)
+  const isMutedRef = useRef(false)
 
-  // Initialize Web Audio API
-  const initAudio = () => {
-    if (audioInitializedRef.current) {
-      if (audioCtxRef.current && audioCtxRef.current.state === 'suspended') {
-        audioCtxRef.current.resume()
+  // Sync ref with state
+  useEffect(() => {
+    isMutedRef.current = isMuted
+    if (isMuted && gainNodeRef.current && audioCtxRef.current) {
+      gainNodeRef.current.gain.setValueAtTime(0, audioCtxRef.current.currentTime)
+    }
+  }, [isMuted])
+
+  // Bulletproof AudioContext initialization & resumption on any user gesture
+  const ensureAudioReady = () => {
+    if (!audioInitializedRef.current) {
+      try {
+        const AudioContext = window.AudioContext || window.webkitAudioContext
+        if (!AudioContext) return
+        const ctx = new AudioContext()
+        audioCtxRef.current = ctx
+
+        // Create high quality 3-second looped organic pink/textile noise buffer
+        const bufferSize = ctx.sampleRate * 3
+        const noiseBuffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate)
+        const output = noiseBuffer.getChannelData(0)
+
+        // Paul Kellet filtered pink noise algorithm for soft natural textile rustle
+        let b0 = 0, b1 = 0, b2 = 0, b3 = 0, b4 = 0, b5 = 0, b6 = 0
+        for (let i = 0; i < bufferSize; i++) {
+          const white = Math.random() * 2 - 1
+          b0 = 0.99886 * b0 + white * 0.0555179
+          b1 = 0.99332 * b1 + white * 0.0750759
+          b2 = 0.96900 * b2 + white * 0.1538520
+          b3 = 0.86650 * b3 + white * 0.3104856
+          b4 = 0.55000 * b4 + white * 0.5329522
+          b5 = -0.7616 * b5 - white * 0.0168980
+          output[i] = (b0 + b1 + b2 + b3 + b4 + b5 + b6 + white * 0.5362) * 0.14
+          b6 = white * 0.115926
+        }
+
+        const noiseSource = ctx.createBufferSource()
+        noiseSource.buffer = noiseBuffer
+        noiseSource.loop = true
+
+        // Lowpass filter modulates with brush speed (airy swish)
+        const lowpass = ctx.createBiquadFilter()
+        lowpass.type = 'lowpass'
+        lowpass.frequency.setValueAtTime(450, ctx.currentTime)
+        lowpass.Q.setValueAtTime(0.7, ctx.currentTime)
+
+        // Subtle bandpass filter for organic textile friction resonance
+        const bandpass = ctx.createBiquadFilter()
+        bandpass.type = 'bandpass'
+        bandpass.frequency.setValueAtTime(650, ctx.currentTime)
+        bandpass.Q.setValueAtTime(1.1, ctx.currentTime)
+
+        // Master Gain Node
+        const masterGain = ctx.createGain()
+        masterGain.gain.setValueAtTime(0, ctx.currentTime)
+
+        // Connect audio graph
+        noiseSource.connect(lowpass)
+        lowpass.connect(bandpass)
+        bandpass.connect(masterGain)
+        masterGain.connect(ctx.destination)
+
+        noiseSource.start()
+
+        noiseSourceRef.current = noiseSource
+        filterNodeRef.current = lowpass
+        bandpassNodeRef.current = bandpass
+        gainNodeRef.current = masterGain
+        audioInitializedRef.current = true
+      } catch (err) {
+        console.warn('AudioContext initialization deferred:', err)
       }
+    }
+
+    if (audioCtxRef.current && audioCtxRef.current.state === 'suspended') {
+      audioCtxRef.current.resume().catch(() => {})
+    }
+  }
+
+  // Modulate tactile fabric rustle sound based on pointer velocity
+  const triggerFabricRustle = (velocity) => {
+    if (isMutedRef.current || !audioCtxRef.current || !gainNodeRef.current) return
+    const ctx = audioCtxRef.current
+    if (ctx.state === 'suspended') {
+      ctx.resume().catch(() => {})
       return
     }
 
-    try {
-      const AudioContext = window.AudioContext || window.webkitAudioContext
-      if (!AudioContext) return
-      const ctx = new AudioContext()
-      audioCtxRef.current = ctx
-
-      // 1. Procedural Noise Buffer (Fabric Rustle / Texture)
-      const bufferSize = ctx.sampleRate * 2
-      const noiseBuffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate)
-      const output = noiseBuffer.getChannelData(0)
-      let lastOut = 0.0
-      for (let i = 0; i < bufferSize; i++) {
-        // Pink-ish noise filter for organic textile rustle
-        const white = Math.random() * 2 - 1
-        output[i] = (lastOut + 0.02 * white) / 1.02
-        lastOut = output[i]
-        output[i] *= 3.5 // scale
-      }
-
-      const noiseSource = ctx.createBufferSource()
-      noiseSource.buffer = noiseBuffer
-      noiseSource.loop = true
-
-      // Filter to shape into soft fabric swoosh
-      const filter = ctx.createBiquadFilter()
-      filter.type = 'bandpass'
-      filter.frequency.setValueAtTime(800, ctx.currentTime)
-      filter.Q.setValueAtTime(1.8, ctx.currentTime)
-
-      // Master Gain for Rustle
-      const gain = ctx.createGain()
-      gain.gain.setValueAtTime(0, ctx.currentTime)
-
-      // Chime Master Gain
-      const chimeGain = ctx.createGain()
-      chimeGain.gain.setValueAtTime(0.04, ctx.currentTime)
-
-      noiseSource.connect(filter)
-      filter.connect(gain)
-      gain.connect(ctx.destination)
-      chimeGain.connect(ctx.destination)
-
-      noiseSource.start()
-
-      noiseNodeRef.current = noiseSource
-      filterNodeRef.current = filter
-      gainNodeRef.current = gain
-      chimeGainRef.current = chimeGain
-      audioInitializedRef.current = true
-    } catch (e) {
-      console.warn('Web Audio not supported or failed to initialize:', e)
-    }
-  }
-
-  // Trigger Procedural Fabric Rustle & Micro-Chime
-  const playFabricSound = (velocity, agitationCount) => {
-    if (isMuted || !audioCtxRef.current) return
-    const ctx = audioCtxRef.current
-    if (ctx.state === 'suspended') {
-      ctx.resume()
-    }
-
     const now = ctx.currentTime
-    const speed = Math.min(Math.max(velocity, 0), 45) // clamp speed
-    if (speed < 0.8) return
+    const speed = Math.min(Math.max(velocity, 0), 65) // clamp velocity
+    if (speed < 0.6) return
 
-    // Modulate Filter Frequency and Volume based on cursor velocity
-    if (filterNodeRef.current && gainNodeRef.current) {
-      const targetFreq = 400 + speed * 45 // 400Hz to ~2400Hz
-      const targetVolume = Math.min(0.02 + (speed / 45) * 0.12, 0.16)
+    const normalized = Math.min(speed / 35, 1.0)
+    // Tactile, soft, non-intrusive fabric volume
+    const targetGain = 0.04 + normalized * 0.22
+    // Cutoff expands from warm muffled friction (350Hz) to airy fabric wave (1800Hz)
+    const targetFreq = 380 + normalized * 1450
 
-      filterNodeRef.current.frequency.cancelScheduledValues(now)
-      filterNodeRef.current.frequency.linearRampToValueAtTime(targetFreq, now + 0.05)
-
-      gainNodeRef.current.gain.cancelScheduledValues(now)
-      gainNodeRef.current.gain.linearRampToValueAtTime(targetVolume, now + 0.04)
-      gainNodeRef.current.gain.exponentialRampToValueAtTime(0.0001, now + 0.35)
-    }
-
-    // Play subtle soft micro-harmonic flutter occasionally
-    if (now - lastSoundTimeRef.current > 0.18 && speed > 5) {
-      lastSoundTimeRef.current = now
-      const osc = ctx.createOscillator()
-      const oscGain = ctx.createGain()
-
-      // Pentatonic / harmonic pitch based on velocity
-      const pitches = [392, 440, 523.25, 587.33, 659.25, 783.99]
-      const note = pitches[Math.floor(Math.random() * pitches.length)]
-      osc.type = 'sine'
-      osc.frequency.setValueAtTime(note, now)
-
-      const noteVol = Math.min((speed / 45) * 0.035, 0.04)
-      oscGain.gain.setValueAtTime(0.0001, now)
-      oscGain.gain.linearRampToValueAtTime(noteVol, now + 0.03)
-      oscGain.gain.exponentialRampToValueAtTime(0.00001, now + 0.45)
-
-      osc.connect(oscGain)
-      oscGain.connect(chimeGainRef.current || ctx.destination)
-
-      osc.start(now)
-      osc.stop(now + 0.5)
+    try {
+      if (filterNodeRef.current) {
+        filterNodeRef.current.frequency.setTargetAtTime(targetFreq, now, 0.035)
+      }
+      if (gainNodeRef.current) {
+        gainNodeRef.current.gain.setTargetAtTime(targetGain, now, 0.03)
+        // Gentle decay as hand slows down or stops
+        gainNodeRef.current.gain.setTargetAtTime(0.0001, now + 0.09, 0.1)
+      }
+    } catch {
+      // safe fallback
     }
   }
 
-  // Physics Simulation & Verlet Mesh Setup
+  // Set up user gesture listeners to unlock AudioContext immediately
+  useEffect(() => {
+    const handleUserGesture = () => {
+      ensureAudioReady()
+    }
+
+    window.addEventListener('pointerdown', handleUserGesture, { passive: true })
+    window.addEventListener('click', handleUserGesture, { passive: true })
+    window.addEventListener('touchstart', handleUserGesture, { passive: true })
+
+    return () => {
+      window.removeEventListener('pointerdown', handleUserGesture)
+      window.removeEventListener('click', handleUserGesture)
+      window.removeEventListener('touchstart', handleUserGesture)
+    }
+  }, [])
+
+  // Physics Simulation & Continuous Mesh Text Warping
   useEffect(() => {
     const canvas = canvasRef.current
     if (!canvas) return
@@ -151,25 +167,45 @@ export default function HangingCloth() {
     let width = (canvas.width = canvas.parentElement.clientWidth)
     let height = (canvas.height = 420)
 
-    // Handle High DPI / Retina Displays
     const dpr = Math.min(window.devicePixelRatio || 1, 2)
     canvas.width = width * dpr
     canvas.height = height * dpr
     ctx.scale(dpr, dpr)
 
-    // Grid Dimensions
-    const rows = DESIGN_TOKENS.length
-    const cols = 36 // Particle columns across width
-    const clothWidth = Math.min(width - 60, 780)
-    const clothHeight = 270
+    // Cloth Mesh Resolution
+    const cols = 26
+    const rows = 14
+    const clothWidth = Math.min(width - 50, 780)
+    const clothHeight = 280
     const startX = (width - clothWidth) / 2
-    const startY = 40
+    const startY = 36
 
     const spacingX = clothWidth / (cols - 1)
     const spacingY = clothHeight / (rows - 1)
 
-    // Particles Setup
+    // Generate Offscreen Texture Canvas for Text (Drawn Once)
+    const offscreen = document.createElement('canvas')
+    const offCtx = offscreen.getContext('2d')
+    offscreen.width = Math.round(clothWidth * dpr)
+    offscreen.height = Math.round(clothHeight * dpr)
+    offCtx.scale(dpr, dpr)
+
+    // Render Clean Monospaced Text Texture
+    offCtx.clearRect(0, 0, clothWidth, clothHeight)
+    offCtx.font = '500 12px "JetBrains Mono", "Fira Code", monospace'
+    offCtx.fillStyle = '#18181b'
+    offCtx.textBaseline = 'middle'
+
+    const textLineSpacing = clothHeight / DESIGN_TOKENS.length
+    for (let i = 0; i < DESIGN_TOKENS.length; i++) {
+      const lineY = i * textLineSpacing + textLineSpacing * 0.5
+      offCtx.fillText(DESIGN_TOKENS[i], 12, lineY)
+    }
+
+    // Initialize Particles
     const particles = []
+    const getIndex = (r, c) => r * cols + c
+
     for (let r = 0; r < rows; r++) {
       for (let c = 0; c < cols; c++) {
         const x = startX + c * spacingX
@@ -179,41 +215,45 @@ export default function HangingCloth() {
           y,
           oldX: x,
           oldY: y,
-          pinned: r === 0, // Pin top row horizontally
-          row: r,
-          col: c,
+          origX: x,
+          origY: y,
+          pinned: r === 0, // Top edge pinned horizontally
+          u: (c / (cols - 1)) * offscreen.width,
+          v: (r / (rows - 1)) * offscreen.height,
         })
       }
     }
 
-    // Constraints Setup
+    // Constraints (Structural, Shear, and Bending for smooth continuous cloth)
     const constraints = []
-    const getIndex = (r, c) => r * cols + c
 
     for (let r = 0; r < rows; r++) {
       for (let c = 0; c < cols; c++) {
-        // Structural Horizontal
+        // Horizontal Structural
         if (c < cols - 1) {
           constraints.push({
             p1: particles[getIndex(r, c)],
             p2: particles[getIndex(r, c + 1)],
             dist: spacingX,
+            stiffness: 0.95,
           })
         }
-        // Structural Vertical
+        // Vertical Structural
         if (r < rows - 1) {
           constraints.push({
             p1: particles[getIndex(r, c)],
             p2: particles[getIndex(r + 1, c)],
             dist: spacingY,
+            stiffness: 0.95,
           })
         }
-        // Diagonal Shear Constraints (Wrinkle / Fabric Stiffness)
+        // Diagonal Shear (Resists excessive skewing)
         if (r < rows - 1 && c < cols - 1) {
           constraints.push({
             p1: particles[getIndex(r, c)],
             p2: particles[getIndex(r + 1, c + 1)],
             dist: Math.hypot(spacingX, spacingY),
+            stiffness: 0.45,
           })
         }
         if (r < rows - 1 && c > 0) {
@@ -221,12 +261,30 @@ export default function HangingCloth() {
             p1: particles[getIndex(r, c)],
             p2: particles[getIndex(r + 1, c - 1)],
             dist: Math.hypot(spacingX, spacingY),
+            stiffness: 0.45,
+          })
+        }
+        // Bending Constraints (Ensures continuous curvature & prevents creasing)
+        if (c < cols - 2) {
+          constraints.push({
+            p1: particles[getIndex(r, c)],
+            p2: particles[getIndex(r, c + 2)],
+            dist: spacingX * 2,
+            stiffness: 0.3,
+          })
+        }
+        if (r < rows - 2) {
+          constraints.push({
+            p1: particles[getIndex(r, c)],
+            p2: particles[getIndex(r + 2, c)],
+            dist: spacingY * 2,
+            stiffness: 0.3,
           })
         }
       }
     }
 
-    // Mouse Tracking State
+    // Mouse Tracking
     const mouse = {
       x: -9999,
       y: -9999,
@@ -237,11 +295,11 @@ export default function HangingCloth() {
       active: false,
     }
 
-    const handleMouseMove = (e) => {
-      initAudio()
+    const updateMouse = (clientX, clientY) => {
+      ensureAudioReady()
       const rect = canvas.getBoundingClientRect()
-      const currentX = e.clientX - rect.left
-      const currentY = e.clientY - rect.top
+      const currentX = clientX - rect.left
+      const currentY = clientY - rect.top
 
       if (mouse.prevX === -9999) {
         mouse.prevX = currentX
@@ -258,6 +316,13 @@ export default function HangingCloth() {
       setIsInteracting(true)
     }
 
+    const handleMouseMove = (e) => updateMouse(e.clientX, e.clientY)
+    const handleTouchMove = (e) => {
+      if (e.touches.length > 0) {
+        updateMouse(e.touches[0].clientX, e.touches[0].clientY)
+      }
+    }
+
     const handleMouseLeave = () => {
       mouse.active = false
       mouse.x = -9999
@@ -267,44 +332,68 @@ export default function HangingCloth() {
       setIsInteracting(false)
     }
 
-    const handleTouchMove = (e) => {
-      initAudio()
-      if (e.touches.length > 0) {
-        const rect = canvas.getBoundingClientRect()
-        const currentX = e.touches[0].clientX - rect.left
-        const currentY = e.touches[0].clientY - rect.top
-        mouse.vx = currentX - (mouse.prevX === -9999 ? currentX : mouse.prevX)
-        mouse.vy = currentY - (mouse.prevY === -9999 ? currentY : mouse.prevY)
-        mouse.x = currentX
-        mouse.y = currentY
-        mouse.prevX = currentX
-        mouse.prevY = currentY
-        mouse.active = true
-      }
-    }
-
     canvas.addEventListener('mousemove', handleMouseMove)
     canvas.addEventListener('mouseleave', handleMouseLeave)
     canvas.addEventListener('touchmove', handleTouchMove, { passive: true })
     canvas.addEventListener('touchend', handleMouseLeave)
 
-    // Physics Loop Parameters
-    const gravity = 0.28
-    const damping = 0.985
-    const brushRadius = 75
-    const impulseStrength = 0.75
+    // Physics Loop Variables
+    const gravity = 0.22
+    const damping = 0.97
+    const baseRadius = 95
 
-    // Animation Render Loop
+    // Helper: Fast Affine Texture-Mapped Triangle with 0.5px subpixel seam overlap
+    const drawTexturedTriangle = (
+      targetCtx,
+      img,
+      x0, y0,
+      x1, y1,
+      x2, y2,
+      u0, v0,
+      u1, v1,
+      u2, v2
+    ) => {
+      const denom = u0 * (v1 - v2) - u1 * (v0 - v2) + u2 * (v0 - v1)
+      if (denom === 0) return
+
+      targetCtx.save()
+
+      // Expand clip slightly from triangle center to prevent subpixel seams
+      const cx = (x0 + x1 + x2) / 3
+      const cy = (y0 + y1 + y2) / 3
+      const delta = 0.025
+
+      targetCtx.beginPath()
+      targetCtx.moveTo(x0 + (x0 - cx) * delta, y0 + (y0 - cy) * delta)
+      targetCtx.lineTo(x1 + (x1 - cx) * delta, y1 + (y1 - cy) * delta)
+      targetCtx.lineTo(x2 + (x2 - cx) * delta, y2 + (y2 - cy) * delta)
+      targetCtx.closePath()
+      targetCtx.clip()
+
+      // Affine transform matrix
+      const a = (x0 * (v1 - v2) - x1 * (v0 - v2) + x2 * (v0 - v1)) / denom
+      const b = (y0 * (v1 - v2) - y1 * (v0 - v2) + y2 * (v0 - v1)) / denom
+      const c = (u0 * (x2 - x1) + u1 * (x0 - x2) + u2 * (x1 - x0)) / denom
+      const d = (u0 * (y2 - y1) + u1 * (y0 - y2) + u2 * (y1 - y0)) / denom
+      const e = (u0 * (v2 * x1 - v1 * x2) + v0 * (u1 * x2 - u2 * x1) + (u2 * v1 - u1 * v2) * x0) / denom
+      const f = (u0 * (v2 * y1 - v1 * y2) + v0 * (u1 * y2 - u2 * y1) + (u2 * v1 - u1 * v2) * y0) / denom
+
+      targetCtx.transform(a, b, c, d, e, f)
+      targetCtx.drawImage(img, 0, 0)
+      targetCtx.restore()
+    }
+
+    // Main Animation Loop
     const tick = () => {
-      // 1. Verlet Integration & Impulse forces
-      let agitatedParticles = 0
       const mouseSpeed = Math.hypot(mouse.vx, mouse.vy)
+      // Dynamic brush radius scales with cursor speed like a sweeping hand
+      const brushRadius = baseRadius + Math.min(mouseSpeed * 1.8, 65)
 
+      // 1. Verlet Integration & Velocity-Based Hand Impulse
       for (let i = 0; i < particles.length; i++) {
         const p = particles[i]
         if (p.pinned) continue
 
-        // Velocity from previous step
         const vx = (p.x - p.oldX) * damping
         const vy = (p.y - p.oldY) * damping
 
@@ -314,43 +403,55 @@ export default function HangingCloth() {
         p.x += vx
         p.y += vy + gravity
 
-        // Cursor Interaction (Impulse & Displacement)
+        // Subtle elastic home-restoring force guarantees perfect settling
+        p.x += (p.origX - p.x) * 0.015
+        p.y += (p.origY - p.y) * 0.015
+
+        // Cursor Force (Brushing hand physics)
         if (mouse.active) {
           const dx = p.x - mouse.x
           const dy = p.y - mouse.y
           const dist = Math.hypot(dx, dy)
 
           if (dist < brushRadius) {
-            agitatedParticles++
-            const force = (1 - dist / brushRadius) * impulseStrength
-            // Apply both mouse velocity direction and radial brush displacement
-            p.x += mouse.vx * force * 0.65 + (dx / (dist || 1)) * force * 3.5
-            p.y += mouse.vy * force * 0.65 + (dy / (dist || 1)) * force * 3.5
+            // Smooth Hermite distance falloff (0 at edge, 1 at center)
+            const t = 1 - dist / brushRadius
+            const smooth = t * t * (3 - 2 * t)
+
+            // Directional momentum drag along mouse direction
+            const dragForce = 0.75 * smooth
+            p.x += mouse.vx * dragForce
+            p.y += mouse.vy * dragForce
+
+            // Subtle outward displacement push to billow the cloth
+            const pushMag = Math.min(mouseSpeed * 0.25 + 2.0, 14.0) * smooth
+            p.x += (dx / (dist || 1)) * pushMag
+            p.y += (dy / (dist || 1)) * pushMag
           }
         }
       }
 
-      // Smooth mouse decay
-      mouse.vx *= 0.7
-      mouse.vy *= 0.7
+      // Smooth mouse velocity decay
+      mouse.vx *= 0.65
+      mouse.vy *= 0.65
 
-      // Trigger Web Audio rustle if cloth is agitated
-      if (agitatedParticles > 0 && mouseSpeed > 1) {
-        playFabricSound(mouseSpeed, agitatedParticles)
+      // Trigger Web Audio rustle if moving
+      if (mouseSpeed > 0.8 && mouse.active) {
+        triggerFabricRustle(mouseSpeed)
       }
 
-      // 2. Solve Distance Constraints (Relaxation iterations)
-      const iterations = 5
+      // 2. Solve Distance Constraints (8 relaxation passes for smooth fabric wave propagation)
+      const iterations = 8
       for (let iter = 0; iter < iterations; iter++) {
         for (let i = 0; i < constraints.length; i++) {
-          const { p1, p2, dist } = constraints[i]
+          const { p1, p2, dist, stiffness } = constraints[i]
           const dx = p2.x - p1.x
           const dy = p2.y - p1.y
           const currentDist = Math.hypot(dx, dy) || 0.001
           const difference = (currentDist - dist) / currentDist
 
-          const offsetX = dx * 0.5 * difference
-          const offsetY = dy * 0.5 * difference
+          const offsetX = dx * 0.5 * difference * stiffness
+          const offsetY = dy * 0.5 * difference * stiffness
 
           if (!p1.pinned) {
             p1.x += offsetX
@@ -363,84 +464,55 @@ export default function HangingCloth() {
         }
       }
 
-      // 3. Clear Canvas
+      // 3. Render Canvas
       ctx.clearRect(0, 0, width, height)
 
-      // 4. Render Subtle Fabric Warp & Weft Grid Mesh Lines
-      ctx.save()
-      ctx.lineWidth = 0.75
-      ctx.strokeStyle = 'rgba(40, 23, 18, 0.07)'
+      // 4. Warp & Render the Entire Text Fabric through the Deformed Mesh
+      for (let r = 0; r < rows - 1; r++) {
+        for (let c = 0; c < cols - 1; c++) {
+          const p00 = particles[getIndex(r, c)]
+          const p10 = particles[getIndex(r, c + 1)]
+          const p01 = particles[getIndex(r + 1, c)]
+          const p11 = particles[getIndex(r + 1, c + 1)]
 
-      // Draw horizontal lines across cloth
-      for (let r = 0; r < rows; r++) {
-        ctx.beginPath()
-        const start = particles[getIndex(r, 0)]
-        ctx.moveTo(start.x, start.y)
-        for (let c = 1; c < cols; c++) {
-          const p = particles[getIndex(r, c)]
-          ctx.lineTo(p.x, p.y)
-        }
-        ctx.stroke()
-      }
+          // Triangle 1: Top-Left half of quad
+          drawTexturedTriangle(
+            ctx,
+            offscreen,
+            p00.x, p00.y,
+            p10.x, p10.y,
+            p01.x, p01.y,
+            p00.u, p00.v,
+            p10.u, p10.v,
+            p01.u, p01.v
+          )
 
-      // Draw vertical lines across cloth
-      for (let c = 0; c < cols; c += 2) {
-        ctx.beginPath()
-        const start = particles[getIndex(0, c)]
-        ctx.moveTo(start.x, start.y)
-        for (let r = 1; r < rows; r++) {
-          const p = particles[getIndex(r, c)]
-          ctx.lineTo(p.x, p.y)
-        }
-        ctx.stroke()
-      }
-      ctx.restore()
-
-      // 5. Render Crisp Monospaced Design Tokens onto Deformed Mesh
-      ctx.save()
-      ctx.font = '500 11.5px "JetBrains Mono", "Fira Code", monospace'
-      ctx.fillStyle = '#18181b'
-      ctx.textBaseline = 'middle'
-
-      for (let r = 0; r < rows; r++) {
-        const text = DESIGN_TOKENS[r]
-        const textLen = text.length
-
-        // Interpolate character positions along row particles
-        for (let charIdx = 0; charIdx < textLen; charIdx++) {
-          const progress = charIdx / (textLen - 1)
-          const colFloat = progress * (cols - 1)
-          const colIndex = Math.floor(colFloat)
-          const frac = colFloat - colIndex
-
-          const p1 = particles[getIndex(r, colIndex)]
-          const p2 = particles[getIndex(r, Math.min(colIndex + 1, cols - 1))]
-
-          const charX = p1.x + (p2.x - p1.x) * frac
-          const charY = p1.y + (p2.y - p1.y) * frac
-          const angle = Math.atan2(p2.y - p1.y, p2.x - p1.x)
-
-          ctx.save()
-          ctx.translate(charX, charY)
-          ctx.rotate(angle)
-          ctx.fillText(text[charIdx], 0, 0)
-          ctx.restore()
+          // Triangle 2: Bottom-Right half of quad
+          drawTexturedTriangle(
+            ctx,
+            offscreen,
+            p10.x, p10.y,
+            p11.x, p11.y,
+            p01.x, p01.y,
+            p10.u, p10.v,
+            p11.u, p11.v,
+            p01.u, p01.v
+          )
         }
       }
-      ctx.restore()
 
-      // 6. Draw Top Hanging Eyelets / Pins
+      // 5. Draw Hanging Brass Eyelets Along Top Pinned Edge
       ctx.save()
-      const eyeletIndices = [0, Math.floor(cols * 0.25), Math.floor(cols * 0.5), Math.floor(cols * 0.75), cols - 1]
-      for (const idx of eyeletIndices) {
-        const p = particles[getIndex(0, idx)]
-        // Pin ring shadow
+      const eyeletCols = [0, Math.floor(cols * 0.25), Math.floor(cols * 0.5), Math.floor(cols * 0.75), cols - 1]
+      for (const colIdx of eyeletCols) {
+        const p = particles[getIndex(0, colIdx)]
+        // Shadow ring
         ctx.beginPath()
         ctx.arc(p.x, p.y - 2, 4.5, 0, Math.PI * 2)
         ctx.fillStyle = '#281712'
         ctx.fill()
 
-        // Brass pin center
+        // Brass pin
         ctx.beginPath()
         ctx.arc(p.x, p.y - 2, 2.5, 0, Math.PI * 2)
         ctx.fillStyle = '#cb9559'
@@ -453,7 +525,6 @@ export default function HangingCloth() {
 
     animationFrameId = requestAnimationFrame(tick)
 
-    // Resize Handler
     const handleResize = () => {
       width = canvas.parentElement.clientWidth
       height = 420
@@ -471,7 +542,7 @@ export default function HangingCloth() {
       canvas.removeEventListener('touchend', handleMouseLeave)
       window.removeEventListener('resize', handleResize)
     }
-  }, [isMuted])
+  }, [])
 
   return (
     <div
@@ -494,16 +565,17 @@ export default function HangingCloth() {
             <div className="flex items-center gap-3">
               {/* Interaction Hint */}
               <span className="hidden sm:inline-block font-display text-[11px] text-[#281712]/75 font-medium">
-                {isInteracting ? 'Billowing fabric...' : 'Brush cursor to swish cloth'}
+                {isInteracting ? 'Billowing fabric...' : 'Brush cursor across text to wave'}
               </span>
 
               {/* Minimal Web Audio Sound Toggle */}
               <button
+                type="button"
                 onClick={() => {
-                  initAudio()
+                  ensureAudioReady()
                   setIsMuted(!isMuted)
                 }}
-                className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-pixel tracking-wide border transition-colors ${
+                className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-pixel tracking-wide border transition-colors cursor-pointer ${
                   isMuted
                     ? 'border-[#281712]/30 text-[#281712]/60 hover:border-[#281712]'
                     : 'border-[#281712] bg-[#281712] text-[#f4ede1] shadow-2xs'
@@ -548,7 +620,7 @@ export default function HangingCloth() {
 
             {/* Bottom Status Row */}
             <div className="flex flex-wrap items-center justify-between gap-2 px-3 py-2 text-[11px] font-pixel text-[#281712]/60 border-t border-[#281712]/15">
-              <span>PHYSICS: VERLET 2D MESH (36×10 PARTICLES)</span>
+              <span>PHYSICS: VERLET 2D MESH (CONTINUOUS FABRIC WARP)</span>
               <span>SYNTHESIZED RUSTLE // NATIVE WEB AUDIO API</span>
             </div>
           </div>
