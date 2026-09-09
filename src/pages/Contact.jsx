@@ -15,7 +15,7 @@ export default function Contact() {
   return (
     <div className="min-h-screen bg-[#4f778f] text-[#281712] relative overflow-hidden font-display flex flex-col justify-between">
       {/* Background Locker Accents */}
-      <div className="absolute inset-0 pointer-events-none opacity-35 bg-locker"></div>
+      <div className="absolute inset-0 pointer-events-none opacity-35 bg-locker" aria-hidden="true"></div>
 
       {/* Navigation */}
       <div className="relative z-20">
@@ -33,8 +33,8 @@ export default function Contact() {
             <div className="relative bg-[#f4ede1] text-[#281712] p-6 sm:p-10 rounded-xs shadow-xl rotate-[0.5deg] border-[1.5px] border-[#4b73b5] paper-crease">
               
               {/* Pushpins */}
-              <div className="absolute -top-3 left-8 push-pin"></div>
-              <div className="absolute -top-3 right-8 push-pin"></div>
+              <div className="absolute -top-3 left-8 push-pin" aria-hidden="true"></div>
+              <div className="absolute -top-3 right-8 push-pin" aria-hidden="true"></div>
 
               {/* Header */}
               <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#281712]/15 pb-4 mb-6">

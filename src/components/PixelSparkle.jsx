@@ -7,6 +7,8 @@ export default function PixelSparkle({ size = 20, className = "" }) {
       fill="currentColor"
       className={`inline-block ${className}`}
       shapeRendering="crispEdges"
+      aria-hidden="true"
+      focusable="false"
     >
       {/* 8-bit pixel star / sparkle */}
       <rect x="7" y="0" width="2" height="2" />

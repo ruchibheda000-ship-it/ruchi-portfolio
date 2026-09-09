@@ -45,7 +45,7 @@ export default function Work() {
   return (
     <div className="min-h-screen bg-[#4f778f] text-[#281712] relative overflow-hidden font-display flex flex-col justify-between">
       {/* Background Locker Accents */}
-      <div className="absolute inset-0 pointer-events-none opacity-35 bg-locker"></div>
+      <div className="absolute inset-0 pointer-events-none opacity-35 bg-locker" aria-hidden="true"></div>
 
       {/* Navigation */}
       <div className="relative z-20">
@@ -61,8 +61,8 @@ export default function Work() {
             
             {/* Header Specimen Paper */}
             <div className="relative mb-8 bg-[#f4ede1] text-[#281712] shadow-md p-4 sm:p-6 rounded-xs rotate-[-0.5deg] border-[1.5px] border-[#4b73b5] flex flex-wrap items-center justify-between gap-4">
-              <div className="absolute -top-3 left-6 push-pin"></div>
-              <div className="absolute -top-3 right-6 push-pin"></div>
+              <div className="absolute -top-3 left-6 push-pin" aria-hidden="true"></div>
+              <div className="absolute -top-3 right-6 push-pin" aria-hidden="true"></div>
 
               <div>
                 <div className="flex items-center gap-2 mb-1">
@@ -94,7 +94,7 @@ export default function Work() {
                   }`}
                 >
                   {/* Push Pin */}
-                  <div className="absolute -top-2 left-1/2 -translate-x-1/2 push-pin"></div>
+                  <div className="absolute -top-2 left-1/2 -translate-x-1/2 push-pin" aria-hidden="true"></div>
                   
                   {/* Top metadata pill */}
                   <div className="flex items-center justify-between gap-2 mb-3 pt-1">

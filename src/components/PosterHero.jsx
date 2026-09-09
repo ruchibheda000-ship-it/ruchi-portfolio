@@ -13,17 +13,17 @@ export default function PosterHero() {
         <div className="relative w-full rounded-sm bg-cork p-4 sm:p-8 md:p-12 overflow-hidden shadow-inner border border-[#804e22]">
           
           {/* Subtle tape on top-left of cork */}
-          <div className="absolute top-2 left-4 w-12 h-6 tape-strip rotate-[-18deg] z-10 hidden sm:block"></div>
+          <div className="absolute top-2 left-4 w-12 h-6 tape-strip rotate-[-18deg] z-10 hidden sm:block" aria-hidden="true"></div>
           
           {/* Subtle note/tape on bottom-right of cork */}
-          <div className="absolute -bottom-1 right-8 w-14 h-8 bg-[#ffffeedd] border border-stone-300 shadow-xs rotate-[8deg] z-10 hidden sm:block"></div>
+          <div className="absolute -bottom-1 right-8 w-14 h-8 bg-[#ffffeedd] border border-stone-300 shadow-xs rotate-[8deg] z-10 hidden sm:block" aria-hidden="true"></div>
 
           {/* MAIN FOLDED PAPER POSTER */}
           <div className="relative mx-auto w-full max-w-4xl bg-[#f4ede1] text-[#281712] shadow-2xl rounded-xs rotate-[-0.8deg] transition-transform hover:rotate-0 duration-500 paper-crease p-3 sm:p-6 md:p-8">
             
             {/* Push Pins at corners */}
-            <div className="absolute -top-2 left-6 push-pin z-30"></div>
-            <div className="absolute -top-2 right-6 push-pin z-30"></div>
+            <div className="absolute -top-2 left-6 push-pin z-30" aria-hidden="true"></div>
+            <div className="absolute -top-2 right-6 push-pin z-30" aria-hidden="true"></div>
 
             {/* BLUE INSET BORDER */}
             <div className="relative border-[1.5px] border-[#4b73b5] rounded-xs px-4 py-6 sm:px-8 sm:py-10 min-h-[460px] sm:min-h-[540px] flex flex-col justify-between">

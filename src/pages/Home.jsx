@@ -7,10 +7,10 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-[#4f778f] text-[#281712] relative overflow-hidden font-display flex flex-col justify-between">
       {/* Background Locker Accents */}
-      <div className="absolute inset-0 pointer-events-none opacity-35 bg-locker"></div>
+      <div className="absolute inset-0 pointer-events-none opacity-35 bg-locker" aria-hidden="true"></div>
       
       {/* Decorative locker vents (louvers) */}
-      <div className="absolute top-12 left-6 sm:left-12 flex flex-col gap-1.5 opacity-25 pointer-events-none hidden md:flex">
+      <div className="absolute top-12 left-6 sm:left-12 flex flex-col gap-1.5 opacity-25 pointer-events-none hidden md:flex" aria-hidden="true">
         <div className="w-16 h-1.5 bg-black rounded-full"></div>
         <div className="w-16 h-1.5 bg-black rounded-full"></div>
         <div className="w-16 h-1.5 bg-black rounded-full"></div>
@@ -18,7 +18,7 @@ export default function Home() {
         <div className="w-16 h-1.5 bg-black rounded-full"></div>
       </div>
 
-      <div className="absolute top-12 right-6 sm:right-12 flex flex-col gap-1.5 opacity-25 pointer-events-none hidden md:flex">
+      <div className="absolute top-12 right-6 sm:right-12 flex flex-col gap-1.5 opacity-25 pointer-events-none hidden md:flex" aria-hidden="true">
         <div className="w-16 h-1.5 bg-black rounded-full"></div>
         <div className="w-16 h-1.5 bg-black rounded-full"></div>
         <div className="w-16 h-1.5 bg-black rounded-full"></div>

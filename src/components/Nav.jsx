@@ -14,7 +14,7 @@ export default function Nav() {
           to="/"
           className="flex items-center gap-2 text-xs sm:text-sm font-display font-extrabold tracking-tight text-[#281712] border border-[#281712] bg-[#f4ede1] px-3 py-1 rounded-full shadow-2xs hover:bg-[#281712] hover:text-[#f4ede1] transition-all"
         >
-          <span className="font-pixel text-xs">✦</span>
+          <span className="font-pixel text-xs" aria-hidden="true">✦</span>
           <span>ruchi.portfolio</span>
         </NavLink>
 

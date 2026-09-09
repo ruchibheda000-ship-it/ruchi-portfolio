@@ -5,6 +5,7 @@ export default function PixelFolder({ to = "/work", className = "" }) {
     <Link
       to={to}
       title="Click to view Work & Projects"
+      aria-label="Open Work and Projects archive"
       className={`group relative inline-block transition-transform hover:scale-105 active:scale-95 duration-200 cursor-pointer ${className}`}
     >
       {/* Folder Container */}
@@ -15,6 +16,8 @@ export default function PixelFolder({ to = "/work", className = "" }) {
           xmlns="http://www.w3.org/2000/svg"
           className="w-full h-full"
           shapeRendering="crispEdges"
+          aria-hidden="true"
+          focusable="false"
         >
           {/* Folder Tab (dark brown) */}
           <rect x="2" y="4" width="22" height="8" rx="2" fill="#281712" />
@@ -40,6 +43,8 @@ export default function PixelFolder({ to = "/work", className = "" }) {
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
             shapeRendering="crispEdges"
+            aria-hidden="true"
+            focusable="false"
           >
             {/* Black Outline */}
             <path
