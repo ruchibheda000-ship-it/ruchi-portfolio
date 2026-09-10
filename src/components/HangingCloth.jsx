@@ -16,17 +16,42 @@ const UI_UX_TYPOGRAPHY_BLOCK = [
 ]
 
 /**
- * Procedural Web Audio Engine for "Sparkly Glass Beads & Enchanted Crystals"
- * Synthesizes crisp, glassy, ethereal tinkles, fairy dust skittering, and glittering crystal clinks.
- * Dynamics compressed for clean +35% punch, sparkling highs (3kHz - 9kHz), and zero clipping.
+ * Pentatonic scale harmonics for miniature glass windchimes (E6 to A8).
+ * Ensures every glass collision rings in magical ethereal harmony.
+ */
+const GLASS_CHIME_FREQUENCIES = [
+  1975.53, // B6
+  2349.32, // D7
+  2637.02, // E7
+  3135.96, // G7
+  3520.00, // A7
+  3951.07, // B7
+  4698.63, // D8
+  5274.04, // E8
+  6271.93, // G8
+  7040.00, // A8
+  7902.13, // B8
+  9397.27, // D9
+]
+
+/**
+ * Procedural Web Audio Engine for "Magical Glass Windchimes & Fairy Dust Shimmer"
+ * Synthesizes delicate glass windchimes and tiny crystal beads drifting, brushing, and colliding.
+ * Features:
+ * - 30-40% louder & punchier through dynamics compressor limiter + makeup gain (zero clipping).
+ * - Ultra-crisp tactile "tik / tck / tiny clack" micro-transient (<3ms) for physical hard bead collision.
+ * - Resonant singing glass bell & transverse rod harmonics (Q = 26.0 - 28.0) for pure crystal chime tones.
+ * - Air shimmering fairy dust layer (high bandpass noise + micro crystal sprinkles).
+ * - Natural irregularity with organic micro-chime sister collisions for lively multi-bead textures.
  */
 class BeadAudioEngine {
   constructor() {
     this.ctx = null
     this.compressor = null
+    this.makeupGain = null
     this.enabled = true
-    this.lastTickTime = 0
-    this.lastClackTime = 0
+    this.lastChimeTime = 0
+    this.lastClinkTime = 0
   }
 
   init() {
@@ -35,14 +60,20 @@ class BeadAudioEngine {
       if (AudioCtx) {
         this.ctx = new AudioCtx()
         
-        // Fast transparent dynamics limiter to maximize sparkle, punch, and headroom (+35%)
+        // Fast transparent brickwall limiter / compressor to prevent any clipping
         this.compressor = this.ctx.createDynamicsCompressor()
-        this.compressor.threshold.setValueAtTime(-14, this.ctx.currentTime)
-        this.compressor.knee.setValueAtTime(5, this.ctx.currentTime)
-        this.compressor.ratio.setValueAtTime(4.2, this.ctx.currentTime)
-        this.compressor.attack.setValueAtTime(0.001, this.ctx.currentTime)
+        this.compressor.threshold.setValueAtTime(-15, this.ctx.currentTime)
+        this.compressor.knee.setValueAtTime(4, this.ctx.currentTime)
+        this.compressor.ratio.setValueAtTime(6.0, this.ctx.currentTime)
+        this.compressor.attack.setValueAtTime(0.0008, this.ctx.currentTime)
         this.compressor.release.setValueAtTime(0.038, this.ctx.currentTime)
-        this.compressor.connect(this.ctx.destination)
+
+        // Makeup gain to deliver 30-40% louder perceived presence without distortion
+        this.makeupGain = this.ctx.createGain()
+        this.makeupGain.gain.setValueAtTime(1.38, this.ctx.currentTime)
+
+        this.compressor.connect(this.makeupGain)
+        this.makeupGain.connect(this.ctx.destination)
       }
     }
     if (this.ctx && this.ctx.state === 'suspended') {
@@ -54,13 +85,13 @@ class BeadAudioEngine {
     if (!this.enabled || !this.ctx || this.ctx.state === 'suspended') return
 
     const now = performance.now()
-    const minInterval = isClack ? 38 : isSecondary ? 8 : Math.max(14, 36 - intensity * 22)
+    const minInterval = isClack ? 30 : isSecondary ? 6 : Math.max(10, 28 - intensity * 18)
     if (isClack) {
-      if (now - this.lastClackTime < minInterval) return
-      this.lastClackTime = now
+      if (now - this.lastClinkTime < minInterval) return
+      this.lastClinkTime = now
     } else if (!isSecondary) {
-      if (now - this.lastTickTime < minInterval) return
-      this.lastTickTime = now
+      if (now - this.lastChimeTime < minInterval) return
+      this.lastChimeTime = now
     }
 
     try {
@@ -79,147 +110,151 @@ class BeadAudioEngine {
       const masterGain = this.ctx.createGain()
       masterGain.connect(outputNode)
 
-      // 30-40% boosted perceived loudness
-      const baseVol = isSecondary ? 0.24 : 0.42
-      const volume = Math.min(0.48, Math.max(0.07, intensity * baseVol))
+      // 30-40% boosted perceived loudness, with dynamic scaling
+      const baseVol = isSecondary ? 0.38 : 0.64
+      const volume = Math.min(0.82, Math.max(0.12, intensity * baseVol))
 
-      if (isClack) {
-        // --- CRISP CRYSTAL GLASS CLINK (Enchanted glass beads cascading & clinking) ---
-        // Primary glass chime note: 2400Hz - 3600Hz with bell-like resonant ring
-        const osc1 = this.ctx.createOscillator()
-        const filter1 = this.ctx.createBiquadFilter()
-        const gain1 = this.ctx.createGain()
+      // Pick a random pitch from the magical glass wind chime harmonic scale with micro-detune
+      const pitchIdx = Math.floor(Math.random() * GLASS_CHIME_FREQUENCIES.length)
+      const detuneFactor = Math.pow(2, (Math.random() * 32 - 16) / 1200) // ±16 cents organic variation
+      const baseFreq = GLASS_CHIME_FREQUENCIES[pitchIdx] * detuneFactor
 
-        const chimeFreq = 2500 + Math.random() * 1100
-        osc1.type = 'sine'
-        osc1.frequency.setValueAtTime(chimeFreq, audioTime)
-        osc1.frequency.exponentialRampToValueAtTime(chimeFreq * 0.96, audioTime + 0.045)
+      // -------------------------------------------------------------
+      // LAYER 1: TACTILE HARD BEAD / ROD IMPACT SNAP ("tik / tck / tiny clack")
+      // -------------------------------------------------------------
+      // High-speed frequency drop (<2.8ms) provides the physical contact bite
+      const oscTik = this.ctx.createOscillator()
+      const gainTik = this.ctx.createGain()
+      oscTik.type = 'sine'
+      const tikStart = isClack ? 7600 : 6200 + Math.random() * 1200
+      const tikEnd = isClack ? 2400 : 1900 + Math.random() * 700
+      oscTik.frequency.setValueAtTime(tikStart, audioTime)
+      oscTik.frequency.exponentialRampToValueAtTime(tikEnd, audioTime + 0.0026)
 
-        filter1.type = 'bandpass'
-        filter1.frequency.setValueAtTime(chimeFreq, audioTime)
-        filter1.Q.setValueAtTime(14.0, audioTime) // High Q for pure glassy ringing
+      gainTik.gain.setValueAtTime(volume * (isClack ? 1.5 : 1.15), audioTime)
+      gainTik.gain.exponentialRampToValueAtTime(0.0001, audioTime + 0.0032)
 
-        gain1.gain.setValueAtTime(volume * 1.3, audioTime)
-        gain1.gain.exponentialRampToValueAtTime(0.0001, audioTime + 0.045)
+      oscTik.connect(gainTik)
+      gainTik.connect(masterGain)
+      oscTik.start(audioTime)
+      oscTik.stop(audioTime + 0.0036)
 
-        osc1.connect(filter1)
-        filter1.connect(gain1)
-        gain1.connect(masterGain)
+      // Micro-noise click spike for tactile bead surface clack
+      const clickLen = Math.max(1, Math.floor(this.ctx.sampleRate * 0.0022))
+      const clickBuf = this.ctx.createBuffer(1, clickLen, this.ctx.sampleRate)
+      const clickData = clickBuf.getChannelData(0)
+      for (let i = 0; i < clickLen; i++) {
+        clickData[i] = (Math.random() * 2 - 1) * (1 - i / clickLen)
+      }
+      const clickSrc = this.ctx.createBufferSource()
+      clickSrc.buffer = clickBuf
 
-        osc1.start(audioTime)
-        osc1.stop(audioTime + 0.048)
+      const clickFilter = this.ctx.createBiquadFilter()
+      clickFilter.type = 'highpass'
+      clickFilter.frequency.setValueAtTime(4200 + Math.random() * 1600, audioTime)
 
-        // Secondary crystal harmonic overtone (5kHz - 7.5kHz sparkle)
-        const osc2 = this.ctx.createOscillator()
-        const filter2 = this.ctx.createBiquadFilter()
-        const gain2 = this.ctx.createGain()
+      const clickGain = this.ctx.createGain()
+      clickGain.gain.setValueAtTime(volume * 1.05, audioTime)
+      clickGain.gain.exponentialRampToValueAtTime(0.0001, audioTime + 0.0024)
 
-        const overtoneFreq = chimeFreq * (1.85 + Math.random() * 0.35)
-        osc2.type = 'triangle'
-        osc2.frequency.setValueAtTime(overtoneFreq, audioTime)
+      clickSrc.connect(clickFilter)
+      clickFilter.connect(clickGain)
+      clickGain.connect(masterGain)
+      clickSrc.start(audioTime)
 
-        filter2.type = 'bandpass'
-        filter2.frequency.setValueAtTime(overtoneFreq, audioTime)
-        filter2.Q.setValueAtTime(18.0, audioTime)
+      // -------------------------------------------------------------
+      // LAYER 2: RESONANT SINGING GLASS CHIME BELL TONE
+      // -------------------------------------------------------------
+      const oscChime = this.ctx.createOscillator()
+      const filterChime = this.ctx.createBiquadFilter()
+      const gainChime = this.ctx.createGain()
 
-        gain2.gain.setValueAtTime(volume * 0.85, audioTime)
-        gain2.gain.exponentialRampToValueAtTime(0.0001, audioTime + 0.035)
+      oscChime.type = 'sine'
+      oscChime.frequency.setValueAtTime(baseFreq, audioTime)
+      oscChime.frequency.exponentialRampToValueAtTime(baseFreq * 0.985, audioTime + 0.045)
 
-        osc2.connect(filter2)
-        filter2.connect(gain2)
-        gain2.connect(masterGain)
+      filterChime.type = 'bandpass'
+      filterChime.frequency.setValueAtTime(baseFreq, audioTime)
+      filterChime.Q.setValueAtTime(26.0, audioTime) // Rich resonant glass ring
 
-        osc2.start(audioTime)
-        osc2.stop(audioTime + 0.038)
+      const ringDuration = isClack ? (0.042 + Math.random() * 0.024) : (0.026 + Math.random() * 0.018)
+      gainChime.gain.setValueAtTime(volume * 1.4, audioTime)
+      gainChime.gain.exponentialRampToValueAtTime(0.0001, audioTime + ringDuration)
 
-        // Hard glass impact tap (<5ms)
-        const oscTap = this.ctx.createOscillator()
-        const gainTap = this.ctx.createGain()
-        oscTap.type = 'sine'
-        oscTap.frequency.setValueAtTime(4200, audioTime)
-        oscTap.frequency.exponentialRampToValueAtTime(1600, audioTime + 0.006)
-        gainTap.gain.setValueAtTime(volume * 0.9, audioTime)
-        gainTap.gain.exponentialRampToValueAtTime(0.0001, audioTime + 0.007)
-        oscTap.connect(gainTap)
-        gainTap.connect(masterGain)
-        oscTap.start(audioTime)
-        oscTap.stop(audioTime + 0.008)
-      } else {
-        // --- SPARKLY GLASS BEAD TINKLE (Delicate fairy dust & crystal skitter) ---
-        // Layer 1: High glassy tinkle ping (3400Hz - 5800Hz)
-        const osc = this.ctx.createOscillator()
-        const filter = this.ctx.createBiquadFilter()
-        const gain = this.ctx.createGain()
+      oscChime.connect(filterChime)
+      filterChime.connect(gainChime)
+      gainChime.connect(masterGain)
+      oscChime.start(audioTime)
+      oscChime.stop(audioTime + ringDuration + 0.005)
 
-        const pingFreq = 3400 + Math.random() * 2400
-        osc.type = 'sine'
-        osc.frequency.setValueAtTime(pingFreq, audioTime)
-        osc.frequency.exponentialRampToValueAtTime(pingFreq * 0.94, audioTime + 0.024)
+      // -------------------------------------------------------------
+      // LAYER 3: TRANSVERSE HARMONIC OVERTONE (Rod collision mode ~2.76x)
+      // -------------------------------------------------------------
+      const oscOvertone = this.ctx.createOscillator()
+      const filterOvertone = this.ctx.createBiquadFilter()
+      const gainOvertone = this.ctx.createGain()
 
-        filter.type = 'bandpass'
-        filter.frequency.setValueAtTime(pingFreq, audioTime)
-        filter.Q.setValueAtTime(16.0, audioTime) // Glassy bell ring
+      const overtoneFreq = Math.min(11000, baseFreq * (2.74 + Math.random() * 0.04))
+      oscOvertone.type = 'sine'
+      oscOvertone.frequency.setValueAtTime(overtoneFreq, audioTime)
 
-        const duration = 0.016 + Math.random() * 0.010
-        gain.gain.setValueAtTime(volume * 1.35, audioTime)
-        gain.gain.exponentialRampToValueAtTime(0.0001, audioTime + duration)
+      filterOvertone.type = 'bandpass'
+      filterOvertone.frequency.setValueAtTime(overtoneFreq, audioTime)
+      filterOvertone.Q.setValueAtTime(28.0, audioTime)
 
-        osc.connect(filter)
-        filter.connect(gain)
-        gain.connect(masterGain)
+      const overtoneDuration = ringDuration * 0.75
+      gainOvertone.gain.setValueAtTime(volume * 0.95, audioTime)
+      gainOvertone.gain.exponentialRampToValueAtTime(0.0001, audioTime + overtoneDuration)
 
-        osc.start(audioTime)
-        osc.stop(audioTime + duration + 0.004)
+      oscOvertone.connect(filterOvertone)
+      filterOvertone.connect(gainOvertone)
+      gainOvertone.connect(masterGain)
+      oscOvertone.start(audioTime)
+      oscOvertone.stop(audioTime + overtoneDuration + 0.005)
 
-        // Layer 2: Ethereal high crystal shimmer overtone (6500Hz - 9400Hz)
-        const oscShimmer = this.ctx.createOscillator()
-        const filterShimmer = this.ctx.createBiquadFilter()
-        const gainShimmer = this.ctx.createGain()
+      // -------------------------------------------------------------
+      // LAYER 4: FAIRY DUST SHIMMER & GENTLE BREEZE TEXTURE
+      // -------------------------------------------------------------
+      const dustLen = Math.max(1, Math.floor(this.ctx.sampleRate * 0.006))
+      const dustBuf = this.ctx.createBuffer(1, dustLen, this.ctx.sampleRate)
+      const dustData = dustBuf.getChannelData(0)
+      for (let i = 0; i < dustLen; i++) {
+        dustData[i] = (Math.random() * 2 - 1) * Math.exp(-i / (dustLen * 0.28))
+      }
 
-        const shimmerFreq = Math.min(9600, pingFreq * (1.75 + Math.random() * 0.35))
-        oscShimmer.type = 'triangle'
-        oscShimmer.frequency.setValueAtTime(shimmerFreq, audioTime)
+      const dustSrc = this.ctx.createBufferSource()
+      dustSrc.buffer = dustBuf
 
-        filterShimmer.type = 'bandpass'
-        filterShimmer.frequency.setValueAtTime(shimmerFreq, audioTime)
-        filterShimmer.Q.setValueAtTime(14.0, audioTime)
+      const dustFilter = this.ctx.createBiquadFilter()
+      dustFilter.type = 'bandpass'
+      dustFilter.frequency.setValueAtTime(6000 + Math.random() * 3200, audioTime)
+      dustFilter.Q.setValueAtTime(3.8, audioTime)
 
-        gainShimmer.gain.setValueAtTime(volume * 0.72, audioTime)
-        gainShimmer.gain.exponentialRampToValueAtTime(0.0001, audioTime + duration * 0.8)
+      const dustGain = this.ctx.createGain()
+      dustGain.gain.setValueAtTime(volume * 0.98, audioTime)
+      dustGain.gain.exponentialRampToValueAtTime(0.0001, audioTime + 0.007)
 
-        oscShimmer.connect(filterShimmer)
-        filterShimmer.connect(gainShimmer)
-        gainShimmer.connect(masterGain)
+      dustSrc.connect(dustFilter)
+      dustFilter.connect(dustGain)
+      dustGain.connect(masterGain)
+      dustSrc.start(audioTime)
 
-        oscShimmer.start(audioTime)
-        oscShimmer.stop(audioTime + duration + 0.004)
-
-        // Layer 3: Fairy dust skittering / dry glass bead friction transient (3-6ms)
-        const bufferSize = Math.max(1, Math.floor(this.ctx.sampleRate * 0.005))
-        const noiseBuffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate)
-        const output = noiseBuffer.getChannelData(0)
-        for (let i = 0; i < bufferSize; i++) {
-          output[i] = (Math.random() * 2 - 1) * Math.exp(-i / (bufferSize * 0.28))
-        }
-
-        const noise = this.ctx.createBufferSource()
-        noise.buffer = noiseBuffer
-
-        const noiseFilter = this.ctx.createBiquadFilter()
-        noiseFilter.type = 'bandpass'
-        // High sparkling shimmer band (4500Hz - 8500Hz)
-        noiseFilter.frequency.setValueAtTime(5200 + Math.random() * 2600, audioTime)
-        noiseFilter.Q.setValueAtTime(3.8, audioTime)
-
-        const noiseGain = this.ctx.createGain()
-        noiseGain.gain.setValueAtTime(volume * 0.95, audioTime)
-        noiseGain.gain.exponentialRampToValueAtTime(0.0001, audioTime + 0.006)
-
-        noise.connect(noiseFilter)
-        noiseFilter.connect(noiseGain)
-        noiseGain.connect(masterGain)
-
-        noise.start(audioTime)
+      // -------------------------------------------------------------
+      // NATURAL ORGANIC IRREGULARITY: SISTER MICRO-CLACK (40% chance)
+      // Creates the authentic sound of multiple tiny beads clattering
+      // rather than an isolated click.
+      // -------------------------------------------------------------
+      if (!isSecondary && Math.random() < 0.42) {
+        setTimeout(() => {
+          if (this.enabled && this.ctx && this.ctx.state === 'running') {
+            this.playBeadContact(
+              intensity * 0.72,
+              panX + (Math.random() * 0.1 - 0.05),
+              false,
+              true
+            )
+          }
+        }, 4 + Math.random() * 7)
       }
     } catch {
       // Graceful fallback if audio context state changes
