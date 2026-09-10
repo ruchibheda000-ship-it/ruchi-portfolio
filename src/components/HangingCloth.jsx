@@ -17,7 +17,8 @@ const UI_UX_TYPOGRAPHY_BLOCK = [
 
 /**
  * Procedural Web Audio Engine for "Beads on a String"
- * Synthesizes short physical bead collisions (ticks & hollow clacks).
+ * Synthesizes short physical bead collisions (ticks, tiny sliding friction, & hollow clacks).
+ * STRICT RULE: Only active during physical contact with the typographic beads.
  */
 class BeadAudioEngine {
   constructor() {
@@ -39,11 +40,11 @@ class BeadAudioEngine {
     }
   }
 
-  playBeadTick(intensity = 0.5, panX = 0, isClack = false) {
+  playBeadContact(intensity = 0.5, panX = 0, isClack = false) {
     if (!this.enabled || !this.ctx || this.ctx.state === 'suspended') return
 
     const now = performance.now()
-    const minInterval = isClack ? 70 : Math.max(28, 65 - intensity * 35)
+    const minInterval = isClack ? 55 : Math.max(20, 48 - intensity * 26)
     if (isClack) {
       if (now - this.lastClackTime < minInterval) return
       this.lastClackTime = now
@@ -55,7 +56,7 @@ class BeadAudioEngine {
     try {
       const audioTime = this.ctx.currentTime
 
-      // Stereo Panner
+      // Stereo Panner (spatial positioning following cursor contact)
       let outputNode = this.ctx.destination
       if (this.ctx.createStereoPanner) {
         const panner = this.ctx.createStereoPanner()
@@ -68,47 +69,47 @@ class BeadAudioEngine {
       const masterGain = this.ctx.createGain()
       masterGain.connect(outputNode)
 
-      const volume = Math.min(0.24, Math.max(0.03, intensity * 0.18))
+      const volume = Math.min(0.26, Math.max(0.04, intensity * 0.20))
 
       if (isClack) {
-        // Deep hollow wooden/acrylic bead "clack"
+        // Hollow acrylic/wood bead "clack"
         const osc = this.ctx.createOscillator()
         const filter = this.ctx.createBiquadFilter()
         const gain = this.ctx.createGain()
 
-        const baseFreq = 480 + Math.random() * 260
+        const baseFreq = 540 + Math.random() * 240
         osc.type = 'triangle'
         osc.frequency.setValueAtTime(baseFreq, audioTime)
-        osc.frequency.exponentialRampToValueAtTime(baseFreq * 0.55, audioTime + 0.035)
+        osc.frequency.exponentialRampToValueAtTime(baseFreq * 0.58, audioTime + 0.032)
 
         filter.type = 'bandpass'
-        filter.frequency.setValueAtTime(baseFreq * 1.15, audioTime)
-        filter.Q.setValueAtTime(4.5, audioTime)
+        filter.frequency.setValueAtTime(baseFreq * 1.2, audioTime)
+        filter.Q.setValueAtTime(4.2, audioTime)
 
-        gain.gain.setValueAtTime(volume * 1.3, audioTime)
-        gain.gain.exponentialRampToValueAtTime(0.0001, audioTime + 0.038)
+        gain.gain.setValueAtTime(volume * 1.25, audioTime)
+        gain.gain.exponentialRampToValueAtTime(0.0001, audioTime + 0.034)
 
         osc.connect(filter)
         filter.connect(gain)
         gain.connect(masterGain)
 
         osc.start(audioTime)
-        osc.stop(audioTime + 0.045)
+        osc.stop(audioTime + 0.04)
       } else {
-        // Crisp tactile bead "tik" / "tck"
-        const baseFreq = 1600 + Math.random() * 1800
+        // Tactile bead impact: crisp "tik / tck"
+        const baseFreq = 1800 + Math.random() * 1800
         const osc = this.ctx.createOscillator()
         const filter = this.ctx.createBiquadFilter()
         const gain = this.ctx.createGain()
 
-        osc.type = Math.random() > 0.45 ? 'sine' : 'triangle'
+        osc.type = Math.random() > 0.4 ? 'sine' : 'triangle'
         osc.frequency.setValueAtTime(baseFreq, audioTime)
-        osc.frequency.exponentialRampToValueAtTime(baseFreq * 0.65, audioTime + 0.016)
+        osc.frequency.exponentialRampToValueAtTime(baseFreq * 0.62, audioTime + 0.014)
 
         filter.type = 'highpass'
         filter.frequency.setValueAtTime(1400, audioTime)
 
-        const duration = 0.014 + Math.random() * 0.008
+        const duration = 0.012 + Math.random() * 0.007
         gain.gain.setValueAtTime(volume, audioTime)
         gain.gain.exponentialRampToValueAtTime(0.0001, audioTime + duration)
 
@@ -119,12 +120,12 @@ class BeadAudioEngine {
         osc.start(audioTime)
         osc.stop(audioTime + duration + 0.005)
 
-        // Ultra-short tactile contact noise burst (3ms)
-        const bufferSize = Math.max(1, Math.floor(this.ctx.sampleRate * 0.0035))
+        // Accompanying physical bead contact click & string sliding transient (3-5ms)
+        const bufferSize = Math.max(1, Math.floor(this.ctx.sampleRate * 0.004))
         const noiseBuffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate)
         const output = noiseBuffer.getChannelData(0)
         for (let i = 0; i < bufferSize; i++) {
-          output[i] = (Math.random() * 2 - 1) * Math.exp(-i / (bufferSize * 0.35))
+          output[i] = (Math.random() * 2 - 1) * Math.exp(-i / (bufferSize * 0.3))
         }
 
         const noise = this.ctx.createBufferSource()
@@ -132,8 +133,8 @@ class BeadAudioEngine {
 
         const noiseFilter = this.ctx.createBiquadFilter()
         noiseFilter.type = 'bandpass'
-        noiseFilter.frequency.setValueAtTime(2600 + Math.random() * 1200, audioTime)
-        noiseFilter.Q.setValueAtTime(2.2, audioTime)
+        noiseFilter.frequency.setValueAtTime(2800 + Math.random() * 1400, audioTime)
+        noiseFilter.Q.setValueAtTime(2.4, audioTime)
 
         const noiseGain = this.ctx.createGain()
         noiseGain.gain.setValueAtTime(volume * 0.85, audioTime)
@@ -155,7 +156,7 @@ export default function HangingCloth() {
   const canvasRef = useRef(null)
   const containerRef = useRef(null)
   const [soundOn, setSoundOn] = useState(true)
-  const [isInteracting, setIsInteracting] = useState(false)
+  const [hasFabricContact, setHasFabricContact] = useState(false)
   const audioEngineRef = useRef(null)
 
   // Initialize audio engine instance once
@@ -193,10 +194,6 @@ export default function HangingCloth() {
     // particles[row][col]
     let particles = []
     let rows = UI_UX_TYPOGRAPHY_BLOCK.length
-    let maxCols = 0
-    UI_UX_TYPOGRAPHY_BLOCK.forEach((line) => {
-      if (line.length > maxCols) maxCols = line.length
-    })
 
     // Mouse / Cursor state
     const mouse = {
@@ -209,6 +206,10 @@ export default function HangingCloth() {
       speed: 0,
       isHovering: false,
     }
+
+    // Audio excitation accumulator
+    let contactAccumulator = 0
+    let nextTriggerThreshold = 9 + Math.random() * 8
 
     // Measure character metrics & build particle grid
     const initGrid = () => {
@@ -245,6 +246,7 @@ export default function HangingCloth() {
             r,
             c,
             char,
+            isSpace: char === ' ',
             x,
             y,
             oldX: x,
@@ -267,9 +269,8 @@ export default function HangingCloth() {
     const VERTICAL_STIFFNESS = 0.78
     const HORIZONTAL_STIFFNESS = 0.32
     const CONSTRAINT_ITERATIONS = 3
-    const CURSOR_RADIUS = width < 600 ? 75 : 95
-
-    let activeDeformationAmount = 0
+    const CURSOR_PHYSICS_RADIUS = width < 600 ? 75 : 95
+    const CONTACT_AUDIO_RADIUS = 30 // Tight localized contact radius for audio excitation
 
     // Animation & Physics Loop
     const tick = () => {
@@ -285,9 +286,6 @@ export default function HangingCloth() {
         mouse.vy *= 0.85
         mouse.speed = Math.hypot(mouse.vx, mouse.vy)
       }
-
-      let frameMaxDisplacement = 0
-      let totalKineticEnergy = 0
 
       // 2. Verlet Integration + Restoring Spring
       for (let r = 0; r < rows; r++) {
@@ -308,16 +306,16 @@ export default function HangingCloth() {
 
           p.x += vx + rx
           p.y += vy + ry
-
-          // Track kinetic energy & displacement
-          const disp = Math.hypot(p.x - p.baseX, p.y - p.baseY)
-          if (disp > frameMaxDisplacement) frameMaxDisplacement = disp
-          totalKineticEnergy += Math.hypot(vx, vy)
         }
       }
 
-      // 3. Cursor Interaction (Physical Disturbance & Trailing Forces)
-      if (mouse.isHovering || mouse.speed > 0.5) {
+      // 3. Contact Detection (Strictly identifying particles touching the cursor)
+      const contactParticles = []
+      let contactKineticEnergy = 0
+      let contactMaxDisplacement = 0
+      let contactAvgX = 0
+
+      if (mouse.isHovering) {
         for (let r = 0; r < rows; r++) {
           const row = particles[r]
           for (let c = 0; c < row.length; c++) {
@@ -326,11 +324,12 @@ export default function HangingCloth() {
             const dy = p.y - mouse.y
             const dist = Math.hypot(dx, dy)
 
-            if (dist < CURSOR_RADIUS) {
-              const factor = Math.pow(1 - dist / CURSOR_RADIUS, 1.6)
+            // Physics deformation within wider radius
+            if (dist < CURSOR_PHYSICS_RADIUS) {
+              const factor = Math.pow(1 - dist / CURSOR_PHYSICS_RADIUS, 1.6)
 
               // Push away (parts the bead curtain)
-              const pushMag = (1 - dist / CURSOR_RADIUS) * Math.min(20, 5 + mouse.speed * 0.25)
+              const pushMag = (1 - dist / CURSOR_PHYSICS_RADIUS) * Math.min(20, 5 + mouse.speed * 0.25)
               const nx = dx / (dist + 1e-4)
               const ny = dy / (dist + 1e-4)
               p.x += nx * pushMag * 0.35
@@ -342,6 +341,16 @@ export default function HangingCloth() {
                 p.x += (mouse.vx / (mouse.speed + 1e-3)) * dragAmount
                 p.y += (mouse.vy / (mouse.speed + 1e-3)) * dragAmount
               }
+            }
+
+            // Direct Physical Contact for Audio (strictly non-space characters within contact radius)
+            if (!p.isSpace && dist < CONTACT_AUDIO_RADIUS) {
+              contactParticles.push(p)
+              const pSpeed = Math.hypot(p.x - p.oldX, p.y - p.oldY)
+              contactKineticEnergy += pSpeed
+              const pDisp = Math.hypot(p.x - p.baseX, p.y - p.baseY)
+              if (pDisp > contactMaxDisplacement) contactMaxDisplacement = pDisp
+              contactAvgX += p.x
             }
           }
         }
@@ -402,20 +411,48 @@ export default function HangingCloth() {
         }
       }
 
-      // 5. Audio Triggering Connected to Real Physical Motion
-      activeDeformationAmount = frameMaxDisplacement
-      const isMoving = mouse.speed > 1.2 || frameMaxDisplacement > 4.5
-      setIsInteracting(isMoving)
+      // 5. Strictly Contact-Coupled Audio Triggering
+      // RULE: NO CONTACT -> COMPLETE SILENCE
+      const hasContact = contactParticles.length > 0
+      setHasFabricContact(hasContact)
 
-      if (audioEngineRef.current && audioEngineRef.current.enabled && isMoving) {
-        // Calculate collision likelihood
-        const pan = width > 0 ? (mouse.x / width) * 1.7 - 0.85 : 0
-        const intensity = Math.min(1, (mouse.speed * 0.05) + (frameMaxDisplacement * 0.03))
+      if (!hasContact) {
+        // Cursor is outside typography or in blank margins -> complete silence
+        contactAccumulator = 0
+      } else if (audioEngineRef.current && audioEngineRef.current.enabled) {
+        contactAvgX /= contactParticles.length
+        const avgParticleSpeed = contactKineticEnergy / contactParticles.length
+        const cursorSpeed = mouse.speed
 
-        // Trigger bead tick if velocity or deformation exceeds threshold
-        if (Math.random() < Math.min(0.82, 0.25 + intensity * 0.65)) {
-          const isClack = mouse.speed > 22 || frameMaxDisplacement > 24
-          audioEngineRef.current.playBeadTick(intensity, pan, isClack)
+        // Audio excitation increases with cursor speed and local particle movement
+        const contactActivity = (cursorSpeed * 0.72) + (avgParticleSpeed * 0.48)
+
+        if (contactActivity > 0.35) {
+          contactAccumulator += contactActivity
+
+          if (contactAccumulator >= nextTriggerThreshold) {
+            contactAccumulator = 0
+            nextTriggerThreshold = 7 + Math.random() * 11 // Organic, irregular timing
+
+            const pan = width > 0 ? (contactAvgX / width) * 1.7 - 0.85 : 0
+            const intensity = Math.min(1, 0.16 + (cursorSpeed * 0.04) + (contactMaxDisplacement * 0.038))
+            const isClack = (cursorSpeed > 16 && contactMaxDisplacement > 9) || contactMaxDisplacement > 22
+
+            audioEngineRef.current.playBeadContact(intensity, pan, isClack)
+
+            // Swift contact movement generates organic micro-clusters ("tik-tik" / "tik-tik-tik")
+            if (cursorSpeed > 7.5 && Math.random() < 0.52) {
+              setTimeout(() => {
+                if (audioEngineRef.current && audioEngineRef.current.enabled && mouse.isHovering) {
+                  audioEngineRef.current.playBeadContact(
+                    intensity * 0.76,
+                    pan + (Math.random() * 0.1 - 0.05),
+                    false
+                  )
+                }
+              }, 12 + Math.random() * 18)
+            }
+          }
         }
       }
 
@@ -432,7 +469,7 @@ export default function HangingCloth() {
         const row = particles[r]
         for (let c = 0; c < row.length; c++) {
           const p = row[c]
-          if (p.char === ' ') continue
+          if (p.isSpace) continue
 
           // Compute string tilt angle from vertical neighbor
           let angle = 0
@@ -610,7 +647,7 @@ export default function HangingCloth() {
             <div className="relative z-20 flex flex-wrap items-center justify-between gap-2 pt-3 px-1 text-[11px] font-pixel text-[#281712]/60 border-t border-[#281712]/15">
               <span>SPECIMEN: DENSE UI/UX & PRODUCT DESIGN VOCABULARY</span>
               <span className="flex items-center gap-1.5">
-                <span>{isInteracting ? 'BEAD STRINGS: ACTIVE DEFORMATION' : 'RESTING STATE: 100% STABLE'}</span>
+                <span>{hasFabricContact ? 'BEAD STRINGS: ACTIVE CONTACT' : 'RESTING STATE: 100% STABLE'}</span>
                 <span>//</span>
                 <button
                   type="button"
