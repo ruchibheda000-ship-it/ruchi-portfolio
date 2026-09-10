@@ -599,7 +599,7 @@ export default function HangingCloth() {
       ctx.font = `500 ${baseFontSize}px "JetBrains Mono", "Fira Code", monospace`
       ctx.textAlign = 'center'
       ctx.textBaseline = 'middle'
-      ctx.fillStyle = '#18181b'
+      ctx.fillStyle = '#173C64'
 
       for (let r = 0; r < rows; r++) {
         const row = particles[r]
@@ -724,16 +724,16 @@ export default function HangingCloth() {
         <div className="relative rounded-sm bg-cork p-3 sm:p-6 overflow-hidden shadow-inner border border-[#804e22]">
           
           {/* TOP CARD BAR */}
-          <div className="relative bg-[#f4ede1] text-[#281712] px-4 py-3 sm:px-6 sm:py-3.5 rounded-t-xs border-[1.5px] border-b-0 border-[#4b73b5] flex items-center justify-between gap-3 shadow-xs">
+          <div className="relative bg-[#FFFED8] text-[#173C64] px-4 py-3 sm:px-6 sm:py-3.5 rounded-t-xs border-2 border-b-0 border-[#173C64] flex items-center justify-between gap-3 shadow-xs">
             <div className="flex items-center gap-2">
-              <span className="w-2.5 h-2.5 rounded-full bg-[#e15554]" aria-hidden="true"></span>
-              <span className="font-pixel text-xs font-bold tracking-wider uppercase text-[#281712]">
+              <span className="w-2.5 h-2.5 rounded-full bg-[#173C64]" aria-hidden="true"></span>
+              <span className="font-pixel text-xs font-bold tracking-wider uppercase text-[#173C64]">
                 ✦ TYPOGRAPHIC FABRIC // UI/UX SPECIMEN
               </span>
             </div>
 
             <div className="flex items-center gap-3">
-              <span className="font-display text-[11px] text-[#281712]/75 font-medium hidden sm:inline-block">
+              <span className="font-display text-[11px] text-[#173C64]/75 font-medium hidden sm:inline-block">
                 Static Typographic Composition
               </span>
 
@@ -741,12 +741,12 @@ export default function HangingCloth() {
               <button
                 type="button"
                 onClick={toggleSound}
-                className="flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-pixel tracking-wide border border-[#281712]/40 text-[#281712]/70 bg-white/50 hover:bg-[#281712] hover:text-[#f4ede1] transition-colors cursor-pointer select-none shadow-2xs"
+                className="flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-pixel tracking-wide border border-[#173C64]/40 text-[#173C64] bg-[#FFFED8] hover:bg-[#173C64] hover:text-[#FFFED8] transition-colors cursor-pointer select-none shadow-2xs"
                 title={soundOn ? 'Bead Sounds: ON (click to mute)' : 'Bead Sounds: OFF (click to unmute)'}
               >
                 <span
                   className={`w-1.5 h-1.5 rounded-full transition-colors ${
-                    soundOn ? 'bg-[#e15554] animate-pulse' : 'bg-[#281712]/30'
+                    soundOn ? 'bg-[#173C64] animate-pulse' : 'bg-[#173C64]/30'
                   }`}
                   aria-hidden="true"
                 ></span>
@@ -756,15 +756,15 @@ export default function HangingCloth() {
           </div>
 
           {/* MAIN POSTER PAPER WITH PHYSICAL INTERACTIVE TYPOGRAPHY CANVAS */}
-          <div className="relative bg-[#f4ede1] text-[#281712] rounded-b-xs border-[1.5px] border-[#4b73b5] p-3 sm:p-6 overflow-hidden shadow-xl paper-crease min-h-[360px] sm:min-h-[400px] flex flex-col justify-between">
+          <div className="relative bg-[#FFFED8] bg-notebook-grid text-[#173C64] rounded-b-xs border-2 border-[#173C64] p-3 sm:p-6 overflow-hidden shadow-xl paper-crease min-h-[360px] sm:min-h-[400px] flex flex-col justify-between">
             
             {/* Top Push Pins */}
             <div className="absolute -top-2.5 left-10 push-pin z-20" aria-hidden="true"></div>
             <div className="absolute -top-2.5 right-10 push-pin z-20" aria-hidden="true"></div>
 
-            {/* Subtle Vertical Center Crease Line (from screenshot) */}
+            {/* Subtle Vertical Center Crease Line */}
             <div
-              className="absolute top-0 bottom-0 left-1/2 w-[1px] bg-[#281712]/10 pointer-events-none z-10"
+              className="absolute top-0 bottom-0 left-1/2 w-[1px] bg-[#173C64]/10 pointer-events-none z-10"
               aria-hidden="true"
             ></div>
 
@@ -780,7 +780,7 @@ export default function HangingCloth() {
             </div>
 
             {/* Bottom Status Row */}
-            <div className="relative z-20 flex flex-wrap items-center justify-between gap-2 pt-3 px-1 text-[11px] font-pixel text-[#281712]/60 border-t border-[#281712]/15">
+            <div className="relative z-20 flex flex-wrap items-center justify-between gap-2 pt-3 px-1 text-[11px] font-pixel text-[#173C64]/70 border-t border-[#173C64]/20">
               <span>SPECIMEN: DENSE UI/UX & PRODUCT DESIGN VOCABULARY</span>
               <span className="flex items-center gap-1.5">
                 <span>{hasFabricContact ? 'BEAD STRINGS: ACTIVE CONTACT' : 'RESTING STATE: 100% STABLE'}</span>
@@ -788,7 +788,7 @@ export default function HangingCloth() {
                 <button
                   type="button"
                   onClick={toggleSound}
-                  className="hover:text-[#281712] underline cursor-pointer"
+                  className="hover:text-[#173C64] underline cursor-pointer"
                 >
                   AUDIO: {soundOn ? 'BEADS ACTIVE' : 'MUTED'}
                 </button>

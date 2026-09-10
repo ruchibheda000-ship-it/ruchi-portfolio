@@ -43,9 +43,9 @@ const projects = [
 
 export default function Work() {
   return (
-    <div className="min-h-screen bg-[#4f778f] text-[#281712] relative overflow-hidden font-display flex flex-col justify-between">
-      {/* Background Locker Accents */}
-      <div className="absolute inset-0 pointer-events-none opacity-35 bg-locker" aria-hidden="true"></div>
+    <div className="min-h-screen bg-[#0e2640] text-[#173C64] relative overflow-hidden font-display flex flex-col justify-between">
+      {/* Background Locker / Editorial Accents */}
+      <div className="absolute inset-0 pointer-events-none opacity-40 bg-locker" aria-hidden="true"></div>
 
       {/* Navigation */}
       <div className="relative z-20">
@@ -60,25 +60,25 @@ export default function Work() {
           <div className="rounded-sm bg-cork p-4 sm:p-8 overflow-hidden shadow-inner border border-[#804e22]">
             
             {/* Header Specimen Paper */}
-            <div className="relative mb-8 bg-[#f4ede1] text-[#281712] shadow-md p-4 sm:p-6 rounded-xs rotate-[-0.5deg] border-[1.5px] border-[#4b73b5] flex flex-wrap items-center justify-between gap-4">
+            <div className="relative mb-8 bg-[#FFFED8] bg-notebook-grid text-[#173C64] shadow-md p-4 sm:p-6 rounded-xs rotate-[-0.5deg] border-2 border-[#173C64] flex flex-wrap items-center justify-between gap-4">
               <div className="absolute -top-3 left-6 push-pin" aria-hidden="true"></div>
               <div className="absolute -top-3 right-6 push-pin" aria-hidden="true"></div>
 
               <div>
                 <div className="flex items-center gap-2 mb-1">
-                  <span className="border border-[#281712] rounded-full px-2.5 py-0.5 font-display font-bold text-[10px] uppercase tracking-wider bg-[#281712] text-[#f4ede1]">
+                  <span className="border border-[#173C64] rounded-full px-2.5 py-0.5 font-display font-bold text-[10px] uppercase tracking-wider bg-[#173C64] text-[#FFFED8]">
                     Archive 01
                   </span>
-                  <span className="font-pixel text-xs text-[#4b73b5]">✦ SELECTED WORK</span>
+                  <span className="font-pixel text-xs text-[#173C64]">✦ SELECTED WORK</span>
                 </div>
-                <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#281712]">
+                <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#173C64]">
                   Design & Visual Projects
                 </h1>
               </div>
 
               <div className="flex items-center gap-2">
-                <PixelSparkle size={20} className="text-[#281712]" />
-                <span className="font-pixel text-xs text-[#281712] bg-[#e6ddca] px-3 py-1 rounded border border-[#281712]/30">
+                <PixelSparkle size={20} className="text-[#173C64]" />
+                <span className="font-pixel text-xs text-[#173C64] bg-[#FFFED8] px-3 py-1 rounded border border-[#173C64]/40">
                   4 Items Pinned
                 </span>
               </div>
@@ -89,7 +89,7 @@ export default function Work() {
               {projects.map((item, idx) => (
                 <div
                   key={item.id}
-                  className={`relative bg-[#f4ede1] text-[#281712] p-5 sm:p-6 rounded-xs shadow-lg border-[1.5px] border-[#4b73b5] transition-all hover:-translate-y-1 hover:shadow-xl ${
+                  className={`relative bg-[#FFFED8] bg-notebook-grid text-[#173C64] p-5 sm:p-6 rounded-xs shadow-lg border-2 border-[#173C64] transition-all hover:-translate-y-1 hover:shadow-xl ${
                     idx % 2 === 0 ? 'rotate-[-0.8deg]' : 'rotate-[0.8deg]'
                   }`}
                 >
@@ -98,30 +98,30 @@ export default function Work() {
                   
                   {/* Top metadata pill */}
                   <div className="flex items-center justify-between gap-2 mb-3 pt-1">
-                    <span className="border border-[#281712] rounded-full px-3 py-0.5 text-[11px] font-bold tracking-tight bg-white/60">
+                    <span className="border border-[#173C64] rounded-full px-3 py-0.5 text-[11px] font-bold tracking-tight bg-[#FFFED8] text-[#173C64]">
                       {item.category}
                     </span>
-                    <span className="font-pixel text-[11px] text-[#4b73b5] font-semibold">
+                    <span className="font-pixel text-[11px] text-[#173C64] font-semibold">
                       {item.year}
                     </span>
                   </div>
 
                   {/* Project Title */}
-                  <h3 className="text-xl sm:text-2xl font-extrabold tracking-tight text-[#281712] mb-2">
+                  <h3 className="text-xl sm:text-2xl font-extrabold tracking-tight text-[#173C64] mb-2">
                     {item.title}
                   </h3>
 
                   {/* Description */}
-                  <p className="text-xs sm:text-sm text-[#281712]/80 leading-relaxed mb-4">
+                  <p className="text-xs sm:text-sm text-[#173C64]/85 leading-relaxed mb-4">
                     {item.description}
                   </p>
 
                   {/* Tags */}
-                  <div className="flex flex-wrap gap-1.5 pt-2 border-t border-[#281712]/15">
+                  <div className="flex flex-wrap gap-1.5 pt-2 border-t border-[#173C64]/20">
                     {item.tags.map((t) => (
                       <span
                         key={t}
-                        className="font-pixel text-[10px] text-[#281712] bg-[#eae2d0] px-2 py-0.5 rounded border border-[#281712]/25"
+                        className="font-pixel text-[10px] text-[#173C64] bg-[#FFFED8] px-2 py-0.5 rounded border border-[#173C64]/30"
                       >
                         #{t}
                       </span>
@@ -140,7 +140,7 @@ export default function Work() {
       <footer className="relative z-20 w-full py-4 text-center">
         <Link
           to="/"
-          className="font-pixel text-xs text-[#f4ede1] hover:underline"
+          className="font-pixel text-xs text-[#FFFED8] hover:underline"
         >
           ← Return to Main Poster
         </Link>

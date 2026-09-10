@@ -3,7 +3,7 @@ import React from 'react'
 export default function PortfolioWordmark({ className = "" }) {
   return (
     <div
-      className={`relative inline-flex items-baseline justify-center select-none text-[#281712] ${className}`}
+      className={`relative inline-flex items-baseline justify-center select-none text-[#173C64] ${className}`}
     >
       {/* Cursive Sweeping 'P' */}
       <span

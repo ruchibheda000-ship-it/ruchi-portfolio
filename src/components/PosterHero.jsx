@@ -18,41 +18,41 @@ export default function PosterHero() {
           {/* Subtle note/tape on bottom-right of cork */}
           <div className="absolute -bottom-1 right-8 w-14 h-8 bg-[#ffffeedd] border border-stone-300 shadow-xs rotate-[8deg] z-10 hidden sm:block" aria-hidden="true"></div>
 
-          {/* MAIN FOLDED PAPER POSTER */}
-          <div className="relative mx-auto w-full max-w-4xl bg-[#f4ede1] text-[#281712] shadow-2xl rounded-xs rotate-[-0.8deg] transition-transform hover:rotate-0 duration-500 paper-crease p-3 sm:p-6 md:p-8">
+          {/* MAIN FOLDED PAPER POSTER (Cream #FFFED8 with subtle editorial grid) */}
+          <div className="relative mx-auto w-full max-w-4xl bg-[#FFFED8] bg-notebook-grid text-[#173C64] shadow-2xl rounded-xs rotate-[-0.8deg] transition-transform hover:rotate-0 duration-500 paper-crease p-3 sm:p-6 md:p-8">
             
             {/* Push Pins at corners */}
             <div className="absolute -top-2 left-6 push-pin z-30" aria-hidden="true"></div>
             <div className="absolute -top-2 right-6 push-pin z-30" aria-hidden="true"></div>
 
-            {/* BLUE INSET BORDER */}
-            <div className="relative border-[1.5px] border-[#4b73b5] rounded-xs px-4 py-6 sm:px-8 sm:py-10 min-h-[460px] sm:min-h-[540px] flex flex-col justify-between">
+            {/* BOLD EDITORIAL INSET BORDER (Primary Blue #173C64) */}
+            <div className="relative border-2 border-[#173C64] rounded-xs px-4 py-6 sm:px-8 sm:py-10 min-h-[460px] sm:min-h-[540px] flex flex-col justify-between">
               
               {/* TOP ROW */}
               <div className="flex flex-wrap items-center justify-between gap-3 relative z-10">
                 {/* GraphicDesign Pill */}
-                <div className="border-[1.5px] border-[#281712] rounded-full px-3.5 py-0.5 bg-[#f4ede1]/80 backdrop-blur-xs shadow-2xs">
-                  <span className="font-display font-extrabold text-[11px] sm:text-xs tracking-tight text-[#281712]">
+                <div className="border-[1.5px] border-[#173C64] rounded-full px-3.5 py-0.5 bg-[#FFFED8] shadow-2xs">
+                  <span className="font-display font-extrabold text-[11px] sm:text-xs tracking-tight text-[#173C64]">
                     GraphicDesign
                   </span>
                 </div>
 
                 {/* Center Handle / Moniker */}
-                <div className="font-display font-extrabold text-xs sm:text-sm tracking-wider text-[#281712] uppercase">
+                <div className="font-display font-extrabold text-xs sm:text-sm tracking-wider text-[#173C64] uppercase">
                   ruchi.design
                 </div>
 
                 {/* Packaging Design Text */}
-                <div className="font-display font-bold text-[11px] sm:text-xs tracking-tight text-[#281712]">
+                <div className="font-display font-bold text-[11px] sm:text-xs tracking-tight text-[#173C64]">
                   packaging Design
                 </div>
               </div>
 
               {/* TOP SPARKLES */}
-              <div className="absolute top-16 left-12 sm:left-24 text-[#281712] animate-pulse">
+              <div className="absolute top-16 left-12 sm:left-24 text-[#173C64] animate-pulse">
                 <PixelSparkle size={24} />
               </div>
-              <div className="absolute top-20 right-14 sm:right-32 text-[#281712] opacity-80">
+              <div className="absolute top-20 right-14 sm:right-32 text-[#173C64] opacity-80">
                 <PixelSparkle size={18} />
               </div>
 
@@ -62,10 +62,10 @@ export default function PosterHero() {
               </div>
 
               {/* FLOATING SPARKLES AROUND HERO */}
-              <div className="absolute bottom-24 left-10 sm:left-20 text-[#281712]">
+              <div className="absolute bottom-24 left-10 sm:left-20 text-[#173C64]">
                 <PixelSparkle size={26} />
               </div>
-              <div className="absolute bottom-28 right-44 text-[#281712] hidden md:block">
+              <div className="absolute bottom-28 right-44 text-[#173C64] hidden md:block">
                 <PixelSparkle size={16} />
               </div>
 
@@ -73,15 +73,15 @@ export default function PosterHero() {
               <div className="relative z-10 flex flex-col sm:flex-row items-center justify-between gap-6 pt-4">
                 
                 {/* Visual Communication Design Pill */}
-                <div className="border-[1.5px] border-[#281712] rounded-full px-5 py-1.5 bg-[#f4ede1] shadow-2xs">
-                  <span className="font-display font-bold text-xs sm:text-sm tracking-wide text-[#281712]">
+                <div className="border-[1.5px] border-[#173C64] rounded-full px-5 py-1.5 bg-[#FFFED8] shadow-2xs">
+                  <span className="font-display font-bold text-xs sm:text-sm tracking-wide text-[#173C64]">
                     Visual communication Design
                   </span>
                 </div>
 
                 {/* Right: Interactive Pixel Folder */}
                 <div className="flex items-center gap-3">
-                  <div className="text-[#281712] opacity-75 hidden sm:block">
+                  <div className="text-[#173C64] opacity-80 hidden sm:block">
                     <PixelSparkle size={14} />
                   </div>
                   <PixelFolder to="/work" />

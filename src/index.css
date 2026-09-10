@@ -5,6 +5,8 @@
   --font-pixel: "Pixelify Sans", "Silkscreen", monospace;
   --font-display: "Syne", "Space Grotesk", sans-serif;
   --font-body: "Space Grotesk", sans-serif;
+  --color-primary-blue: #173C64;
+  --color-primary-cream: #FFFED8;
 }
 
 /* Custom Utilities for Retro Graphic Design Poster aesthetic */
@@ -20,6 +22,23 @@
   font-family: var(--font-display);
 }
 
+/* Editorial Graph Paper Grid Texture (Cream #FFFED8 with subtle Blue #173C64 rules) */
+.bg-notebook-grid {
+  background-color: #FFFED8;
+  background-image:
+    linear-gradient(rgba(23, 60, 100, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(23, 60, 100, 0.08) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+
+/* Deep Editorial Canvas Surround */
+.bg-editorial-surround {
+  background-color: #0e2640;
+  background-image:
+    radial-gradient(rgba(255, 254, 216, 0.07) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
 /* Realistic Cork Texture */
 .bg-cork {
   background-color: #ba8148;
@@ -33,10 +52,10 @@
 
 /* Vintage Blue Locker Texture */
 .bg-locker {
-  background-color: #557d94;
+  background-color: #173c64;
   background-image:
-    linear-gradient(90deg, rgba(0,0,0,0.12) 1px, transparent 1px),
-    linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px);
+    linear-gradient(90deg, rgba(0,0,0,0.2) 1px, transparent 1px),
+    linear-gradient(rgba(255,254,216,0.05) 1px, transparent 1px);
   background-size: 280px 100%, 100% 20px;
 }
 
@@ -54,9 +73,9 @@
   transform: translateX(-50%);
   background: linear-gradient(
     90deg,
-    rgba(0, 0, 0, 0.12) 0%,
-    rgba(255, 255, 255, 0.35) 50%,
-    rgba(0, 0, 0, 0.08) 100%
+    rgba(23, 60, 100, 0.12) 0%,
+    rgba(255, 254, 216, 0.45) 50%,
+    rgba(23, 60, 100, 0.08) 100%
   );
   pointer-events: none;
   z-index: 20;
@@ -64,21 +83,22 @@
 
 /* Washi / Masking Tape Style */
 .tape-strip {
-  background: rgba(245, 241, 219, 0.82);
+  background: rgba(255, 254, 216, 0.85);
   backdrop-filter: blur(1px);
-  border: 1px dashed rgba(212, 198, 160, 0.6);
+  border: 1px dashed rgba(23, 60, 100, 0.35);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
 }
 
 /* Retro Pill Badge */
 .retro-pill {
-  border: 1.5px solid #281712;
+  border: 1.5px solid #173C64;
   border-radius: 9999px;
   padding: 0.2rem 0.85rem;
   font-family: var(--font-display);
   font-weight: 700;
   letter-spacing: -0.02em;
-  color: #281712;
+  color: #173C64;
+  background-color: #FFFED8;
 }
 
 /* Pushpin effect */
@@ -86,6 +106,7 @@
   width: 14px;
   height: 14px;
   border-radius: 50%;
-  background: radial-gradient(circle at 35% 35%, #e15554, #8b1e1e);
-  box-shadow: 0 3px 6px rgba(0,0,0,0.35), inset 0 1px 2px rgba(255,255,255,0.6);
+  background: radial-gradient(circle at 35% 35%, #1d4d80, #0d2238);
+  box-shadow: 0 3px 6px rgba(0,0,0,0.35), inset 0 1px 2px rgba(255,254,216,0.6);
+  border: 1px solid rgba(255,254,216,0.3);
 }

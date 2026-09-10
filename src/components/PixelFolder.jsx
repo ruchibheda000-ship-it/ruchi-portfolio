@@ -19,19 +19,19 @@ export default function PixelFolder({ to = "/work", className = "" }) {
           aria-hidden="true"
           focusable="false"
         >
-          {/* Folder Tab (dark brown) */}
-          <rect x="2" y="4" width="22" height="8" rx="2" fill="#281712" />
+          {/* Folder Tab (Primary Blue) */}
+          <rect x="2" y="4" width="22" height="8" rx="2" fill="#173C64" />
           
-          {/* Folder Body (periwinkle blue) */}
-          <rect x="2" y="10" width="58" height="34" rx="3" fill="#9db5e4" />
+          {/* Folder Body (Primary Blue) */}
+          <rect x="2" y="10" width="58" height="34" rx="3" fill="#173C64" />
           
-          {/* Folder Inset Highlight */}
-          <rect x="4" y="12" width="54" height="2" fill="#b9cbf0" />
-          <rect x="4" y="14" width="2" height="28" fill="#b9cbf0" />
+          {/* Folder Inset Highlight (Primary Cream) */}
+          <rect x="4" y="12" width="54" height="2" fill="#FFFED8" />
+          <rect x="4" y="14" width="2" height="28" fill="#FFFED8" />
           
           {/* Folder Bottom Shadow Line */}
-          <rect x="4" y="42" width="54" height="2" fill="#7a96cb" />
-          <rect x="58" y="12" width="2" height="32" fill="#7a96cb" />
+          <rect x="4" y="42" width="54" height="2" fill="#0d233a" />
+          <rect x="58" y="12" width="2" height="32" fill="#0d233a" />
         </svg>
 
         {/* Pixel Cursor Pointer Overlay */}
@@ -46,22 +46,22 @@ export default function PixelFolder({ to = "/work", className = "" }) {
             aria-hidden="true"
             focusable="false"
           >
-            {/* Black Outline */}
+            {/* Outline */}
             <path
               d="M0 0V14L4 10.5L6.5 15.5L8.5 14.5L6 9.5H11.5L0 0Z"
-              fill="#281712"
+              fill="#173C64"
             />
-            {/* White Interior */}
+            {/* Interior */}
             <path
               d="M1 1.5V12L4 9.5L6.5 14.5L7.5 14L5.2 9H10L1 1.5Z"
-              fill="#ffffff"
+              fill="#FFFED8"
             />
           </svg>
         </div>
       </div>
 
       <div className="text-center mt-1">
-        <span className="font-pixel text-[11px] tracking-wider text-[#281712] font-semibold bg-[#eae3d2] px-2 py-0.5 rounded border border-[#281712]/40 group-hover:bg-[#281712] group-hover:text-white transition-colors">
+        <span className="font-pixel text-[11px] tracking-wider text-[#173C64] font-semibold bg-[#FFFED8] px-2 py-0.5 rounded border border-[#173C64] group-hover:bg-[#173C64] group-hover:text-[#FFFED8] transition-colors">
           OPEN WORK
         </span>
       </div>
