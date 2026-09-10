@@ -85,125 +85,170 @@ export default function Home() {
       <Nav />
 
       {/* ========================================================================= */}
-      {/* 1. HERO SECTION — OVERSIZED EDITORIAL TYPE & DESIGNER INTRODUCTION       */}
-      {/* (Inspired by Jackie Zhang's bold headline hierarchy & playful stickers)   */}
+      {/* HERO AREA — RECREATED JACKIE ZHANG BLUEPRINT COMPOSITION                  */}
+      {/* Oversized typography, vertical letter stack, repeated typography, & fabric*/}
       {/* ========================================================================= */}
-      <section className="relative w-full max-w-6xl mx-auto px-4 sm:px-6 pt-10 sm:pt-16 pb-12 sm:pb-20">
+      <section className="relative w-full max-w-7xl mx-auto px-4 sm:px-8 lg:px-16 pt-6 sm:pt-10 pb-12 sm:pb-20">
         
-        {/* Top Kicker / Metadata Bar */}
-        <div className="flex flex-wrap items-center justify-between gap-3 mb-6 sm:mb-8 pb-3 border-b border-[#173C64]/20">
-          <div className="flex items-center gap-2">
+        {/* Top Kicker & Metadata Bar */}
+        <div className="flex flex-wrap items-center justify-between gap-3 mb-8 sm:mb-12 pb-4 border-b border-[#173C64]/20">
+          <div className="flex items-center gap-2.5">
             <span className="font-mono text-xs uppercase tracking-widest text-[#173C64] font-bold bg-[#FFFED8] px-2.5 py-0.5 border border-[#173C64] rounded-full shadow-2xs">
               PORTFOLIO EDITION 2026
             </span>
-            <span className="text-xs font-mono text-[#173C64]/70 hidden sm:inline">
-              // VISUAL COMMUNICATION & DIGITAL EXPERIMENTS
+            <span className="text-xs font-mono text-[#173C64]/70 hidden md:inline">
+              // UI/UX DESIGNER & DESIGN ENTREPRENEUR
             </span>
           </div>
 
-          <div className="flex items-center gap-2 text-xs font-mono text-[#173C64]/80">
+          <div className="flex items-center gap-3 text-xs font-mono text-[#173C64]/80">
             <PixelSparkle size={14} />
             <span>MUMBAI, INDIA</span>
             <span className="opacity-40">•</span>
             <span>GMT +5:30</span>
-          </div>
-        </div>
-
-        {/* OVERSIZED EDITORIAL HEADLINE */}
-        <div className="relative z-10 max-w-5xl">
-          <h1 className="font-serif text-4xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-bold tracking-tight text-[#173C64] leading-[1.08] mb-6 sm:mb-8">
-            Visual communication{' '}
-            <span className="block sm:inline font-normal italic font-serif opacity-95">
-              that feels
-            </span>{' '}
-            <span className="relative inline-block font-hand font-normal text-[#173C64] text-5xl sm:text-7xl md:text-8xl lg:text-[6.2rem] transform -rotate-1 px-1 underline decoration-[#173C64]/40 decoration-wavy decoration-2">
-              tactile
-            </span>{' '}
-            <span className="font-serif font-bold tracking-tight">
-              & unforgettable.
-            </span>
-          </h1>
-
-          {/* Designer Introduction Copy */}
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-6 sm:gap-10 items-start pt-2">
-            <p className="md:col-span-8 text-base sm:text-xl text-[#173C64]/90 font-normal leading-relaxed">
-              Hey there, I’m <strong className="font-bold font-display text-[#173C64]">Ruchi Bheda</strong> — a multidisciplinary visual designer bridging the tactile warmth of print craft, expressive typography, and packaging die-cuts with experimental digital interactions.
-            </p>
-
-            <div className="md:col-span-4 flex flex-col gap-3">
-              <a
-                href="#fabric-specimen"
-                className="inline-flex items-center justify-between gap-3 px-5 py-3 rounded-full bg-[#173C64] text-[#FFFED8] font-display font-bold text-xs sm:text-sm tracking-wide shadow-md hover:bg-[#0e2640] hover:-translate-y-0.5 transition-all duration-200"
-              >
-                <span>Interact with Typographic Fabric</span>
-                <span className="text-base font-mono">↓</span>
-              </a>
-
-              <Link
-                to="/about"
-                className="inline-flex items-center justify-between gap-3 px-5 py-2.5 rounded-full bg-[#FFFED8] text-[#173C64] font-display font-semibold text-xs sm:text-sm border border-[#173C64] shadow-2xs hover:bg-[#173C64]/5 hover:-translate-y-0.5 transition-all duration-200"
-              >
-                <span>Read Bio & Manifesto</span>
-                <span className="text-base font-mono">→</span>
-              </Link>
-            </div>
-          </div>
-        </div>
-
-        {/* PLAYFUL FLOATING STICKERS / TAGS (Jackie Zhang signature interaction) */}
-        <div className="mt-8 sm:mt-12 pt-6 border-t border-[#173C64]/15 flex flex-wrap items-center gap-2 sm:gap-3">
-          <span className="text-xs font-mono uppercase text-[#173C64]/70 mr-2 flex items-center gap-1.5">
-            <PixelSparkle size={12} />
-            <span>CORE FOCUS:</span>
-          </span>
-          {heroStickers.map((sticker, idx) => (
-            <div
-              key={idx}
-              className={`inline-block text-xs font-display font-bold px-3.5 py-1.5 rounded-full border-1.5 border-[#173C64] ${sticker.bg} ${sticker.text} ${sticker.rotate} shadow-xs hover:scale-105 hover:rotate-0 transition-transform duration-200 cursor-default select-none`}
-            >
-              {sticker.label}
-            </div>
-          ))}
-        </div>
-
-      </section>
-
-      {/* ========================================================================= */}
-      {/* 2. CENTERPIECE INTERACTIVE SPECIMEN: TYPOGRAPHIC FABRIC                  */}
-      {/* 🚨 MANDATORY: Kept 100% intact with physical canvas and audio engine 🚨   */}
-      {/* ========================================================================= */}
-      <section
-        id="fabric-specimen"
-        className="relative w-full max-w-6xl mx-auto px-4 sm:px-6 my-4 sm:my-10"
-      >
-        {/* Specimen Header & Status Bar */}
-        <div className="flex flex-wrap items-center justify-between gap-3 mb-3 px-1">
-          <div className="flex items-center gap-2">
-            <span className="border border-[#173C64] rounded-full px-2.5 py-0.5 font-mono font-bold text-[11px] uppercase tracking-wider bg-[#173C64] text-[#FFFED8]">
-              SPECIMEN 01
-            </span>
-            <span className="font-display font-extrabold text-sm sm:text-base text-[#173C64] tracking-tight">
-              Interactive Typographic Fabric
-            </span>
-          </div>
-
-          <div className="flex items-center gap-2 font-mono text-xs text-[#173C64]/80">
-            <span className="hidden sm:inline">PHYSICAL BEADS SIMULATION</span>
             <span className="opacity-40">•</span>
-            <span className="underline decoration-dotted">WEB AUDIO CHIMES</span>
+            <span className="text-[#173C64] font-semibold">AVAILABLE</span>
           </div>
         </div>
 
-        {/* The Exact Typographic Fabric Component (Untouched physics & sound) */}
-        <div className="w-full">
-          <HangingCloth />
+        {/* HERO MAIN GRID: Vertical Typography Pillar on Left + Massive Statement on Right */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start mb-10 sm:mb-14">
+          
+          {/* LEFT PILLAR: Vertically Arranged Typography & Repeated Typography (Jackie Zhang Blueprint) */}
+          <div className="hidden lg:flex lg:col-span-2 flex-col justify-between py-2 border-r border-[#173C64]/20 pr-6 min-h-[380px]">
+            {/* Vertically arranged letters: UI/UX DESIGNER */}
+            <div className="flex flex-col gap-1 items-center font-mono text-xs font-bold tracking-widest text-[#173C64]">
+              {['U', 'I', '/', 'U', 'X'].map((char, i) => (
+                <span key={`ui-${i}`} className="leading-tight select-none opacity-90">{char}</span>
+              ))}
+              <span className="w-1.5 h-1.5 rounded-full bg-[#173C64] my-2"></span>
+              {['D', 'E', 'S', 'I', 'G', 'N', 'E', 'R'].map((char, i) => (
+                <span key={`des-${i}`} className="leading-tight select-none opacity-90">{char}</span>
+              ))}
+            </div>
+
+            {/* Repeated Typography Motif: BHEDA repeated vertically (Echoing Jackie Zhang's repeated stamps) */}
+            <div className="flex flex-col items-center gap-2 pt-6 mt-6 border-t border-[#173C64]/15">
+              {['BHEDA', 'BHEDA', 'BHEDA', 'BHEDA'].map((txt, i) => (
+                <span
+                  key={`repeat-${i}`}
+                  className="font-display font-extrabold text-[11px] tracking-[0.25em] text-[#173C64]/40 select-none hover:text-[#173C64] transition-colors"
+                >
+                  {txt}
+                </span>
+              ))}
+            </div>
+
+            {/* Vertical Sub-Label */}
+            <div className="text-[10px] font-mono text-[#173C64]/50 tracking-widest uppercase text-center pt-4">
+              STUDIO 2026
+            </div>
+          </div>
+
+          {/* MAIN COLUMN: Oversized Typographic Statement & Identity */}
+          <div className="lg:col-span-10 flex flex-col justify-between">
+            
+            {/* Top Identity Tag */}
+            <div className="flex items-center gap-2 mb-4">
+              <span className="font-mono text-xs uppercase tracking-widest text-[#173C64]/70">
+                ✦ RUCHI BHEDA — DESIGN STATEMENT
+              </span>
+            </div>
+
+            {/* OVERSIZED TYPOGRAPHIC STATEMENT (Jackie Zhang Blueprint: "I find the why's before the what's.") */}
+            <h1 className="flex flex-col gap-1 sm:gap-2 leading-[1.04] text-[#173C64]">
+              <span className="font-display font-extrabold text-4xl sm:text-6xl md:text-7xl lg:text-[5.2rem] xl:text-[6rem] tracking-tight">
+                I find the
+              </span>
+
+              <div className="flex items-baseline gap-3 sm:gap-6 flex-wrap">
+                <span className="font-hand font-normal text-6xl sm:text-8xl md:text-9xl lg:text-[7.2rem] xl:text-[8rem] text-[#173C64] leading-none transform -rotate-2 underline decoration-[#173C64]/30 decoration-wavy decoration-2 sm:decoration-4 select-none">
+                  why's
+                </span>
+                <span className="font-display font-extrabold text-4xl sm:text-6xl md:text-7xl lg:text-[5.2rem] xl:text-[6rem] tracking-tight">
+                  before the
+                </span>
+              </div>
+
+              <span className="font-display font-extrabold text-4xl sm:text-6xl md:text-7xl lg:text-[5.2rem] xl:text-[6rem] tracking-tight">
+                what's.
+              </span>
+            </h1>
+
+            {/* Explanatory Portfolio Copy & Quick Jump */}
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-6 sm:gap-8 items-start pt-8 sm:pt-10 mt-6 border-t border-[#173C64]/15">
+              <p className="md:col-span-8 text-base sm:text-lg md:text-xl text-[#173C64]/90 font-normal leading-relaxed">
+                I am a UI/UX designer and design entrepreneur focused on discovering the core user needs, behavioral mental models, and intuitive systems that precede visual execution.
+              </p>
+
+              <div className="md:col-span-4 flex flex-col gap-2.5">
+                <a
+                  href="#fabric-specimen"
+                  className="inline-flex items-center justify-between gap-3 px-5 py-3 rounded-full bg-[#173C64] text-[#FFFED8] font-display font-bold text-xs sm:text-sm tracking-wide shadow-md hover:bg-[#0e2640] hover:-translate-y-0.5 transition-all duration-200"
+                >
+                  <span>Interact with Fabric</span>
+                  <span className="text-base font-mono">↓</span>
+                </a>
+                <Link
+                  to="/about"
+                  className="inline-flex items-center justify-between gap-3 px-5 py-2.5 rounded-full bg-[#FFFED8] text-[#173C64] font-display font-semibold text-xs sm:text-sm border border-[#173C64] shadow-2xs hover:bg-[#173C64]/5 hover:-translate-y-0.5 transition-all duration-200"
+                >
+                  <span>About & Process</span>
+                  <span className="text-base font-mono">→</span>
+                </Link>
+              </div>
+            </div>
+
+            {/* Mobile Vertical Indicator (When vertical pillar is hidden on small screens) */}
+            <div className="flex lg:hidden flex-wrap items-center gap-2 pt-4 text-xs font-mono text-[#173C64]/70">
+              <span className="font-bold">✦ UI/UX DESIGNER</span>
+              <span>•</span>
+              <span className="font-bold">DESIGN ENTREPRENEUR</span>
+              <span>•</span>
+              <span>RUCHI BHEDA</span>
+            </div>
+
+          </div>
+
         </div>
 
-        {/* Specimen Caption & Interaction Instructions */}
-        <div className="mt-3 px-2 flex flex-wrap items-center justify-between text-xs font-mono text-[#173C64]/80 gap-2">
-          <span>✦ Move cursor across words to bend bead strings and scatter fairy-dust glass chimes</span>
-          <span className="font-semibold text-[#173C64]">TOUCH & MOUSE ENABLED // PROCEDURAL AUDIO</span>
+        {/* ===================================================================== */}
+        {/* COEXISTING INTERACTIVE TYPOGRAPHIC FABRIC (INTEGRATED INTO HERO AREA) */}
+        {/* 🚨 MANDATORY: Kept 100% intact with physical canvas and audio engine 🚨*/}
+        {/* ===================================================================== */}
+        <div id="fabric-specimen" className="relative w-full mt-6 sm:mt-10 pt-6 border-t border-[#173C64]/20">
+          
+          {/* Specimen Header & Status Bar */}
+          <div className="flex flex-wrap items-center justify-between gap-3 mb-3 px-1">
+            <div className="flex items-center gap-2">
+              <span className="border border-[#173C64] rounded-full px-2.5 py-0.5 font-mono font-bold text-[11px] uppercase tracking-wider bg-[#173C64] text-[#FFFED8]">
+                SPECIMEN 01
+              </span>
+              <span className="font-display font-extrabold text-sm sm:text-base text-[#173C64] tracking-tight">
+                Interactive Typographic Fabric
+              </span>
+            </div>
+
+            <div className="flex items-center gap-2 font-mono text-xs text-[#173C64]/80">
+              <span className="hidden sm:inline">PHYSICAL BEADS SIMULATION</span>
+              <span className="opacity-40">•</span>
+              <span className="underline decoration-dotted">WEB AUDIO CHIMES</span>
+            </div>
+          </div>
+
+          {/* The Exact Typographic Fabric Component (Untouched physics & sound) */}
+          <div className="w-full">
+            <HangingCloth />
+          </div>
+
+          {/* Specimen Caption & Interaction Instructions */}
+          <div className="mt-3 px-2 flex flex-wrap items-center justify-between text-xs font-mono text-[#173C64]/80 gap-2">
+            <span>✦ Move cursor across words to bend bead strings and scatter fairy-dust glass chimes</span>
+            <span className="font-semibold text-[#173C64]">TOUCH & MOUSE ENABLED // PROCEDURAL AUDIO</span>
+          </div>
+
         </div>
+
       </section>
 
       {/* ========================================================================= */}
