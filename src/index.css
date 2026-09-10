@@ -1,15 +1,30 @@
 @import "tailwindcss";
 
 @theme {
+  --font-serif: "Averia Serif Libre", Georgia, serif;
+  --font-hand: "Gochi Hand", cursive;
   --font-script: "Pinyon Script", "Alex Brush", cursive;
   --font-pixel: "Pixelify Sans", "Silkscreen", monospace;
+  --font-mono: "JetBrains Mono", monospace;
   --font-display: "Syne", "Space Grotesk", sans-serif;
-  --font-body: "Space Grotesk", sans-serif;
+  --font-body: "DM Sans", "Space Grotesk", sans-serif;
   --color-primary-blue: #173C64;
   --color-primary-cream: #FFFED8;
 }
 
-/* Custom Utilities for Retro Graphic Design Poster aesthetic */
+/* Custom Utilities for Retro Graphic Design Poster & Editorial aesthetic */
+.font-serif {
+  font-family: var(--font-serif);
+}
+
+.font-hand {
+  font-family: var(--font-hand);
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+}
+
 .font-script {
   font-family: var(--font-script);
 }
