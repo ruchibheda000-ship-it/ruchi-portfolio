@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import Nav from '../components/Nav'
 import HangingCloth from '../components/HangingCloth'
-import PolaroidCamera from '../components/PolaroidCamera'
+import TransparentVideo from '../components/TransparentVideo'
 
 export default function Home() {
   // Live Mumbai IST Time
@@ -519,16 +519,16 @@ export default function Home() {
           </div>
 
           {/* --------------------------------------------------------------------- */}
-          {/* RIGHT SIDE: STYLIZED POLAROID CAMERA WITH LIVING EMERGING PHOTO STRIP */}
-          {/* Inspired by reference image: Chunky camera + video photo ejecting     */}
+          {/* RIGHT SIDE: TRANSPARENT VIDEO (Ruchi About Me Portfolio)             */}
+          {/* Real-time white background removal; no extra camera container         */}
           {/* --------------------------------------------------------------------- */}
           <div className="lg:col-span-5 relative flex justify-center items-center py-4">
             
             {/* Background Soft Accent Glow */}
             <div className="absolute inset-0 bg-radial from-[#0B3272]/30 via-transparent to-transparent blur-3xl pointer-events-none"></div>
 
-            {/* Polaroid Camera Component */}
-            <PolaroidCamera isPrinting={aboutVisible} />
+            {/* Transparent Video Component */}
+            <TransparentVideo src="/ruchi-about-me.mp4" />
 
           </div>
 

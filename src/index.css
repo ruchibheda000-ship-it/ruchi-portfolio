@@ -200,36 +200,10 @@ html {
 
 @media (prefers-reduced-motion: reduce) {
   .animate-gentle-open-top,
-  .animate-gentle-open-bottom,
-  .animate-polaroid-eject {
+  .animate-gentle-open-bottom {
     animation: none !important;
     transform: none !important;
   }
-}
-
-/* ======================================================================== */
-/* POLAROID PHOTO EJECTION ANIMATION                                        */
-/* Smooth mechanical print/slide downward out of the camera slot            */
-/* ======================================================================== */
-
-@keyframes polaroidEject {
-  0% {
-    transform: translateY(-260px);
-    opacity: 0.6;
-  }
-  15% {
-    transform: translateY(-230px);
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(0px);
-    opacity: 1;
-  }
-}
-
-.animate-polaroid-eject {
-  animation: polaroidEject 1.8s cubic-bezier(0.2, 0.8, 0.25, 1) 0.3s forwards;
-  will-change: transform, opacity;
 }
 
 /* Notebook horizontal spine fold shadow & page depth */
