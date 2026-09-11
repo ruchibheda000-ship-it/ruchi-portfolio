@@ -184,42 +184,44 @@ export default function Home() {
       <Nav />
 
       {/* ========================================================================= */}
-      {/* 3. CENTRAL DIARY OBJECT                                                   */}
-      {/* Narrates story until "3 Things You Should Know About Me"                  */}
+      {/* 3. CENTRAL PHYSICAL OPEN DIARY (TWO-PAGE LANDSCAPE SPREAD)                */}
+      {/* Reference: Image 2 (Opened flat with Page 1 top, Page 2 bottom)           */}
       {/* Palette: #0B3272 Forest Blue cover, #E4BA83 Gold trim, #F6E8D2 Paper     */}
       {/* ========================================================================= */}
-      <div className="relative z-20 w-full max-w-4xl lg:max-w-5xl mx-auto px-3 sm:px-6">
+      <div className="relative z-20 w-full max-w-5xl lg:max-w-6xl mx-auto px-3 sm:px-6 my-6 sm:my-10">
         
         {/* PHYSICAL NOTEBOOK OUTER BINDING (Forest Blue #0B3272 with Gold #E4BA83 ribbon) */}
-        <div className="relative rounded-[32px] sm:rounded-[44px] bg-[#0B3272] p-2.5 sm:p-4 shadow-[0_30px_90px_-15px_rgba(0,0,0,0.85)] border-4 sm:border-[6px] border-[#082452]">
+        <div className="relative rounded-[32px] sm:rounded-[44px] bg-[#0B3272] p-2.5 sm:p-4 shadow-[0_35px_100px_-15px_rgba(0,0,0,0.85)] border-4 sm:border-[6px] border-[#082452] animate-diary-unfold">
           
-          {/* BOOKMARK RIBBON (Gold #E4BA83 silk ribbon peeking from the side) */}
-          <div className="absolute -left-3 sm:-left-5 bottom-28 z-30 pointer-events-none select-none">
-            <svg width="45" height="30" viewBox="0 0 45 30" fill="none">
-              <path d="M45 10 C30 8, 12 18, 2 28 L2 18 C12 8, 30 2, 45 4 Z" fill="#E4BA83" />
+          {/* SILK BOOKMARK RIBBON (Gold #E4BA83 silk ribbon peeking from the central fold / spine seam) */}
+          <div className="absolute -left-4 sm:-left-7 top-1/2 -translate-y-1/2 z-30 pointer-events-none select-none">
+            <svg width="55" height="34" viewBox="0 0 55 34" fill="none">
+              <path d="M55 12 C35 8, 14 20, 0 32 L0 20 C14 8, 35 2, 55 4 Z" fill="#E4BA83" />
             </svg>
           </div>
-          <div className="absolute -left-4 sm:-left-6 bottom-16 z-30 pointer-events-none select-none">
-            <svg width="60" height="40" viewBox="0 0 60 40" fill="none">
-              <path d="M60 14 C40 10, 16 26, 0 38 L0 26 C16 14, 40 4, 60 6 Z" fill="#F6E8D2" />
+          <div className="absolute -right-4 sm:-right-7 top-1/2 -translate-y-1/2 z-30 pointer-events-none select-none">
+            <svg width="55" height="34" viewBox="0 0 55 34" fill="none" className="transform scale-x-[-1]">
+              <path d="M55 12 C35 8, 14 20, 0 32 L0 20 C14 8, 35 2, 55 4 Z" fill="#E4BA83" />
             </svg>
           </div>
 
-          {/* NOTEBOOK INTERIOR PAGES (Warm Paper #F6E8D2 / #F1E3CC with subtle blue grid) */}
-          <div className="relative rounded-[24px] sm:rounded-[36px] bg-diary-grid text-[#061840] overflow-hidden shadow-inner border border-[#E8DEC8]">
+          {/* NOTEBOOK INTERIOR (Connected Two Landscape Pages) */}
+          <div className="relative rounded-[24px] sm:rounded-[36px] bg-[#F6E8D2] overflow-hidden border border-[#E8DEC8]">
             
-            {/* Top Page Margin Fold */}
-            <div className="w-full h-3 sm:h-4 bg-linear-to-b from-[#E6D9C8] to-transparent opacity-60"></div>
-
-            {/* ===================================================================== */}
-            {/* PART A: HERO SPREAD                                                   */}
-            {/* ===================================================================== */}
-            <section className="relative px-6 sm:px-12 lg:px-16 pt-6 sm:pt-10 pb-12">
+            {/* =================================================================== */}
+            {/* PAGE 1: UPPER LANDSCAPE PAGE (PORTFOLIO CONTENT & SPREAD)          */}
+            {/* Composition: Hero + Botanical Illustration + Journal + Case Studies */}
+            {/* =================================================================== */}
+            <div className="relative bg-diary-grid text-[#061840] p-6 sm:p-10 lg:p-12 page-upper-depth">
               
-              <div className="grid grid-cols-1 md:grid-cols-12 gap-6 lg:gap-8 items-center">
+              {/* Subtle top margin wash */}
+              <div className="absolute top-0 left-0 right-0 h-3 bg-linear-to-b from-[#E6D9C8] to-transparent opacity-60 pointer-events-none"></div>
+
+              {/* Upper Hero Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-12 gap-6 lg:gap-8 items-center pb-8 border-b border-[#0B3272]/20 border-dashed">
                 
                 {/* Left Column: Wordmark, Role, Core Statement, Time */}
-                <div className="md:col-span-6 lg:col-span-6 space-y-4 sm:space-y-6">
+                <div className="md:col-span-6 lg:col-span-6 space-y-4 sm:space-y-5">
                   
                   {/* Hand-drawn wordmark in Forest Blue with Path Gold dot */}
                   <div>
@@ -232,10 +234,10 @@ export default function Home() {
                   </div>
 
                   {/* Core Statement */}
-                  <div className="pt-2">
-                    <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-[3.25rem] text-[#061840] leading-[1.12] tracking-tight">
+                  <div>
+                    <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl text-[#061840] leading-[1.14] tracking-tight">
                       <span>I find the </span>
-                      <span className="font-hand font-normal text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-[#0B3272] inline-block transform -rotate-2 underline decoration-[#E4BA83] decoration-wavy decoration-2">
+                      <span className="font-hand font-normal text-4xl sm:text-5xl md:text-6xl text-[#0B3272] inline-block transform -rotate-2 underline decoration-[#E4BA83] decoration-wavy decoration-2">
                         why's
                       </span>
                       <span className="block">before the what's.</span>
@@ -243,22 +245,22 @@ export default function Home() {
                   </div>
 
                   {/* Location & Time Indicator */}
-                  <div className="pt-2 flex items-center gap-2 font-serif text-sm sm:text-base text-[#0B3272]/80">
+                  <div className="flex items-center gap-2 font-serif text-sm sm:text-base text-[#0B3272]/85">
                     <span>Mumbai</span>
                     <span>•</span>
                     <span>GMT +5:30</span>
                     {timeString && (
                       <>
                         <span>•</span>
-                        <span className="font-mono text-xs text-[#061840]/70">{timeString}</span>
+                        <span className="font-mono text-xs text-[#061840]/70 font-semibold">{timeString}</span>
                       </>
                     )}
                   </div>
 
                   {/* Stamp buttons */}
-                  <div className="pt-4 flex flex-wrap items-center gap-3">
+                  <div className="pt-2 flex flex-wrap items-center gap-3">
                     <a
-                      href="#diary-story"
+                      href="#diary-journal"
                       className="px-4 py-1.5 rounded-full border border-[#0B3272] bg-transparent text-[#0B3272] font-serif text-xs sm:text-sm hover:bg-[#0B3272] hover:text-[#F1E3CC] transition-colors"
                     >
                       Read journal ↓
@@ -274,8 +276,8 @@ export default function Home() {
                 </div>
 
                 {/* Right Column: Hand-Drawn SVG Botanical Window (in Forest Blue #0B3272 & Gold #E4BA83) */}
-                <div className="md:col-span-6 lg:col-span-6 relative flex justify-center items-center py-4">
-                  <div className="relative w-full max-w-[340px] sm:max-w-[420px]">
+                <div className="md:col-span-6 lg:col-span-6 relative flex justify-center items-center">
+                  <div className="relative w-full max-w-[340px] sm:max-w-[400px]">
                     <svg viewBox="0 0 380 340" fill="none" stroke="#0B3272" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" className="w-full h-auto select-none">
                       
                       {/* Window Header Frame */}
@@ -344,152 +346,137 @@ export default function Home() {
 
               </div>
 
-            </section>
-
-            {/* Page Divider Line */}
-            <div className="w-full border-b border-[#0B3272]/20 border-dashed my-4"></div>
-
-            {/* ===================================================================== */}
-            {/* PART B: ABOUT / MY STORY (Inside Diary)                              */}
-            {/* ===================================================================== */}
-            <section id="diary-story" className="relative px-6 sm:px-12 lg:px-16 py-8">
-              
-              <div className="max-w-3xl space-y-4">
-                <span className="font-mono text-xs uppercase tracking-widest text-[#0B3272] font-semibold">
-                  ✦ JOURNAL ENTRY // MY PERSPECTIVE
-                </span>
+              {/* Lower Page 1 Editorial Section: Journal Memo & Field Archive Split */}
+              <div className="pt-8 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
                 
-                <h2 className="font-serif text-2xl sm:text-3xl lg:text-4xl text-[#061840] font-normal leading-tight">
-                  I don’t design in isolation.<br />
-                  I design for <span className="font-hand text-3xl sm:text-4xl text-[#0B3272] underline decoration-[#E4BA83] decoration-wavy">living human ecosystems.</span>
-                </h2>
-
-                <div className="space-y-3 font-serif text-sm sm:text-base text-[#061840]/85 leading-relaxed pt-1">
-                  <p>
-                    I am not trying to be limited to just UI/UX. I want to grow into a <strong>design entrepreneur</strong> who understands products, businesses, brands, people, and technology as interconnected parts of a living whole.
-                  </p>
-                  <p>
-                    Too often in technology, teams jump straight into the <em>what</em> before thoroughly interrogating the <em>why</em>. My work starts with relentless curiosity: uncovering the underlying human motivations, emotional frictions, and mental models that determine whether a product actually sticks.
-                  </p>
-                </div>
-
-                <div className="pt-2">
-                  <Link
-                    to="/about"
-                    className="inline-flex items-center gap-2 font-serif text-xs sm:text-sm text-[#0B3272] hover:text-[#E4BA83] transition-colors"
-                  >
-                    <span>Read full background & perspective</span>
-                    <span>→</span>
-                  </Link>
-                </div>
-              </div>
-
-            </section>
-
-            {/* Page Divider Line */}
-            <div className="w-full border-b border-[#0B3272]/20 border-dashed my-4"></div>
-
-            {/* ===================================================================== */}
-            {/* PART C: MY WORK / EXPLORATION (Inside Diary)                          */}
-            {/* ===================================================================== */}
-            <section id="diary-projects" className="relative px-6 sm:px-12 lg:px-16 py-8">
-              
-              <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 mb-6">
-                <div>
-                  <span className="font-mono text-xs uppercase tracking-widest text-[#0B3272] font-semibold">
-                    ✦ FIELD ARCHIVE // CASE STUDIES
-                  </span>
-                  <h2 className="font-serif text-2xl sm:text-3xl text-[#061840] font-normal tracking-tight mt-1">
-                    Projects & Living Systems
-                  </h2>
-                </div>
-                <Link
-                  to="/work"
-                  className="inline-flex items-center gap-2 font-serif text-xs sm:text-sm text-[#0B3272] hover:text-[#E4BA83] transition-colors"
-                >
-                  <span>Explore full archive</span>
-                  <span>→</span>
-                </Link>
-              </div>
-
-              {/* Grid of Journal Project Cards */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
-                {projects.map((proj, idx) => (
-                  <Link
-                    key={proj.id}
-                    to="/work"
-                    className={`group relative p-5 sm:p-6 rounded-md bg-[#F1E3CC] border border-[#0B3272]/25 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 no-underline text-[#061840] ${idx % 2 === 0 ? 'transform -rotate-0.5' : 'transform rotate-0.5'}`}
-                  >
-                    {/* Washi Tape at corner in Path Gold #E4BA83 */}
-                    <div className="absolute -top-2.5 left-6 w-14 h-4 bg-[#E4BA83]/70 border border-[#0B3272]/20 transform -rotate-2 select-none pointer-events-none"></div>
+                {/* Left Column (5 Cols): Taped Journal Entry Clipping */}
+                <div id="diary-journal" className="lg:col-span-5 relative p-6 rounded-md bg-[#F1E3CC] border border-[#0B3272]/20 shadow-md">
+                  {/* Washi Tape in Path Gold */}
+                  <div className="absolute -top-3 left-8 w-20 h-5 bg-[#E4BA83]/80 border border-[#0B3272]/20 transform -rotate-1 select-none pointer-events-none shadow-xs"></div>
+                  
+                  <div className="pt-2">
+                    <span className="font-mono text-[11px] uppercase tracking-widest text-[#0B3272] font-semibold block mb-2">
+                      ✦ JOURNAL ENTRY // MY PERSPECTIVE
+                    </span>
+                    <h2 className="font-serif text-xl sm:text-2xl text-[#061840] font-normal leading-tight mb-3">
+                      I don’t design in isolation.<br />
+                      I design for <span className="font-hand text-2xl sm:text-3xl text-[#0B3272] underline decoration-[#E4BA83] decoration-wavy">living human ecosystems.</span>
+                    </h2>
                     
-                    {/* Top Row */}
-                    <div className="flex items-center justify-between gap-2 pt-1 mb-2">
-                      <span className="font-mono text-xs font-bold text-[#0B3272]">
-                        {proj.number}
+                    <div className="space-y-3 font-serif text-xs sm:text-sm text-[#061840]/85 leading-relaxed">
+                      <p>
+                        I am not trying to be limited to just UI/UX. I want to grow into a <strong>design entrepreneur</strong> who understands products, businesses, brands, people, and technology as interconnected parts of a living whole.
+                      </p>
+                      <p>
+                        Too often in technology, teams jump straight into the <em>what</em> before thoroughly interrogating the <em>why</em>. My work starts with relentless curiosity: uncovering the underlying human motivations, emotional frictions, and mental models that determine whether a product actually sticks.
+                      </p>
+                    </div>
+
+                    <div className="pt-4 border-t border-[#0B3272]/15 mt-4">
+                      <Link
+                        to="/about"
+                        className="inline-flex items-center gap-1.5 font-serif text-xs sm:text-sm font-semibold text-[#0B3272] hover:text-[#E4BA83] transition-colors"
+                      >
+                        <span>Read full background & perspective</span>
+                        <span>→</span>
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Right Column (7 Cols): Compact Case Studies Scrapbook Grid */}
+                <div id="diary-projects" className="lg:col-span-7 space-y-4">
+                  
+                  <div className="flex items-center justify-between pb-2 border-b border-[#0B3272]/20">
+                    <div>
+                      <span className="font-mono text-[11px] uppercase tracking-widest text-[#0B3272] font-semibold">
+                        ✦ FIELD ARCHIVE // CASE STUDIES
                       </span>
-                      <span className="font-mono text-[10px] uppercase tracking-wider text-[#061840]/60">
-                        {proj.category}
-                      </span>
+                      <h2 className="font-serif text-xl sm:text-2xl text-[#061840] font-normal">
+                        Projects & Living Systems
+                      </h2>
                     </div>
+                    <Link
+                      to="/work"
+                      className="font-serif text-xs sm:text-sm text-[#0B3272] hover:text-[#E4BA83] transition-colors font-semibold"
+                    >
+                      Explore full archive →
+                    </Link>
+                  </div>
 
-                    {/* Title */}
-                    <h3 className="font-serif text-xl sm:text-2xl font-bold text-[#061840] group-hover:text-[#0B3272] transition-colors mb-1">
-                      {proj.title}
-                    </h3>
+                  {/* 6 Projects in a 2x3 compact tactile layout */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                    {projects.map((proj, idx) => (
+                      <Link
+                        key={proj.id}
+                        to="/work"
+                        className={`group relative p-3.5 sm:p-4 rounded-md bg-[#F1E3CC] border border-[#0B3272]/20 shadow-xs hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 no-underline text-[#061840] ${idx % 2 === 0 ? 'transform -rotate-0.5' : 'transform rotate-0.5'}`}
+                      >
+                        {/* Washi Tape corner */}
+                        <div className="absolute -top-2 left-4 w-10 h-3.5 bg-[#E4BA83]/70 border border-[#0B3272]/20 select-none pointer-events-none"></div>
 
-                    {/* Subtitle */}
-                    <div className="font-mono text-[11px] text-[#061840]/60 uppercase tracking-wider mb-2">
-                      {proj.subtitle}
-                    </div>
+                        <div className="flex items-center justify-between gap-1 mb-1 pt-1">
+                          <span className="font-mono text-xs font-bold text-[#0B3272]">{proj.number}</span>
+                          <span className="font-mono text-[9px] uppercase tracking-wider text-[#061840]/60 truncate max-w-[140px]">{proj.category}</span>
+                        </div>
 
-                    {/* Description */}
-                    <p className="font-serif text-xs sm:text-sm text-[#061840]/80 leading-relaxed mb-3">
-                      {proj.description}
-                    </p>
+                        <h3 className="font-serif text-base sm:text-lg font-bold text-[#061840] group-hover:text-[#0B3272] transition-colors">
+                          {proj.title}
+                        </h3>
 
-                    {/* Handwritten Field Note Sticky */}
-                    <div className="p-2 rounded bg-[#F6E8D2] border border-[#0B3272]/20 font-hand text-sm text-[#0B3272] flex items-center justify-between">
-                      <span>"{proj.note}"</span>
-                      <span className="text-[11px] font-mono text-[#E4BA83] font-bold">Open ↗</span>
-                    </div>
+                        <p className="font-serif text-xs text-[#061840]/75 line-clamp-2 mt-1 leading-snug">
+                          {proj.description}
+                        </p>
 
-                  </Link>
-                ))}
+                        <div className="mt-2 pt-2 border-t border-[#0B3272]/15 flex items-center justify-between font-hand text-xs text-[#0B3272]">
+                          <span>"{proj.note}"</span>
+                          <span className="font-mono text-[10px] text-[#E4BA83] font-bold">Open ↗</span>
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+
+                </div>
+
               </div>
 
-            </section>
+            </div>
 
-            {/* ===================================================================== */}
-            {/* PART D: DIARY ENDING VISUAL TRANSFORMATION                            */}
-            {/* "3 THINGS YOU SHOULD KNOW ABOUT ME" (Flat Open Diary 2-Page Spread)   */}
-            {/* The page visually rotates ~90deg into a flat two-page spread          */}
-            {/* ===================================================================== */}
-            <section id="diary-beliefs" className="relative px-6 sm:px-12 lg:px-16 pt-10 pb-16 bg-[#F1E3CC] border-t-2 border-[#0B3272]/30 shadow-inner">
-              
-              {/* Spine Stitching Effect indicating open spread */}
-              <div className="w-full flex items-center justify-center gap-2 mb-8 select-none pointer-events-none opacity-50">
-                <div className="h-[1px] bg-[#0B3272] flex-grow"></div>
-                <span className="font-mono text-[11px] tracking-widest uppercase text-[#0B3272]">✦ OPEN DIARY SPREAD ✦</span>
-                <div className="h-[1px] bg-[#0B3272] flex-grow"></div>
-              </div>
-
-              {/* Section Header */}
-              <div className="text-center max-w-2xl mx-auto mb-10">
-                <span className="font-mono text-xs uppercase tracking-widest text-[#0B3272] font-semibold block mb-2">
-                  FINAL CHAPTER // CORE ATTRIBUTES
+            {/* =================================================================== */}
+            {/* CENTRAL HORIZONTAL BINDING / SPINE CREASE                           */}
+            {/* Visually divides Page 1 and Page 2 as an authentic open book seam   */}
+            {/* =================================================================== */}
+            <div className="relative w-full h-7 sm:h-9 spine-crease-shadow border-y border-[#0B3272]/30 flex items-center justify-center select-none pointer-events-none z-20">
+              <div className="w-full flex items-center justify-center gap-3 px-8">
+                <div className="h-[1px] bg-[#0B3272]/40 flex-grow"></div>
+                <span className="font-mono text-[10px] sm:text-[11px] tracking-widest uppercase text-[#0B3272]/70 font-semibold">
+                  ✦ CENTRAL BINDING CREASE ✦
                 </span>
-                <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl text-[#061840] font-normal tracking-tight">
-                  3 things you should know about me
+                <div className="h-[1px] bg-[#0B3272]/40 flex-grow"></div>
+              </div>
+            </div>
+
+            {/* =================================================================== */}
+            {/* PAGE 2: LOWER LANDSCAPE PAGE (EXCLUSIVELY 3 BELIEFS)                */}
+            {/* Reference: Image 2 ("3 things I strongly believe in")               */}
+            {/* NOTHING ELSE INSIDE THIS PAGE. THE DIARY ENDS HERE.                 */}
+            {/* =================================================================== */}
+            <div id="diary-beliefs" className="relative bg-[#F6E8D2] px-6 sm:px-12 lg:px-16 pt-8 sm:pt-12 pb-14 sm:pb-16 page-lower-depth text-[#061840]">
+              
+              {/* Header: Exactly matching Image 2 */}
+              <div className="max-w-2xl mb-8 sm:mb-12">
+                <h2 className="font-serif text-2xl sm:text-3xl lg:text-4xl text-[#061840] font-normal tracking-tight">
+                  3 things I strongly believe in
                 </h2>
               </div>
 
-              {/* THE 3 OVERLAPPING PHYSICAL PAPER SCRAPS */}
-              <div className="relative min-h-[380px] sm:min-h-[440px] max-w-2xl mx-auto mb-12">
+              {/* THE 3 OVERLAPPING PHYSICAL PAPER CARDS / SCRAPS (Matching Image 2) */}
+              <div className="relative min-h-[360px] sm:min-h-[420px] max-w-2xl mx-auto mb-10">
                 
                 {/* SCRAP 1: Torn Lined Notebook Paper (Top Left, tilted -3°) */}
                 <div className="absolute top-0 left-0 sm:left-4 z-10 w-[240px] sm:w-[310px] p-6 rounded-xs bg-notebook-ruled shadow-xl border border-[#0B3272]/20 transform -rotate-3 hover:rotate-0 transition-transform duration-300">
-                  <div className="absolute -top-1.5 left-0 right-0 h-2 bg-[#F1E3CC]" style={{ clipPath: 'polygon(0% 100%, 5% 0%, 10% 100%, 15% 0%, 20% 100%, 25% 0%, 30% 100%, 35% 0%, 40% 100%, 45% 0%, 50% 100%, 55% 0%, 60% 100%, 65% 0%, 70% 100%, 75% 0%, 80% 100%, 85% 0%, 90% 100%, 95% 0%, 100% 100%)' }}></div>
+                  {/* Jagged Torn Edge */}
+                  <div className="absolute -top-1.5 left-0 right-0 h-2 bg-[#F6E8D2]" style={{ clipPath: 'polygon(0% 100%, 5% 0%, 10% 100%, 15% 0%, 20% 100%, 25% 0%, 30% 100%, 35% 0%, 40% 100%, 45% 0%, 50% 100%, 55% 0%, 60% 100%, 65% 0%, 70% 100%, 75% 0%, 80% 100%, 85% 0%, 90% 100%, 95% 0%, 100% 100%)' }}></div>
                   
                   <div className="pt-3 font-hand text-2xl sm:text-3xl lg:text-4xl text-[#061840] font-bold leading-[1.3] select-none pl-4">
                     tirelessly<br />
@@ -503,7 +490,8 @@ export default function Home() {
 
                 {/* SCRAP 2: Torn Graph Paper (Top Right, overlapping, tilted +4°) */}
                 <div className="absolute top-4 right-0 sm:right-6 z-20 w-[250px] sm:w-[320px] p-6 rounded-xs bg-torn-graph shadow-2xl border border-[#0B3272]/25 transform rotate-4 hover:rotate-0 transition-transform duration-300">
-                  <div className="absolute -right-1 top-0 bottom-0 w-2 bg-[#F1E3CC]" style={{ clipPath: 'polygon(0% 0%, 100% 5%, 0% 10%, 100% 15%, 0% 20%, 100% 25%, 0% 30%, 100% 35%, 0% 40%, 100% 45%, 0% 50%, 100% 55%, 0% 60%, 100% 65%, 0% 70%, 100% 75%, 0% 80%, 100% 85%, 0% 90%, 100% 95%, 0% 100%)' }}></div>
+                  {/* Jagged Torn Right Edge */}
+                  <div className="absolute -right-1 top-0 bottom-0 w-2 bg-[#F6E8D2]" style={{ clipPath: 'polygon(0% 0%, 100% 5%, 0% 10%, 100% 15%, 0% 20%, 100% 25%, 0% 30%, 100% 35%, 0% 40%, 100% 45%, 0% 50%, 100% 55%, 0% 60%, 100% 65%, 0% 70%, 100% 75%, 0% 80%, 100% 85%, 0% 90%, 100% 95%, 0% 100%)' }}></div>
                   
                   <div className="font-mono text-xl sm:text-2xl lg:text-3xl text-[#061840] font-bold leading-tight select-none">
                     Software<br />
@@ -518,7 +506,7 @@ export default function Home() {
                 {/* SCRAP 3: Soft Cream Sticky Note with Paperclip (Center Bottom, overlapping both, tilted -1°) */}
                 <div className="absolute top-48 sm:top-52 left-1/2 -translate-x-1/2 z-30 w-[260px] sm:w-[330px] p-6 sm:p-8 rounded-sm bg-kraft-note shadow-2xl border border-[#0B3272]/30 transform -rotate-1 hover:rotate-0 transition-transform duration-300">
                   
-                  {/* Paperclip */}
+                  {/* Metallic Paperclip */}
                   <div className="absolute -top-5 left-10 pointer-events-none select-none">
                     <svg width="22" height="42" viewBox="0 0 22 42" fill="none">
                       <path d="M6 10 L6 32 C6 37 16 37 16 32 L16 8 C16 3 3 3 3 8 L3 34 C3 41 19 41 19 34 L19 12" stroke="#0B3272" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
@@ -574,13 +562,13 @@ export default function Home() {
 
               </div>
 
-            </section>
+              {/* Bottom Page Margin Fold & DIARY CONCLUSION STAMP */}
+              <div className="w-full bg-[#E8DEC8] py-2 px-6 flex items-center justify-between font-mono text-[11px] text-[#061840]/70 border-t border-[#0B3272]/20 mt-6 rounded-b-md">
+                <span>✦ CHAPTER CONCLUDED</span>
+                <span>RUCHI BHEDA DIARY // 2026</span>
+                <span>END OF NOTEBOOK ✦</span>
+              </div>
 
-            {/* Bottom Page Margin Fold & DIARY CONCLUSION STAMP */}
-            <div className="w-full bg-[#E8DEC8] py-2 px-6 flex items-center justify-between font-mono text-[11px] text-[#061840]/60 border-t border-[#0B3272]/20">
-              <span>✦ CHAPTER CONCLUDED</span>
-              <span>RUCHI BHEDA DIARY // 2026</span>
-              <span>END OF NOTEBOOK ✦</span>
             </div>
 
           </div>
@@ -593,7 +581,7 @@ export default function Home() {
       {/* 4. CONTACT ME SECTION (STEPPING OUTSIDE THE DIARY)                        */}
       {/* Separate visual moment in the #061840 Midnight Forest environment         */}
       {/* ========================================================================= */}
-      <section className="relative z-20 w-full max-w-5xl mx-auto px-6 sm:px-12 pt-24 pb-16">
+      <section className="relative z-20 w-full max-w-5xl mx-auto px-6 sm:px-12 pt-20 pb-16">
         
         {/* Section Header */}
         <div className="max-w-2xl mb-12">
