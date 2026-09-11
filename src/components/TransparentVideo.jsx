@@ -172,14 +172,75 @@ export default function TransparentVideo({
     }
   }, [src])
 
+  // Restart video on scroll and viewport entry (no loop)
+  useEffect(() => {
+    const video = videoRef.current
+    const canvas = canvasRef.current
+    if (!video || !canvas) return
+
+    video.loop = false
+
+    let lastRestartTime = 0
+    let lastScrollY = window.scrollY
+
+    const restartVideo = () => {
+      try {
+        video.currentTime = 0
+        video.play().catch(() => {})
+      } catch (err) {
+        // ignore autoplay restriction if any
+      }
+    }
+
+    const handleScroll = () => {
+      const rect = canvas.getBoundingClientRect()
+      // Check if visible in viewport
+      const inView = rect.top < window.innerHeight && rect.bottom > 0
+      if (!inView) return
+
+      const delta = Math.abs(window.scrollY - lastScrollY)
+      if (delta > 3) {
+        lastScrollY = window.scrollY
+        const now = Date.now()
+        // Trigger immediate restart when scroll starts, throttled to 500ms so it doesn't freeze on frame 0
+        if (now - lastRestartTime > 500) {
+          lastRestartTime = now
+          restartVideo()
+        }
+      }
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            lastRestartTime = Date.now()
+            restartVideo()
+          }
+        })
+      },
+      { threshold: 0.1 }
+    )
+
+    observer.observe(canvas)
+    window.addEventListener('scroll', handleScroll, { passive: true })
+
+    return () => {
+      observer.disconnect()
+      window.removeEventListener('scroll', handleScroll)
+    }
+  }, [])
+
   return (
-    <div className={`relative flex items-center justify-center ${className}`}>
-      {/* Hidden Source Video */}
+    <div
+      className={`relative flex items-center justify-center transition-transform duration-500 ${className}`}
+      style={{ transform: 'rotate(7deg)' }}
+    >
+      {/* Hidden Source Video (No Loop) */}
       <video
         ref={videoRef}
         src={src}
         autoPlay
-        loop
         muted
         playsInline
         preload="auto"
@@ -189,7 +250,7 @@ export default function TransparentVideo({
         <source src="/Ruchi About Me Portfolio.mp4" type="video/mp4" />
       </video>
 
-      {/* Real-time Transparent Canvas with White Background Keyed Out */}
+      {/* Real-time Transparent Canvas with White Background Keyed Out & 7 deg tilt */}
       <canvas
         ref={canvasRef}
         className="w-full h-auto max-w-[340px] sm:max-w-[400px] lg:max-w-[430px] object-contain drop-shadow-[0_30px_60px_rgba(0,0,0,0.65)] select-none pointer-events-none"
@@ -197,3 +258,4 @@ export default function TransparentVideo({
     </div>
   )
 }
+
