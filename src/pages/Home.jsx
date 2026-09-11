@@ -209,10 +209,10 @@ export default function Home() {
       {/* ========================================================================= */}
       <div className="relative z-20 w-full max-w-5xl lg:max-w-6xl mx-auto px-3 sm:px-6 my-4 sm:my-8">
         
-        {/* PHYSICAL NOTEBOOK OUTER BINDING (Forest Blue #0B3272 with Gold #E4BA83 ribbon) */}
+        {/* PHYSICAL NOTEBOOK OUTER BINDING (Deep Blue #0B3272 subtle crumpled paper cover) */}
         <div
           key={openAnimKey}
-          className="relative rounded-[32px] sm:rounded-[44px] bg-[#0B3272] p-2.5 sm:p-4 shadow-[0_35px_100px_-15px_rgba(0,0,0,0.85)] border-4 sm:border-[6px] border-[#082452] animate-diary-rotate-open"
+          className="relative rounded-[32px] sm:rounded-[44px] bg-crumpled-cover border-paper-cover p-2.5 sm:p-4 animate-diary-rotate-open"
         >
           
           {/* SILK BOOKMARK RIBBON (Gold #E4BA83 silk ribbon peeking from the central fold / spine seam) */}
