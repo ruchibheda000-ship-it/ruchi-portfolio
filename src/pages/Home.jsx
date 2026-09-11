@@ -105,6 +105,12 @@ export default function Home() {
     setCheckedItems(prev => ({ ...prev, [key]: !prev[key] }))
   }
 
+  // State to trigger the physical 90-degree opening animation
+  const [openAnimKey, setOpenAnimKey] = useState(0)
+  const handleReplayOpening = () => {
+    setOpenAnimKey(k => k + 1)
+  }
+
   return (
     <div className="min-h-screen bg-[#061840] text-[#F1E3CC] font-body selection:bg-[#E4BA83] selection:text-[#061840] relative overflow-x-hidden pb-24">
       
@@ -183,15 +189,31 @@ export default function Home() {
       {/* ========================================================================= */}
       <Nav />
 
+      {/* Replay Opening Animation Control (Floating subtile trigger) */}
+      <div className="max-w-5xl lg:max-w-6xl mx-auto px-6 flex justify-end mb-2">
+        <button
+          onClick={handleReplayOpening}
+          type="button"
+          className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#0B3272]/50 border border-[#0B3272] text-[#E4BA83] font-mono text-[11px] hover:bg-[#0B3272] hover:text-[#F1E3CC] transition-colors cursor-pointer select-none"
+        >
+          <span>↻</span>
+          <span>Replay Diary Opening (90°)</span>
+        </button>
+      </div>
+
       {/* ========================================================================= */}
       {/* 3. CENTRAL PHYSICAL OPEN DIARY (TWO-PAGE LANDSCAPE SPREAD)                */}
       {/* Reference: Image 2 (Opened flat with Page 1 top, Page 2 bottom)           */}
+      {/* Upper and lower pages have approximately the same visual importance.      */}
       {/* Palette: #0B3272 Forest Blue cover, #E4BA83 Gold trim, #F6E8D2 Paper     */}
       {/* ========================================================================= */}
-      <div className="relative z-20 w-full max-w-5xl lg:max-w-6xl mx-auto px-3 sm:px-6 my-6 sm:my-10">
+      <div className="relative z-20 w-full max-w-5xl lg:max-w-6xl mx-auto px-3 sm:px-6 my-4 sm:my-8">
         
         {/* PHYSICAL NOTEBOOK OUTER BINDING (Forest Blue #0B3272 with Gold #E4BA83 ribbon) */}
-        <div className="relative rounded-[32px] sm:rounded-[44px] bg-[#0B3272] p-2.5 sm:p-4 shadow-[0_35px_100px_-15px_rgba(0,0,0,0.85)] border-4 sm:border-[6px] border-[#082452] animate-diary-unfold">
+        <div
+          key={openAnimKey}
+          className="relative rounded-[32px] sm:rounded-[44px] bg-[#0B3272] p-2.5 sm:p-4 shadow-[0_35px_100px_-15px_rgba(0,0,0,0.85)] border-4 sm:border-[6px] border-[#082452] animate-diary-rotate-open"
+        >
           
           {/* SILK BOOKMARK RIBBON (Gold #E4BA83 silk ribbon peeking from the central fold / spine seam) */}
           <div className="absolute -left-4 sm:-left-7 top-1/2 -translate-y-1/2 z-30 pointer-events-none select-none">
@@ -209,33 +231,34 @@ export default function Home() {
           <div className="relative rounded-[24px] sm:rounded-[36px] bg-[#F6E8D2] overflow-hidden border border-[#E8DEC8]">
             
             {/* =================================================================== */}
-            {/* PAGE 1: UPPER LANDSCAPE PAGE (PORTFOLIO CONTENT & SPREAD)          */}
-            {/* Composition: Hero + Botanical Illustration + Journal + Case Studies */}
+            {/* PAGE 1: UPPER LANDSCAPE PAGE (PORTFOLIO CONTENT SPREAD)             */}
+            {/* Composition: Hero + Botanical Illustration + Journal + Projects     */}
+            {/* Single cohesive landscape editorial page, NOT stacked web sections. */}
             {/* =================================================================== */}
             <div className="relative bg-diary-grid text-[#061840] p-6 sm:p-10 lg:p-12 page-upper-depth">
               
-              {/* Subtle top margin wash */}
+              {/* Top margin wash */}
               <div className="absolute top-0 left-0 right-0 h-3 bg-linear-to-b from-[#E6D9C8] to-transparent opacity-60 pointer-events-none"></div>
 
-              {/* Upper Hero Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-12 gap-6 lg:gap-8 items-center pb-8 border-b border-[#0B3272]/20 border-dashed">
+              {/* Landscape Layout Grid: Hero (Left) + Botanical Window (Right) */}
+              <div className="grid grid-cols-1 md:grid-cols-12 gap-6 lg:gap-8 items-center pb-6">
                 
                 {/* Left Column: Wordmark, Role, Core Statement, Time */}
-                <div className="md:col-span-6 lg:col-span-6 space-y-4 sm:space-y-5">
+                <div className="md:col-span-6 lg:col-span-6 space-y-3 sm:space-y-4">
                   
                   {/* Hand-drawn wordmark in Forest Blue with Path Gold dot */}
                   <div>
                     <span className="font-hand text-4xl sm:text-5xl lg:text-6xl text-[#0B3272] font-bold tracking-tight inline-block transform -rotate-1 select-none">
                       Ruchi<span className="text-2xl sm:text-3xl font-mono ml-1 text-[#E4BA83]">ツ</span>
                     </span>
-                    <div className="font-serif text-lg sm:text-xl md:text-2xl text-[#0B3272] tracking-wide mt-1">
+                    <div className="font-serif text-lg sm:text-xl md:text-2xl text-[#0B3272] tracking-wide mt-0.5">
                       Product Designer
                     </div>
                   </div>
 
                   {/* Core Statement */}
                   <div>
-                    <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl text-[#061840] leading-[1.14] tracking-tight">
+                    <h1 className="font-serif text-3xl sm:text-4xl md:text-[2.75rem] text-[#061840] leading-[1.14] tracking-tight">
                       <span>I find the </span>
                       <span className="font-hand font-normal text-4xl sm:text-5xl md:text-6xl text-[#0B3272] inline-block transform -rotate-2 underline decoration-[#E4BA83] decoration-wavy decoration-2">
                         why's
@@ -258,15 +281,15 @@ export default function Home() {
                   </div>
 
                   {/* Stamp buttons */}
-                  <div className="pt-2 flex flex-wrap items-center gap-3">
+                  <div className="pt-1 flex flex-wrap items-center gap-3">
                     <a
-                      href="#diary-journal"
+                      href="#diary-journal-memo"
                       className="px-4 py-1.5 rounded-full border border-[#0B3272] bg-transparent text-[#0B3272] font-serif text-xs sm:text-sm hover:bg-[#0B3272] hover:text-[#F1E3CC] transition-colors"
                     >
                       Read journal ↓
                     </a>
                     <a
-                      href="#diary-projects"
+                      href="#diary-archive-index"
                       className="px-4 py-1.5 rounded-full bg-[#0B3272] text-[#F1E3CC] font-serif text-xs sm:text-sm shadow-xs hover:bg-[#082452] transition-colors"
                     >
                       Case studies →
@@ -275,9 +298,9 @@ export default function Home() {
 
                 </div>
 
-                {/* Right Column: Hand-Drawn SVG Botanical Window (in Forest Blue #0B3272 & Gold #E4BA83) */}
+                {/* Right Column: Hand-Drawn SVG Botanical Window Illustration */}
                 <div className="md:col-span-6 lg:col-span-6 relative flex justify-center items-center">
-                  <div className="relative w-full max-w-[340px] sm:max-w-[400px]">
+                  <div className="relative w-full max-w-[340px] sm:max-w-[380px]">
                     <svg viewBox="0 0 380 340" fill="none" stroke="#0B3272" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" className="w-full h-auto select-none">
                       
                       {/* Window Header Frame */}
@@ -346,24 +369,24 @@ export default function Home() {
 
               </div>
 
-              {/* Lower Page 1 Editorial Section: Journal Memo & Field Archive Split */}
-              <div className="pt-8 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+              {/* Integrated Editorial Scrapbook Band: Journal Memo (Left) + Case Studies (Right) */}
+              <div className="pt-6 border-t border-[#0B3272]/20 border-dashed grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
                 
-                {/* Left Column (5 Cols): Taped Journal Entry Clipping */}
-                <div id="diary-journal" className="lg:col-span-5 relative p-6 rounded-md bg-[#F1E3CC] border border-[#0B3272]/20 shadow-md">
+                {/* Left (5 Cols): Taped Journal Entry Clipping */}
+                <div id="diary-journal-memo" className="lg:col-span-5 relative p-5 rounded-md bg-[#F1E3CC] border border-[#0B3272]/20 shadow-xs">
                   {/* Washi Tape in Path Gold */}
-                  <div className="absolute -top-3 left-8 w-20 h-5 bg-[#E4BA83]/80 border border-[#0B3272]/20 transform -rotate-1 select-none pointer-events-none shadow-xs"></div>
+                  <div className="absolute -top-2.5 left-6 w-16 h-4 bg-[#E4BA83]/80 border border-[#0B3272]/20 transform -rotate-1 select-none pointer-events-none shadow-xs"></div>
                   
-                  <div className="pt-2">
-                    <span className="font-mono text-[11px] uppercase tracking-widest text-[#0B3272] font-semibold block mb-2">
+                  <div>
+                    <span className="font-mono text-[10px] uppercase tracking-widest text-[#0B3272] font-semibold block mb-1">
                       ✦ JOURNAL ENTRY // MY PERSPECTIVE
                     </span>
-                    <h2 className="font-serif text-xl sm:text-2xl text-[#061840] font-normal leading-tight mb-3">
+                    <h2 className="font-serif text-lg sm:text-xl text-[#061840] font-normal leading-snug mb-2">
                       I don’t design in isolation.<br />
-                      I design for <span className="font-hand text-2xl sm:text-3xl text-[#0B3272] underline decoration-[#E4BA83] decoration-wavy">living human ecosystems.</span>
+                      I design for <span className="font-hand text-xl sm:text-2xl text-[#0B3272] underline decoration-[#E4BA83] decoration-wavy">living human ecosystems.</span>
                     </h2>
                     
-                    <div className="space-y-3 font-serif text-xs sm:text-sm text-[#061840]/85 leading-relaxed">
+                    <div className="space-y-2 font-serif text-xs sm:text-sm text-[#061840]/85 leading-relaxed">
                       <p>
                         I am not trying to be limited to just UI/UX. I want to grow into a <strong>design entrepreneur</strong> who understands products, businesses, brands, people, and technology as interconnected parts of a living whole.
                       </p>
@@ -372,10 +395,10 @@ export default function Home() {
                       </p>
                     </div>
 
-                    <div className="pt-4 border-t border-[#0B3272]/15 mt-4">
+                    <div className="pt-3 border-t border-[#0B3272]/15 mt-3">
                       <Link
                         to="/about"
-                        className="inline-flex items-center gap-1.5 font-serif text-xs sm:text-sm font-semibold text-[#0B3272] hover:text-[#E4BA83] transition-colors"
+                        className="inline-flex items-center gap-1.5 font-serif text-xs font-semibold text-[#0B3272] hover:text-[#E4BA83] transition-colors"
                       >
                         <span>Read full background & perspective</span>
                         <span>→</span>
@@ -384,53 +407,53 @@ export default function Home() {
                   </div>
                 </div>
 
-                {/* Right Column (7 Cols): Compact Case Studies Scrapbook Grid */}
-                <div id="diary-projects" className="lg:col-span-7 space-y-4">
+                {/* Right (7 Cols): Compact Case Studies Scrapbook Grid */}
+                <div id="diary-archive-index" className="lg:col-span-7 space-y-3">
                   
-                  <div className="flex items-center justify-between pb-2 border-b border-[#0B3272]/20">
+                  <div className="flex items-center justify-between pb-1 border-b border-[#0B3272]/20">
                     <div>
-                      <span className="font-mono text-[11px] uppercase tracking-widest text-[#0B3272] font-semibold">
+                      <span className="font-mono text-[10px] uppercase tracking-widest text-[#0B3272] font-semibold">
                         ✦ FIELD ARCHIVE // CASE STUDIES
                       </span>
-                      <h2 className="font-serif text-xl sm:text-2xl text-[#061840] font-normal">
+                      <h2 className="font-serif text-lg sm:text-xl text-[#061840] font-normal">
                         Projects & Living Systems
                       </h2>
                     </div>
                     <Link
                       to="/work"
-                      className="font-serif text-xs sm:text-sm text-[#0B3272] hover:text-[#E4BA83] transition-colors font-semibold"
+                      className="font-serif text-xs text-[#0B3272] hover:text-[#E4BA83] transition-colors font-semibold"
                     >
                       Explore full archive →
                     </Link>
                   </div>
 
                   {/* 6 Projects in a 2x3 compact tactile layout */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                     {projects.map((proj, idx) => (
                       <Link
                         key={proj.id}
                         to="/work"
-                        className={`group relative p-3.5 sm:p-4 rounded-md bg-[#F1E3CC] border border-[#0B3272]/20 shadow-xs hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 no-underline text-[#061840] ${idx % 2 === 0 ? 'transform -rotate-0.5' : 'transform rotate-0.5'}`}
+                        className={`group relative p-3 rounded-md bg-[#F1E3CC] border border-[#0B3272]/20 shadow-xs hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 no-underline text-[#061840] ${idx % 2 === 0 ? 'transform -rotate-0.5' : 'transform rotate-0.5'}`}
                       >
                         {/* Washi Tape corner */}
-                        <div className="absolute -top-2 left-4 w-10 h-3.5 bg-[#E4BA83]/70 border border-[#0B3272]/20 select-none pointer-events-none"></div>
+                        <div className="absolute -top-1.5 left-4 w-8 h-3 bg-[#E4BA83]/70 border border-[#0B3272]/20 select-none pointer-events-none"></div>
 
-                        <div className="flex items-center justify-between gap-1 mb-1 pt-1">
-                          <span className="font-mono text-xs font-bold text-[#0B3272]">{proj.number}</span>
-                          <span className="font-mono text-[9px] uppercase tracking-wider text-[#061840]/60 truncate max-w-[140px]">{proj.category}</span>
+                        <div className="flex items-center justify-between gap-1 mb-0.5 pt-0.5">
+                          <span className="font-mono text-[11px] font-bold text-[#0B3272]">{proj.number}</span>
+                          <span className="font-mono text-[9px] uppercase tracking-wider text-[#061840]/60 truncate max-w-[130px]">{proj.category}</span>
                         </div>
 
-                        <h3 className="font-serif text-base sm:text-lg font-bold text-[#061840] group-hover:text-[#0B3272] transition-colors">
+                        <h3 className="font-serif text-sm sm:text-base font-bold text-[#061840] group-hover:text-[#0B3272] transition-colors leading-tight">
                           {proj.title}
                         </h3>
 
-                        <p className="font-serif text-xs text-[#061840]/75 line-clamp-2 mt-1 leading-snug">
+                        <p className="font-serif text-[11px] text-[#061840]/75 line-clamp-1 mt-0.5 leading-tight">
                           {proj.description}
                         </p>
 
-                        <div className="mt-2 pt-2 border-t border-[#0B3272]/15 flex items-center justify-between font-hand text-xs text-[#0B3272]">
+                        <div className="mt-1.5 pt-1.5 border-t border-[#0B3272]/15 flex items-center justify-between font-hand text-[11px] text-[#0B3272]">
                           <span>"{proj.note}"</span>
-                          <span className="font-mono text-[10px] text-[#E4BA83] font-bold">Open ↗</span>
+                          <span className="font-mono text-[9px] text-[#E4BA83] font-bold">Open ↗</span>
                         </div>
                       </Link>
                     ))}
@@ -446,7 +469,7 @@ export default function Home() {
             {/* CENTRAL HORIZONTAL BINDING / SPINE CREASE                           */}
             {/* Visually divides Page 1 and Page 2 as an authentic open book seam   */}
             {/* =================================================================== */}
-            <div className="relative w-full h-7 sm:h-9 spine-crease-shadow border-y border-[#0B3272]/30 flex items-center justify-center select-none pointer-events-none z-20">
+            <div className="relative w-full h-7 sm:h-8 spine-crease-shadow border-y border-[#0B3272]/30 flex items-center justify-center select-none pointer-events-none z-20">
               <div className="w-full flex items-center justify-center gap-3 px-8">
                 <div className="h-[1px] bg-[#0B3272]/40 flex-grow"></div>
                 <span className="font-mono text-[10px] sm:text-[11px] tracking-widest uppercase text-[#0B3272]/70 font-semibold">
@@ -461,17 +484,17 @@ export default function Home() {
             {/* Reference: Image 2 ("3 things I strongly believe in")               */}
             {/* NOTHING ELSE INSIDE THIS PAGE. THE DIARY ENDS HERE.                 */}
             {/* =================================================================== */}
-            <div id="diary-beliefs" className="relative bg-[#F6E8D2] px-6 sm:px-12 lg:px-16 pt-8 sm:pt-12 pb-14 sm:pb-16 page-lower-depth text-[#061840]">
+            <div id="diary-beliefs" className="relative bg-[#F6E8D2] px-6 sm:px-12 lg:px-16 pt-8 sm:pt-10 pb-12 sm:pb-14 page-lower-depth text-[#061840]">
               
               {/* Header: Exactly matching Image 2 */}
-              <div className="max-w-2xl mb-8 sm:mb-12">
+              <div className="max-w-2xl mb-8 sm:mb-10">
                 <h2 className="font-serif text-2xl sm:text-3xl lg:text-4xl text-[#061840] font-normal tracking-tight">
                   3 things I strongly believe in
                 </h2>
               </div>
 
               {/* THE 3 OVERLAPPING PHYSICAL PAPER CARDS / SCRAPS (Matching Image 2) */}
-              <div className="relative min-h-[360px] sm:min-h-[420px] max-w-2xl mx-auto mb-10">
+              <div className="relative min-h-[360px] sm:min-h-[400px] max-w-2xl mx-auto mb-8">
                 
                 {/* SCRAP 1: Torn Lined Notebook Paper (Top Left, tilted -3°) */}
                 <div className="absolute top-0 left-0 sm:left-4 z-10 w-[240px] sm:w-[310px] p-6 rounded-xs bg-notebook-ruled shadow-xl border border-[#0B3272]/20 transform -rotate-3 hover:rotate-0 transition-transform duration-300">
@@ -504,7 +527,7 @@ export default function Home() {
                 </div>
 
                 {/* SCRAP 3: Soft Cream Sticky Note with Paperclip (Center Bottom, overlapping both, tilted -1°) */}
-                <div className="absolute top-48 sm:top-52 left-1/2 -translate-x-1/2 z-30 w-[260px] sm:w-[330px] p-6 sm:p-8 rounded-sm bg-kraft-note shadow-2xl border border-[#0B3272]/30 transform -rotate-1 hover:rotate-0 transition-transform duration-300">
+                <div className="absolute top-48 sm:top-50 left-1/2 -translate-x-1/2 z-30 w-[260px] sm:w-[330px] p-6 sm:p-8 rounded-sm bg-kraft-note shadow-2xl border border-[#0B3272]/30 transform -rotate-1 hover:rotate-0 transition-transform duration-300">
                   
                   {/* Metallic Paperclip */}
                   <div className="absolute -top-5 left-10 pointer-events-none select-none">

@@ -131,26 +131,30 @@ html {
 }
 
 /* ======================================================================== */
-/* 2-PAGE PHYSICAL OPEN DIARY ANIMATION & SPINE CREASE                      */
+/* 2-PAGE PHYSICAL OPEN DIARY 90° ROTATION & OPENING ANIMATION             */
 /* ======================================================================== */
 
-@keyframes diaryUnfold {
+@keyframes diaryRotateOpen90 {
   0% {
-    opacity: 0.8;
-    transform: perspective(1800px) rotateX(14deg) scale(0.96);
+    opacity: 0.7;
+    transform: perspective(2000px) rotate(-90deg) scale(0.68);
   }
-  60% {
-    transform: perspective(1800px) rotateX(-1.5deg) scale(1.008);
+  35% {
+    opacity: 0.95;
+    transform: perspective(2000px) rotate(-32deg) scale(0.88);
+  }
+  70% {
+    transform: perspective(2000px) rotate(-3deg) scale(1.012);
   }
   100% {
     opacity: 1;
-    transform: perspective(1800px) rotateX(0deg) scale(1);
+    transform: perspective(2000px) rotate(0deg) scale(1);
   }
 }
 
-.animate-diary-unfold {
-  animation: diaryUnfold 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  transform-origin: center top;
+.animate-diary-rotate-open {
+  animation: diaryRotateOpen90 1.35s cubic-bezier(0.2, 0.9, 0.3, 1) forwards;
+  transform-origin: center center;
 }
 
 /* Notebook horizontal spine fold shadow & page depth */
