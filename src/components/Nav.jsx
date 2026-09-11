@@ -12,7 +12,7 @@ export default function Nav() {
   return (
     <header className="sticky top-4 sm:top-6 z-50 w-full flex justify-center px-4 mb-6 sm:mb-10 pointer-events-none">
       <nav
-        className="pointer-events-auto bg-[#0B3272]/90 text-[#F1E3CC] px-8 sm:px-12 py-2 sm:py-2.5 rounded-full shadow-2xl border border-[#0B3272] flex items-center justify-center gap-7 sm:gap-11 font-hand text-2xl sm:text-3xl tracking-wide select-none backdrop-blur-md"
+        className="pointer-events-auto text-[#F1E3CC] flex items-center justify-center gap-7 sm:gap-11 font-hand text-2xl sm:text-3xl tracking-wide select-none"
         aria-label="Main Navigation"
       >
         {navLinks.map((link) => (
