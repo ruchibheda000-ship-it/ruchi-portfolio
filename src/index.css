@@ -155,6 +155,56 @@ html {
     0 35px 100px -15px rgba(0, 0, 0, 0.85);
 }
 
+/* ======================================================================== */
+/* GENTLE DIARY OPENING ANIMATION (Subtle, restrained, plays once on load)   */
+/* Soft physical ease from slightly ajar to fully open and stationary       */
+/* ======================================================================== */
+
+.diary-gentle-scene {
+  perspective: 2000px;
+}
+
+@keyframes diaryGentleOpenTop {
+  0% {
+    transform: rotateX(-18deg);
+    opacity: 0.88;
+  }
+  100% {
+    transform: rotateX(0deg);
+    opacity: 1;
+  }
+}
+
+@keyframes diaryGentleOpenBottom {
+  0% {
+    transform: rotateX(14deg);
+    opacity: 0.9;
+  }
+  100% {
+    transform: rotateX(0deg);
+    opacity: 1;
+  }
+}
+
+.animate-gentle-open-top {
+  transform-origin: bottom center;
+  animation: diaryGentleOpenTop 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.12s both;
+  will-change: transform, opacity;
+}
+
+.animate-gentle-open-bottom {
+  transform-origin: top center;
+  animation: diaryGentleOpenBottom 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.12s both;
+  will-change: transform, opacity;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-gentle-open-top,
+  .animate-gentle-open-bottom {
+    animation: none !important;
+    transform: none !important;
+  }
+}
 
 /* Notebook horizontal spine fold shadow & page depth */
 .spine-crease-shadow {

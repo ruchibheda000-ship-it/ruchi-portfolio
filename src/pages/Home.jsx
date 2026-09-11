@@ -115,7 +115,7 @@ export default function Home() {
       {/* PAGE 2: 3 Things I Strongly Believe In (3 Sticky Notes)                   */}
       {/* Palette: #0B3272 Forest Blue cover, #E4BA83 Gold trim, #F6E8D2 Paper     */}
       {/* ========================================================================= */}
-      <div className="relative z-20 w-full max-w-4xl lg:max-w-5xl mx-auto px-3 sm:px-6 my-4 sm:my-8">
+      <div className="relative z-20 w-full max-w-4xl lg:max-w-5xl mx-auto px-3 sm:px-6 my-4 sm:my-8 diary-gentle-scene">
         
         {/* SILK BOOKMARK RIBBON (Gold #E4BA83 silk ribbon peeking from the central fold / spine seam) */}
         <div className="absolute -left-4 sm:-left-6 top-1/2 -translate-y-1/2 z-40 pointer-events-none select-none">
@@ -132,7 +132,7 @@ export default function Home() {
         {/* ----------------------------------------------------------------------- */}
         {/* UPPER HALF: BLUE COVER + PAGE 1                                         */}
         {/* ----------------------------------------------------------------------- */}
-        <div className="relative rounded-t-[32px] sm:rounded-t-[44px] bg-crumpled-cover border-paper-cover border-b-0 p-2.5 sm:p-4 pb-0 shadow-[0_20px_50px_-10px_rgba(0,0,0,0.7)]">
+        <div className="relative rounded-t-[32px] sm:rounded-t-[44px] bg-crumpled-cover border-paper-cover border-b-0 p-2.5 sm:p-4 pb-0 shadow-[0_20px_50px_-10px_rgba(0,0,0,0.7)] animate-gentle-open-top">
           {/* PAGE 1 INTERIOR (Warm Cream Paper with Blue Grid - Equal Height to Page 2) */}
           <div className="relative rounded-t-[24px] sm:rounded-t-[36px] bg-diary-grid text-[#061840] p-6 sm:p-10 lg:p-12 border border-[#E8DEC8] border-b-0 page-upper-depth overflow-hidden min-h-[500px] sm:min-h-[540px] lg:min-h-[560px] flex flex-col justify-center">
             
@@ -275,7 +275,7 @@ export default function Home() {
         {/* LOWER HALF: BLUE COVER + PAGE 2                                         */}
         {/* Dedicated exclusively to "3 Things I Strongly Believe In"              */}
         {/* ----------------------------------------------------------------------- */}
-        <div className="relative rounded-b-[32px] sm:rounded-b-[44px] bg-crumpled-cover border-paper-cover border-t-0 p-2.5 sm:p-4 pt-0 shadow-[0_30px_90px_-15px_rgba(0,0,0,0.85)]">
+        <div className="relative rounded-b-[32px] sm:rounded-b-[44px] bg-crumpled-cover border-paper-cover border-t-0 p-2.5 sm:p-4 pt-0 shadow-[0_30px_90px_-15px_rgba(0,0,0,0.85)] animate-gentle-open-bottom">
           {/* PAGE 2 INTERIOR (Warm Paper - Equal Height to Page 1, Exactly matching Image 2) */}
           <div id="diary-beliefs" className="relative rounded-b-[24px] sm:rounded-b-[36px] bg-[#F6E8D2] px-6 sm:px-12 lg:px-16 pt-8 sm:pt-10 pb-6 sm:pb-8 border border-[#E8DEC8] border-t-0 page-lower-depth text-[#061840] overflow-hidden min-h-[500px] sm:min-h-[540px] lg:min-h-[560px] flex flex-col justify-between">
             
