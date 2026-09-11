@@ -154,8 +154,8 @@ export default function Home() {
           key={`page1-${openAnimKey}`}
           className="relative rounded-t-[32px] sm:rounded-t-[44px] bg-crumpled-cover border-paper-cover border-b-0 p-2.5 sm:p-4 pb-0 animate-hinge-page1 shadow-[0_20px_50px_-10px_rgba(0,0,0,0.7)]"
         >
-          {/* PAGE 1 INTERIOR (Warm Cream Paper with Blue Grid) */}
-          <div className="relative rounded-t-[24px] sm:rounded-t-[36px] bg-diary-grid text-[#061840] p-6 sm:p-10 lg:p-12 pb-8 border border-[#E8DEC8] border-b-0 page-upper-depth overflow-hidden">
+          {/* PAGE 1 INTERIOR (Warm Cream Paper with Blue Grid - Equal Height to Page 2) */}
+          <div className="relative rounded-t-[24px] sm:rounded-t-[36px] bg-diary-grid text-[#061840] p-6 sm:p-10 lg:p-12 border border-[#E8DEC8] border-b-0 page-upper-depth overflow-hidden min-h-[500px] sm:min-h-[540px] lg:min-h-[560px] flex flex-col justify-center">
             
             {/* Top margin wash */}
             <div className="absolute top-0 left-0 right-0 h-3 bg-linear-to-b from-[#E6D9C8] to-transparent opacity-60 pointer-events-none"></div>
@@ -300,18 +300,18 @@ export default function Home() {
           key={`page2-${openAnimKey}`}
           className="relative rounded-b-[32px] sm:rounded-b-[44px] bg-crumpled-cover border-paper-cover border-t-0 p-2.5 sm:p-4 pt-0 animate-hinge-page2 shadow-[0_30px_90px_-15px_rgba(0,0,0,0.85)]"
         >
-          {/* PAGE 2 INTERIOR (Warm Paper, Exactly matching Image 2) */}
-          <div id="diary-beliefs" className="relative rounded-b-[24px] sm:rounded-b-[36px] bg-[#F6E8D2] px-6 sm:px-12 lg:px-16 pt-8 sm:pt-10 pb-12 sm:pb-14 border border-[#E8DEC8] border-t-0 page-lower-depth text-[#061840] overflow-hidden">
+          {/* PAGE 2 INTERIOR (Warm Paper - Equal Height to Page 1, Exactly matching Image 2) */}
+          <div id="diary-beliefs" className="relative rounded-b-[24px] sm:rounded-b-[36px] bg-[#F6E8D2] px-6 sm:px-12 lg:px-16 pt-8 sm:pt-10 pb-6 sm:pb-8 border border-[#E8DEC8] border-t-0 page-lower-depth text-[#061840] overflow-hidden min-h-[500px] sm:min-h-[540px] lg:min-h-[560px] flex flex-col justify-between">
             
             {/* Header: Exactly matching Image 2 */}
-            <div className="max-w-2xl mb-8 sm:mb-10">
+            <div className="max-w-2xl mb-4 sm:mb-6">
               <h2 className="font-serif text-2xl sm:text-3xl lg:text-4xl text-[#061840] font-normal tracking-tight">
                 3 Things I Strongly Believe In
               </h2>
             </div>
 
             {/* THE 3 OVERLAPPING PHYSICAL PAPER CARDS / SCRAPS (Matching Image 2) */}
-            <div className="relative min-h-[360px] sm:min-h-[400px] max-w-2xl mx-auto mb-8">
+            <div className="relative min-h-[340px] sm:min-h-[360px] max-w-2xl mx-auto my-auto w-full">
               
               {/* SCRAP 1: Torn Lined Notebook Paper (Top Left, tilted -3°) */}
               <div className="absolute top-0 left-0 sm:left-4 z-10 w-[240px] sm:w-[310px] p-6 rounded-xs bg-notebook-ruled shadow-xl border border-[#0B3272]/20 transform -rotate-3 hover:rotate-0 transition-transform duration-300">
@@ -344,7 +344,7 @@ export default function Home() {
               </div>
 
               {/* SCRAP 3: Soft Cream Sticky Note with Paperclip (Center Bottom, overlapping both, tilted -1°) */}
-              <div className="absolute top-48 sm:top-50 left-1/2 -translate-x-1/2 z-30 w-[260px] sm:w-[330px] p-6 sm:p-8 rounded-sm bg-kraft-note shadow-2xl border border-[#0B3272]/30 transform -rotate-1 hover:rotate-0 transition-transform duration-300">
+              <div className="absolute top-44 sm:top-48 left-1/2 -translate-x-1/2 z-30 w-[260px] sm:w-[330px] p-6 sm:p-8 rounded-sm bg-kraft-note shadow-2xl border border-[#0B3272]/30 transform -rotate-1 hover:rotate-0 transition-transform duration-300">
                 
                 {/* Metallic Paperclip */}
                 <div className="absolute -top-5 left-10 pointer-events-none select-none">
@@ -365,7 +365,7 @@ export default function Home() {
             </div>
 
             {/* Hand-Drawn Botanical Sketch at Bottom (Forest Blue #0B3272 & Path Gold #E4BA83) */}
-            <div className="w-full flex justify-between items-end pt-4 select-none pointer-events-none opacity-80">
+            <div className="w-full flex justify-between items-end pt-2 select-none pointer-events-none opacity-80">
               
               {/* Left: Fallen Tree Log with Bark & Mushrooms */}
               <div className="w-44 sm:w-56">
@@ -400,13 +400,6 @@ export default function Home() {
                 </svg>
               </div>
 
-            </div>
-
-            {/* Bottom Page Margin Fold & DIARY CONCLUSION STAMP */}
-            <div className="w-full bg-[#E8DEC8] py-2 px-6 flex items-center justify-between font-mono text-[11px] text-[#061840]/70 border-t border-[#0B3272]/20 mt-6 rounded-b-md">
-              <span>✦ CHAPTER CONCLUDED</span>
-              <span>RUCHI BHEDA DIARY // 2026</span>
-              <span>END OF NOTEBOOK ✦</span>
             </div>
 
           </div>
