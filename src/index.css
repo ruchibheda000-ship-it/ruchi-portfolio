@@ -179,15 +179,28 @@ html {
 }
 
 /* ======================================================================== */
-/* 2-PAGE PHYSICAL OPEN DIARY SPINE-HINGING ANIMATION                      */
-/* The central horizontal spine is the stationary anchor.                   */
-/* Page 1 hinges open upwards from the spine.                               */
-/* Page 2 hinges open downwards from the spine.                             */
+/* 3D PHYSICAL BOOK HINGE KINEMATICS                                        */
 /* ======================================================================== */
 
-.diary-spine-anchor {
-  perspective: 2200px;
+.diary-3d-scene {
+  perspective: 2500px;
   transform-style: preserve-3d;
+}
+
+.book-3d-leaf {
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.face-front {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.face-back {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: rotateX(180deg);
 }
 
 /* Page 1 (Top half): Hinges up around the bottom edge (central spine) */

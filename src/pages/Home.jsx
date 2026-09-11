@@ -54,11 +54,11 @@ export default function Home() {
     if (!scrollTrackRef.current) return
     const rect = scrollTrackRef.current.getBoundingClientRect()
     if (scrollProgress < 0.5) {
-      // Scroll to fully opened state
+      // Scroll down to fully open position
       const targetY = window.scrollY + rect.top + (scrollTrackRef.current.offsetHeight - window.innerHeight)
       window.scrollTo({ top: targetY, behavior: 'smooth' })
     } else {
-      // Scroll to closed state
+      // Scroll back up to closed position
       const targetY = window.scrollY + rect.top
       window.scrollTo({ top: targetY, behavior: 'smooth' })
     }
@@ -75,12 +75,14 @@ export default function Home() {
     setCheckedItems(prev => ({ ...prev, [key]: !prev[key] }))
   }
 
-  // Physical 3D Cover Angle and Inner Page Reveal calculations
-  // 0% -> Closed (angle 0deg)
-  // 100% -> Fully Open (angle 180deg)
-  const coverAngle = Math.min(180, scrollProgress * 180)
-  const isCoverLifting = scrollProgress > 0.02
-  const isOpenFlat = scrollProgress >= 0.95
+  // Cover 3D Angle: 0deg (Closed on Page 2) -> -180deg (Fully Opened as Page 1)
+  const coverAngle = -scrollProgress * 180
+  const isOpen = scrollProgress >= 0.95
+  const isClosed = scrollProgress <= 0.05
+
+  // Dynamic shadow cast by the lifting cover onto the page underneath
+  const liftShadowOpacity = Math.sin(scrollProgress * Math.PI) * 0.65
+  const liftShadowBlur = Math.sin(scrollProgress * Math.PI) * 50
 
   return (
     <div className="min-h-screen bg-[#061840] text-[#F1E3CC] font-body selection:bg-[#E4BA83] selection:text-[#061840] relative overflow-x-hidden pb-24">
@@ -162,21 +164,26 @@ export default function Home() {
 
       {/* ========================================================================= */}
       {/* 3. SCROLL-DRIVEN PHYSICAL DIARY HERO                                      */}
-      {/* INITIAL STATE (0%): CLOSED BLUE DIARY with "Portfolio" (Reference 1 & 2)  */}
-      {/* SCROLLING (0% -> 100%): COVER PHYSICALLY HINGES OPEN AROUND CENTRAL SPINE  */}
-      {/* FULLY OPEN (100%): TWO-PAGE OPEN SPREAD (PAGE 1 INTRO, PAGE 2 3 BELIEFS)   */}
+      {/*                                                                           */}
+      {/* THE PHYSICAL PRINCIPLE:                                                   */}
+      {/* - Central horizontal spine is the FIXED STATIONARY ANCHOR HINGE.          */}
+      {/* - Closed state (0%): The front cover lies closed over the pages.          */}
+      {/* - Scrolling (0% -> 100%): The front cover physically hinges 180° upward   */}
+      {/*   around the spine, naturally revealing Page 1 on its inside face and     */}
+      {/*   Page 2 underneath on the table!                                         */}
+      {/* - Open state (100%): Page 1 (Top) + Spine (Center) + Page 2 (Bottom).     */}
       {/* ========================================================================= */}
-      <div ref={scrollTrackRef} className="relative w-full h-[230vh]">
+      <div ref={scrollTrackRef} className="relative w-full h-[240vh]">
         
         {/* Sticky Viewport Container */}
-        <div className="sticky top-6 sm:top-10 w-full min-h-[92vh] flex flex-col items-center justify-center pointer-events-auto px-3 sm:px-6">
+        <div className="sticky top-4 sm:top-8 w-full min-h-[94vh] flex flex-col items-center justify-center pointer-events-auto px-3 sm:px-6">
           
-          {/* Subtle Dynamic Status Bar */}
+          {/* Subtle Status Bar / Mode Indicator */}
           <div className="w-full max-w-4xl lg:max-w-5xl flex items-center justify-between mb-2 sm:mb-3 font-mono text-[10px] sm:text-xs text-[#8DA1B4]">
             <div className="flex items-center gap-2">
-              <span className={`w-2 h-2 rounded-full ${isOpenFlat ? 'bg-[#E4BA83]' : 'bg-[#0B3272] border border-[#E4BA83]/60'}`}></span>
+              <span className={`w-2 h-2 rounded-full ${isOpen ? 'bg-[#E4BA83]' : 'bg-[#0B3272] border border-[#E4BA83]/60'}`}></span>
               <span className="uppercase tracking-wider">
-                {isOpenFlat ? 'PHYSICAL DIARY // FULLY OPENED' : scrollProgress > 0.1 ? `OPENING SPREAD // ${Math.round(scrollProgress * 100)}%` : 'PERSONAL NOTEBOOK // CLOSED COVER'}
+                {isOpen ? 'PHYSICAL DIARY // FULLY OPENED' : scrollProgress > 0.05 ? `COVER HINGING OPEN // ${Math.round(scrollProgress * 100)}%` : 'CLOSED NOTEBOOK // SCROLL TO OPEN'}
               </span>
             </div>
             <button
@@ -184,43 +191,42 @@ export default function Home() {
               type="button"
               className="flex items-center gap-1.5 px-3 py-0.5 rounded-full border border-[#0B3272] bg-[#061840]/60 text-[#E4BA83] hover:bg-[#0B3272] hover:text-[#F1E3CC] transition-colors cursor-pointer select-none"
             >
-              <span>{isOpenFlat ? '▲ Close Diary' : '▼ Scroll / Click to Open'}</span>
+              <span>{isOpen ? '▲ Close Diary' : '▼ Scroll / Click to Open'}</span>
             </button>
           </div>
 
-          {/* THE PHYSICAL DIARY (3D Perspective Spine Container) */}
-          <div className="relative z-20 w-full max-w-4xl lg:max-w-5xl [perspective:2400px]">
+          {/* 3D SCENE: Physical Book with Central Horizontal Spine Hinge */}
+          <div
+            className="relative z-20 w-full max-w-4xl lg:max-w-5xl diary-3d-scene transition-transform duration-100 ease-out"
+            style={{
+              // Center the closed notebook vertically at 0%, and center the open two-page spread at 100%
+              transform: `translateY(${(1 - scrollProgress) * -120}px)`
+            }}
+          >
             
-            {/* SILK BOOKMARK RIBBON (Gold #E4BA83 silk ribbon peeking from spine) */}
-            <div className="absolute -left-4 sm:-left-6 top-1/2 -translate-y-1/2 z-40 pointer-events-none select-none">
+            {/* BOOKMARK RIBBON (Gold #E4BA83 silk ribbon peeking from the fixed spine fold) */}
+            <div className="absolute -left-4 sm:-left-6 top-[50%] -translate-y-1/2 z-40 pointer-events-none select-none">
               <svg width="50" height="30" viewBox="0 0 50 30" fill="none">
                 <path d="M50 10 C32 6, 12 18, 0 28 L0 18 C12 8, 32 2, 50 4 Z" fill="#E4BA83" />
               </svg>
             </div>
-            <div className="absolute -right-4 sm:-right-6 top-1/2 -translate-y-1/2 z-40 pointer-events-none select-none">
+            <div className="absolute -right-4 sm:-right-6 top-[50%] -translate-y-1/2 z-40 pointer-events-none select-none">
               <svg width="50" height="30" viewBox="0 0 50 30" fill="none" className="transform scale-x-[-1]">
                 <path d="M50 10 C32 6, 12 18, 0 28 L0 18 C12 8, 32 2, 50 4 Z" fill="#E4BA83" />
               </svg>
             </div>
 
-            {/* ------------------------------------------------------------------- */}
-            {/* PHYSICAL DIARY CONTAINER                                            */}
-            {/* When closed: shows the Blue Cover with "Portfolio"                  */}
-            {/* When opening: Cover physically lifts upward around central spine    */}
-            {/* When open: Upper Page 1 & Lower Page 2 form a balanced landscape     */}
-            {/* ------------------------------------------------------------------- */}
-            <div className="relative w-full book-ground-shadow rounded-[32px] sm:rounded-[44px] overflow-visible">
+            {/* THE TWO-PAGE OPEN SPREAD BASE CONTAINER */}
+            <div className="relative w-full book-ground-shadow rounded-[32px] sm:rounded-[44px]">
               
-              {/* UPPER HALF: BLUE COVER + PAGE 1 (Hinges open upwards around spine) */}
-              <div
-                className="relative rounded-t-[32px] sm:rounded-t-[44px] bg-crumpled-cover border-paper-cover border-b-0 p-2.5 sm:p-4 pb-0 origin-bottom [transform-style:preserve-3d] transition-shadow duration-300"
-                style={{
-                  transform: `rotateX(${-Math.max(0, (1 - scrollProgress) * 75)}deg)`,
-                  filter: `brightness(${0.88 + scrollProgress * 0.12})`
-                }}
-              >
-                {/* PAGE 1 INTERIOR (Warm Cream Paper with Blue Grid - Equal Height to Page 2) */}
-                <div className="relative rounded-t-[24px] sm:rounded-t-[36px] bg-diary-grid text-[#061840] p-6 sm:p-10 lg:p-12 border border-[#E8DEC8] border-b-0 page-upper-depth overflow-hidden min-h-[460px] sm:min-h-[500px] lg:min-h-[520px] flex flex-col justify-center">
+              {/* ----------------------------------------------------------------- */}
+              {/* A. UPPER HALF: PAGE 1 RESTING PLACE (Above the Spine)             */}
+              {/* Visible when the cover hinges open to 100%                        */}
+              {/* ----------------------------------------------------------------- */}
+              <div className="relative rounded-t-[32px] sm:rounded-t-[44px] bg-crumpled-cover border-paper-cover border-b-0 p-2.5 sm:p-4 pb-0 min-h-[460px] sm:min-h-[500px] lg:min-h-[520px] flex flex-col justify-center">
+                
+                {/* PAGE 1 INTERIOR (Warm Cream Paper with Blue Grid) */}
+                <div className="relative rounded-t-[24px] sm:rounded-t-[36px] bg-diary-grid text-[#061840] p-6 sm:p-10 lg:p-12 border border-[#E8DEC8] border-b-0 page-upper-depth overflow-hidden h-full flex flex-col justify-center">
                   
                   {/* Top margin wash */}
                   <div className="absolute top-0 left-0 right-0 h-3 bg-linear-to-b from-[#E6D9C8] to-transparent opacity-60 pointer-events-none"></div>
@@ -230,8 +236,6 @@ export default function Home() {
                     
                     {/* Left Column: Wordmark, Role, Core Statement, Location & Time */}
                     <div className="md:col-span-6 lg:col-span-6 space-y-4 sm:space-y-6">
-                      
-                      {/* Hand-drawn wordmark in Forest Blue with Path Gold dot */}
                       <div>
                         <span className="font-hand text-4xl sm:text-5xl lg:text-6xl text-[#0B3272] font-bold tracking-tight inline-block transform -rotate-1 select-none">
                           Ruchi<span className="text-2xl sm:text-3xl font-mono ml-1 text-[#E4BA83]">ツ</span>
@@ -241,7 +245,6 @@ export default function Home() {
                         </div>
                       </div>
 
-                      {/* Core Statement */}
                       <div>
                         <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl text-[#061840] leading-[1.14] tracking-tight">
                           <span>I find the </span>
@@ -252,7 +255,6 @@ export default function Home() {
                         </h1>
                       </div>
 
-                      {/* Location & Time Indicator */}
                       <div className="flex items-center gap-2 font-serif text-sm sm:text-base text-[#0B3272]/85 pt-1">
                         <span>Mumbai</span>
                         <span>•</span>
@@ -264,42 +266,29 @@ export default function Home() {
                           </>
                         )}
                       </div>
-
                     </div>
 
-                    {/* Right Column: Hand-Drawn SVG Botanical Window Illustration (Matching Image 2) */}
+                    {/* Right Column: Hand-Drawn SVG Botanical Window Illustration */}
                     <div className="md:col-span-6 lg:col-span-6 relative flex justify-center items-center">
                       <div className="relative w-full max-w-[340px] sm:max-w-[380px]">
                         <svg viewBox="0 0 380 340" fill="none" stroke="#0B3272" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" className="w-full h-auto select-none">
-                          
-                          {/* Window Header Frame */}
                           <rect x="65" y="60" width="220" height="230" rx="4" strokeWidth="2.5" />
                           <line x1="65" y1="84" x2="285" y2="84" strokeWidth="2" />
-                          
-                          {/* Window Controls */}
                           <rect x="75" y="68" width="8" height="8" rx="1" />
                           <text x="145" y="77" fill="#0B3272" stroke="none" fontFamily="sans-serif" fontSize="9" fontWeight="bold" letterSpacing="1">UNTITLED</text>
                           <line x1="262" y1="72" x2="274" y2="72" />
                           <line x1="262" y1="76" x2="274" y2="76" />
-
-                          {/* Birds perched on the window */}
                           <path d="M102 60 C102 46, 116 46, 116 60 Z" />
                           <circle cx="111" cy="51" r="1" fill="#E4BA83" />
                           <path d="M115 52 L119 53" />
-                          
                           <path d="M124 60 C124 46, 138 46, 138 60 Z" />
                           <circle cx="133" cy="51" r="1" fill="#E4BA83" />
                           <path d="M137 52 L141 53" />
-                          
                           <path d="M236 60 C236 46, 250 46, 250 60 Z" />
                           <circle cx="240" cy="51" r="1" fill="#E4BA83" />
                           <path d="M236 52 L232 53" />
-
-                          {/* Search pill inside window */}
                           <rect x="130" y="105" width="80" height="20" rx="10" />
                           <path d="M150 115 Q158 110 166 115" stroke="#E4BA83" />
-
-                          {/* Friendly Character holding screen */}
                           <rect x="135" y="152" width="62" height="82" rx="12" strokeWidth="2.2" fill="#F6E8D2" />
                           <circle cx="212" cy="180" r="18" fill="#F6E8D2" />
                           <circle cx="206" cy="176" r="2" fill="#0B3272" />
@@ -309,24 +298,17 @@ export default function Home() {
                           <ellipse cx="140" cy="186" rx="6" ry="4" fill="#F6E8D2" />
                           <ellipse cx="196" cy="204" rx="6" ry="5" fill="#F6E8D2" />
                           <path d="M202 198 L196 245 L228 245 L224 198" />
-
-                          {/* Friendly Peeking Critter on Right */}
                           <path d="M280 190 Q292 186 298 205 L292 270 L274 270" fill="#F6E8D2" />
                           <ellipse cx="294" cy="200" rx="12" ry="16" fill="#F6E8D2" />
                           <circle cx="292" cy="196" r="2" fill="#0B3272" />
                           <path d="M298 190 Q310 188 304 200" />
                           <path d="M304 202 L316 206" stroke="#E4BA83" />
-
-                          {/* Lush Foliage & Ferns */}
                           <path d="M52 230 C30 200, 70 170, 95 190 C110 160, 150 170, 140 210" fill="#F6E8D2" />
                           <path d="M62 255 C40 220, 80 190, 110 220" />
                           <path d="M68 280 C35 240, 100 220, 140 250" fill="#F6E8D2" />
-
                           <path d="M96 280 C80 250, 120 230, 146 250 C170 220, 220 225, 230 255 C250 225, 300 240, 290 280 Z" fill="#F6E8D2" />
                           <path d="M102 284 L106 274 L110 284" />
                           <path d="M174 286 L178 274 L182 286" />
-
-                          {/* Bottom-left blooming flower buds */}
                           <path d="M4 275 Q24 235 48 200" strokeWidth="2.5" />
                           <ellipse cx="24" cy="216" rx="10" ry="14" transform="rotate(-30 24 216)" fill="#F6E8D2" />
                           <path d="M18 204 Q24 216 22 228" />
@@ -341,7 +323,10 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* CENTRAL DIARY SPINE (STATIONARY HORIZONTAL BINDING ANCHOR) */}
+              {/* ----------------------------------------------------------------- */}
+              {/* B. CENTRAL DIARY SPINE (FIXED STATIONARY AXIS & HINGE)             */}
+              {/* The anchor point connecting the top half and bottom half           */}
+              {/* ----------------------------------------------------------------- */}
               <div className="relative z-30 w-full h-8 sm:h-10 bg-crumpled-cover border-x border-paper-cover flex items-center justify-center select-none pointer-events-none px-2.5 sm:px-4">
                 <div className="w-full h-full spine-crease-shadow border-y border-[#0B3272]/40 flex items-center justify-center px-6">
                   <div className="w-full flex items-center justify-center gap-3">
@@ -354,17 +339,26 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* LOWER HALF: BLUE COVER + PAGE 2 (Hinges open downwards around spine) */}
-              <div
-                className="relative rounded-b-[32px] sm:rounded-b-[44px] bg-crumpled-cover border-paper-cover border-t-0 p-2.5 sm:p-4 pt-0 origin-top [transform-style:preserve-3d] transition-shadow duration-300"
-                style={{
-                  transform: `rotateX(${Math.max(0, (1 - scrollProgress) * 55)}deg)`,
-                  filter: `brightness(${0.9 + scrollProgress * 0.1})`
-                }}
-              >
-                {/* PAGE 2 INTERIOR (Warm Paper - Equal Height to Page 1, Exactly matching Image 2) */}
-                <div id="diary-beliefs" className="relative rounded-b-[24px] sm:rounded-b-[36px] bg-[#F6E8D2] px-6 sm:px-12 lg:px-16 pt-8 sm:pt-10 pb-6 sm:pb-8 border border-[#E8DEC8] border-t-0 page-lower-depth text-[#061840] overflow-hidden min-h-[460px] sm:min-h-[500px] lg:min-h-[520px] flex flex-col justify-between">
+              {/* ----------------------------------------------------------------- */}
+              {/* C. LOWER HALF: PAGE 2 (Underneath the cover on the desk)           */}
+              {/* Dedicated exclusively to "3 Things I Strongly Believe In"          */}
+              {/* ----------------------------------------------------------------- */}
+              <div className="relative rounded-b-[32px] sm:rounded-b-[44px] bg-crumpled-cover border-paper-cover border-t-0 p-2.5 sm:p-4 pt-0 min-h-[460px] sm:min-h-[500px] lg:min-h-[520px] flex flex-col justify-between">
+                
+                {/* Physical Stacked Paper Block Edges (visible around the book sides) */}
+                <div className="absolute -bottom-2 right-4 left-4 h-2 rounded-b-md closed-book-paper-block opacity-90 pointer-events-none"></div>
+
+                {/* PAGE 2 INTERIOR (Warm Paper, 3 Sticky Notes, Botanical Line Art) */}
+                <div id="diary-beliefs" className="relative rounded-b-[24px] sm:rounded-b-[36px] bg-[#F6E8D2] px-6 sm:px-12 lg:px-16 pt-8 sm:pt-10 pb-6 sm:pb-8 border border-[#E8DEC8] border-t-0 page-lower-depth text-[#061840] overflow-hidden h-full flex flex-col justify-between">
                   
+                  {/* Dynamic Shadow Cast by the Lifting Front Cover */}
+                  <div
+                    className="absolute inset-0 bg-gradient-to-b from-black to-transparent pointer-events-none transition-opacity duration-75 z-20"
+                    style={{
+                      opacity: liftShadowOpacity
+                    }}
+                  ></div>
+
                   {/* Header: Exactly matching Image 2 */}
                   <div className="max-w-2xl mb-4 sm:mb-6">
                     <h2 className="font-serif text-2xl sm:text-3xl lg:text-4xl text-[#061840] font-normal tracking-tight">
@@ -377,9 +371,7 @@ export default function Home() {
                     
                     {/* SCRAP 1: Torn Lined Notebook Paper (Top Left, tilted -3°) */}
                     <div className="absolute top-0 left-0 sm:left-4 z-10 w-[240px] sm:w-[310px] p-6 rounded-xs bg-notebook-ruled shadow-xl border border-[#0B3272]/20 transform -rotate-3 hover:rotate-0 transition-transform duration-300">
-                      {/* Jagged Torn Edge */}
                       <div className="absolute -top-1.5 left-0 right-0 h-2 bg-[#F6E8D2]" style={{ clipPath: 'polygon(0% 100%, 5% 0%, 10% 100%, 15% 0%, 20% 100%, 25% 0%, 30% 100%, 35% 0%, 40% 100%, 45% 0%, 50% 100%, 55% 0%, 60% 100%, 65% 0%, 70% 100%, 75% 0%, 80% 100%, 85% 0%, 90% 100%, 95% 0%, 100% 100%)' }}></div>
-                      
                       <div className="pt-3 font-hand text-2xl sm:text-3xl lg:text-4xl text-[#061840] font-bold leading-[1.3] select-none pl-4">
                         tirelessly<br />
                         pursue<br />
@@ -392,9 +384,7 @@ export default function Home() {
 
                     {/* SCRAP 2: Torn Graph Paper (Top Right, overlapping, tilted +4°) */}
                     <div className="absolute top-4 right-0 sm:right-6 z-20 w-[250px] sm:w-[320px] p-6 rounded-xs bg-torn-graph shadow-2xl border border-[#0B3272]/25 transform rotate-4 hover:rotate-0 transition-transform duration-300">
-                      {/* Jagged Torn Right Edge */}
                       <div className="absolute -right-1 top-0 bottom-0 w-2 bg-[#F6E8D2]" style={{ clipPath: 'polygon(0% 0%, 100% 5%, 0% 10%, 100% 15%, 0% 20%, 100% 25%, 0% 30%, 100% 35%, 0% 40%, 100% 45%, 0% 50%, 100% 55%, 0% 60%, 100% 65%, 0% 70%, 100% 75%, 0% 80%, 100% 85%, 0% 90%, 100% 95%, 0% 100%)' }}></div>
-                      
                       <div className="font-mono text-xl sm:text-2xl lg:text-3xl text-[#061840] font-bold leading-tight select-none">
                         Software<br />
                         should<br />
@@ -407,14 +397,11 @@ export default function Home() {
 
                     {/* SCRAP 3: Soft Cream Sticky Note with Paperclip (Center Bottom, overlapping both, tilted -1°) */}
                     <div className="absolute top-44 sm:top-48 left-1/2 -translate-x-1/2 z-30 w-[260px] sm:w-[330px] p-6 sm:p-8 rounded-sm bg-kraft-note shadow-2xl border border-[#0B3272]/30 transform -rotate-1 hover:rotate-0 transition-transform duration-300">
-                      
-                      {/* Metallic Paperclip */}
                       <div className="absolute -top-5 left-10 pointer-events-none select-none">
                         <svg width="22" height="42" viewBox="0 0 22 42" fill="none">
                           <path d="M6 10 L6 32 C6 37 16 37 16 32 L16 8 C16 3 3 3 3 8 L3 34 C3 41 19 41 19 34 L19 12" stroke="#0B3272" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
                         </svg>
                       </div>
-
                       <div className="font-serif italic font-bold text-2xl sm:text-3xl lg:text-4xl text-[#061840] leading-tight select-none pt-2">
                         Design for<br />
                         moments
@@ -428,8 +415,6 @@ export default function Home() {
 
                   {/* Hand-Drawn Botanical Sketch at Bottom (Forest Blue #0B3272 & Path Gold #E4BA83) */}
                   <div className="w-full flex justify-between items-end pt-2 select-none pointer-events-none opacity-80">
-                    
-                    {/* Left: Fallen Tree Log with Bark & Mushrooms */}
                     <div className="w-44 sm:w-56">
                       <svg viewBox="0 0 200 90" fill="none" stroke="#0B3272" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         <ellipse cx="40" cy="50" rx="18" ry="24" />
@@ -447,7 +432,6 @@ export default function Home() {
                       </svg>
                     </div>
 
-                    {/* Right: Wild Wheat & Floral Sprigs */}
                     <div className="w-48 sm:w-64">
                       <svg viewBox="0 0 220 110" fill="none" stroke="#0B3272" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         <path d="M120 100 Q140 50 170 20" />
@@ -461,55 +445,122 @@ export default function Home() {
                         <path d="M60 40 Q66 30 72 40 Q66 50 60 40" stroke="#E4BA83" />
                       </svg>
                     </div>
-
                   </div>
 
                 </div>
               </div>
 
-              {/* ------------------------------------------------------------------- */}
-              {/* THE CLOSED FRONT COVER OVERLAY (Visible at 0% scroll)               */}
-              {/* Features the exact hybrid "Portfolio" typography from Reference 1   */}
-              {/* Physically hinges upward around the spine as the user scrolls       */}
-              {/* ------------------------------------------------------------------- */}
+              {/* ----------------------------------------------------------------- */}
+              {/* D. THE HINGED 3D FRONT COVER LEAF                                 */}
+              {/* Anchored at the central horizontal spine hinge line               */}
+              {/* Physical Kinematics: Rotates from 0deg (closed) to -180deg (open) */}
+              {/* ----------------------------------------------------------------- */}
               <div
-                onClick={toggleDiaryOpen}
-                className="absolute inset-0 z-50 rounded-[32px] sm:rounded-[44px] bg-crumpled-cover border-paper-cover p-6 sm:p-12 flex flex-col justify-between origin-bottom [transform-style:preserve-3d] cursor-pointer select-none transition-opacity duration-200"
+                className="absolute left-0 right-0 top-[50%] z-50 book-3d-leaf cursor-pointer select-none origin-top pointer-events-auto"
                 style={{
-                  transform: `rotateX(${-coverAngle}deg)`,
-                  opacity: scrollProgress >= 0.85 ? 0 : 1,
-                  pointerEvents: scrollProgress >= 0.85 ? 'none' : 'auto',
-                  backfaceVisibility: 'hidden'
+                  height: 'calc(50% - 16px)',
+                  transform: `rotateX(${coverAngle}deg)`,
+                  // Once completely open, disable pointer events so inner links work
+                  pointerEvents: scrollProgress >= 0.96 ? 'none' : 'auto'
                 }}
+                onClick={toggleDiaryOpen}
               >
-                {/* Visible paper block edge peeking under the cover */}
-                <div className="absolute -bottom-2.5 right-6 left-6 h-2.5 rounded-b-md closed-book-paper-block opacity-90 pointer-events-none"></div>
+                {/* 1. FRONT FACE: CLOSED BLUE DIARY COVER (Faces viewer when closed) */}
+                <div
+                  className="absolute inset-0 face-front rounded-[32px] sm:rounded-[44px] bg-crumpled-cover border-paper-cover p-6 sm:p-10 flex flex-col justify-between"
+                  style={{
+                    boxShadow: `0 ${15 + liftShadowBlur}px ${30 + liftShadowBlur * 1.5}px rgba(0,0,0,${0.6 + liftShadowOpacity * 0.3})`
+                  }}
+                >
+                  {/* Paper block edge visible at bottom of closed cover */}
+                  <div className="absolute -bottom-2 right-4 left-4 h-2 rounded-b-md closed-book-paper-block opacity-90 pointer-events-none"></div>
 
-                {/* Cover Header */}
-                <div className="w-full flex items-center justify-between font-mono text-xs text-[#8DA1B4]">
-                  <div className="flex items-center gap-2">
-                    <span className="w-2.5 h-2.5 rounded-full bg-[#E4BA83] animate-pulse"></span>
-                    <span className="text-[#F1E3CC] font-bold tracking-wider">RUCHI BHEDA</span>
+                  {/* Cover Header */}
+                  <div className="w-full flex items-center justify-between font-mono text-xs text-[#8DA1B4]">
+                    <div className="flex items-center gap-2">
+                      <span className="w-2.5 h-2.5 rounded-full bg-[#E4BA83] animate-pulse"></span>
+                      <span className="text-[#F1E3CC] font-bold tracking-wider">RUCHI BHEDA</span>
+                    </div>
+                    <span className="border border-[#0B3272] bg-[#061840]/60 px-3 py-1 rounded-full text-[10px] text-[#E4BA83] font-semibold">
+                      PRODUCT DESIGNER
+                    </span>
                   </div>
-                  <span className="border border-[#0B3272] bg-[#061840]/60 px-3 py-1 rounded-full text-[10px] text-[#E4BA83] font-semibold">
-                    PRODUCT DESIGNER
-                  </span>
+
+                  {/* THE HERO TYPOGRAPHY: "Portfolio" (Reference 1 Typography) */}
+                  <div className="my-auto py-2 sm:py-4">
+                    <PortfolioCoverWord />
+                  </div>
+
+                  {/* Cover Footer / Scroll CTA */}
+                  <div className="w-full flex flex-col sm:flex-row items-center justify-between gap-2 pt-3 border-t border-[#F1E3CC]/15 text-xs font-mono text-[#8DA1B4]">
+                    <span className="flex items-center gap-1.5 text-[#F1E3CC]">
+                      <span className="text-[#E4BA83] font-bold">✦</span>
+                      <span>A personal journal of systems, products & moments</span>
+                    </span>
+                    <div className="flex items-center gap-2 text-[#E4BA83] font-semibold animate-bounce">
+                      <span>Scroll down to open journal</span>
+                      <span>↓</span>
+                    </div>
+                  </div>
                 </div>
 
-                {/* THE HERO TYPOGRAPHY: "Portfolio" (Directly inspired by Reference 1) */}
-                <div className="my-auto py-6">
-                  <PortfolioCoverWord />
-                </div>
+                {/* 2. BACK FACE: PAGE 1 (Rotated 180deg inside leaf; lands flat on top) */}
+                <div className="absolute inset-0 face-back rounded-t-[32px] sm:rounded-t-[44px] bg-crumpled-cover border-paper-cover border-b-0 p-2.5 sm:p-4 pb-0 flex flex-col justify-center">
+                  <div className="relative rounded-t-[24px] sm:rounded-t-[36px] bg-diary-grid text-[#061840] p-6 sm:p-10 lg:p-12 border border-[#E8DEC8] border-b-0 page-upper-depth overflow-hidden h-full flex flex-col justify-center">
+                    {/* Shadow overlay during swing */}
+                    <div
+                      className="absolute inset-0 bg-black/40 pointer-events-none transition-opacity"
+                      style={{
+                        opacity: Math.max(0, 1 - scrollProgress * 1.2)
+                      }}
+                    ></div>
 
-                {/* Cover Footer / Scroll CTA */}
-                <div className="w-full flex flex-col sm:flex-row items-center justify-between gap-3 pt-4 border-t border-[#F1E3CC]/15 text-xs font-mono text-[#8DA1B4]">
-                  <span className="flex items-center gap-1.5 text-[#F1E3CC]">
-                    <span className="text-[#E4BA83] font-bold">✦</span>
-                    <span>A personal journal of systems, products & moments</span>
-                  </span>
-                  <div className="flex items-center gap-2 text-[#E4BA83] font-semibold animate-bounce">
-                    <span>Scroll down to open journal</span>
-                    <span>↓</span>
+                    {/* Page 1 Duplicate Content for Seamless 3D Swing */}
+                    <div className="grid grid-cols-1 md:grid-cols-12 gap-6 lg:gap-8 items-center">
+                      <div className="md:col-span-6 lg:col-span-6 space-y-4 sm:space-y-6">
+                        <div>
+                          <span className="font-hand text-4xl sm:text-5xl lg:text-6xl text-[#0B3272] font-bold tracking-tight inline-block transform -rotate-1 select-none">
+                            Ruchi<span className="text-2xl sm:text-3xl font-mono ml-1 text-[#E4BA83]">ツ</span>
+                          </span>
+                          <div className="font-serif text-lg sm:text-xl md:text-2xl text-[#0B3272] tracking-wide mt-1">
+                            Product Designer
+                          </div>
+                        </div>
+
+                        <div>
+                          <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl text-[#061840] leading-[1.14] tracking-tight">
+                            <span>I find the </span>
+                            <span className="font-hand font-normal text-4xl sm:text-5xl md:text-6xl text-[#0B3272] inline-block transform -rotate-2 underline decoration-[#E4BA83] decoration-wavy decoration-2">
+                              why's
+                            </span>
+                            <span className="block">before the what's.</span>
+                          </h1>
+                        </div>
+
+                        <div className="flex items-center gap-2 font-serif text-sm sm:text-base text-[#0B3272]/85 pt-1">
+                          <span>Mumbai</span>
+                          <span>•</span>
+                          <span>GMT +5:30</span>
+                        </div>
+                      </div>
+
+                      <div className="md:col-span-6 lg:col-span-6 relative flex justify-center items-center">
+                        <div className="relative w-full max-w-[340px] sm:max-w-[380px]">
+                          <svg viewBox="0 0 380 340" fill="none" stroke="#0B3272" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" className="w-full h-auto select-none">
+                            <rect x="65" y="60" width="220" height="230" rx="4" strokeWidth="2.5" />
+                            <line x1="65" y1="84" x2="285" y2="84" strokeWidth="2" />
+                            <rect x="75" y="68" width="8" height="8" rx="1" />
+                            <text x="145" y="77" fill="#0B3272" stroke="none" fontFamily="sans-serif" fontSize="9" fontWeight="bold" letterSpacing="1">UNTITLED</text>
+                            <circle cx="212" cy="180" r="18" fill="#F6E8D2" />
+                            <circle cx="206" cy="176" r="2" fill="#0B3272" />
+                            <circle cx="216" cy="178" r="2" fill="#0B3272" />
+                            <path d="M206 186 Q212 192 218 186" />
+                            <path d="M52 230 C30 200, 70 170, 95 190 C110 160, 150 170, 140 210" fill="#F6E8D2" />
+                          </svg>
+                        </div>
+                      </div>
+                    </div>
+
                   </div>
                 </div>
 
