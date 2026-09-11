@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import Nav from '../components/Nav'
 import HangingCloth from '../components/HangingCloth'
@@ -16,6 +16,25 @@ export default function Home() {
     updateTime()
     const interval = setInterval(updateTime, 1000)
     return () => clearInterval(interval)
+  }, [])
+
+  // Reveal animation for the About Me section on scroll entry
+  const aboutRef = useRef(null)
+  const [aboutVisible, setAboutVisible] = useState(false)
+
+  useEffect(() => {
+    if (!aboutRef.current) return
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setAboutVisible(true)
+          observer.disconnect()
+        }
+      },
+      { threshold: 0.15 }
+    )
+    observer.observe(aboutRef.current)
+    return () => observer.disconnect()
   }, [])
 
   // Interactive checklist state for Contact section
@@ -384,7 +403,207 @@ export default function Home() {
       </div>
 
       {/* ========================================================================= */}
-      {/* 4. CONTACT ME SECTION (STEPPING OUTSIDE THE DIARY)                        */}
+      {/* 4. ABOUT ME SECTION (STEPPING OUT OF THE DIARY // BOLD & EXPRESSIVE)      */}
+      {/* Placed strictly AFTER Diary and BEFORE Contact Me!                        */}
+      {/* Asymmetrical composition: Large typography + layered personal visual     */}
+      {/* Palette: #061840 background, #F1E3CC headings, #E4BA83 gold, #8DA1B4 mist */}
+      {/* ========================================================================= */}
+      <section
+        ref={aboutRef}
+        id="about-me"
+        className={`relative z-20 w-full max-w-5xl mx-auto px-6 sm:px-12 pt-20 sm:pt-28 pb-12 transition-all duration-1000 ease-out ${
+          aboutVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+        }`}
+      >
+        {/* Subtle Decorative Background Chalk Doodle */}
+        <div className="absolute -top-6 right-12 pointer-events-none select-none opacity-40 hidden md:block">
+          <svg width="120" height="40" viewBox="0 0 120 40" fill="none" stroke="#8DA1B4" strokeWidth="1.8" strokeLinecap="round" strokeDasharray="3 3">
+            <path d="M10 30 Q60 5 110 25" />
+          </svg>
+        </div>
+
+        {/* Top Micro-Metadata Header */}
+        <div className="flex items-center gap-2.5 font-mono text-xs uppercase tracking-widest text-[#E4BA83] mb-8">
+          <span className="w-2 h-2 rounded-full bg-[#E4BA83]"></span>
+          <span>STEPPING BEYOND THE PAGES // THE PERSPECTIVE</span>
+          <span className="opacity-40">•</span>
+          <span className="text-[#8DA1B4]">RUCHI BHEDA</span>
+        </div>
+
+        {/* Asymmetrical Layout: Left (Expressive Typography & Narrative) | Right (Layered Tactile Visual) */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+          
+          {/* --------------------------------------------------------------------- */}
+          {/* LEFT SIDE: BOLD "ABOUT ME!" TYPOGRAPHY + PERSONAL INTRODUCTION        */}
+          {/* --------------------------------------------------------------------- */}
+          <div className="lg:col-span-7 space-y-6 sm:space-y-8">
+            
+            {/* Bold Expressive Heading */}
+            <div className="relative inline-block select-none">
+              <h2 className="font-serif text-6xl sm:text-7xl lg:text-8xl xl:text-9xl text-[#F1E3CC] leading-[0.88] tracking-tighter uppercase font-normal">
+                ABOUT<br />
+                <span className="font-hand text-[#E4BA83] tracking-normal lowercase text-7xl sm:text-8xl lg:text-9xl xl:text-[9.5rem] inline-block transform -rotate-3 ml-1 sm:ml-2">
+                  me<span className="text-[#F1E3CC] font-serif">!</span>
+                </span>
+              </h2>
+
+              {/* Hand-drawn swirl underline in Path Gold */}
+              <div className="absolute -bottom-3 left-2 sm:left-4 pointer-events-none">
+                <svg width="200" height="24" viewBox="0 0 200 24" fill="none" stroke="#E4BA83" strokeWidth="2.5" strokeLinecap="round">
+                  <path d="M4 14 Q65 2 130 16 Q165 22 194 10" />
+                </svg>
+              </div>
+            </div>
+
+            {/* Core Philosophy Statement */}
+            <div className="pt-2">
+              <p className="font-serif text-2xl sm:text-3xl lg:text-3xl text-[#F1E3CC] font-normal leading-snug">
+                I don't design in isolation. I design for{' '}
+                <span className="text-[#E4BA83] underline decoration-[#E4BA83]/50 decoration-wavy decoration-2">
+                  living human ecosystems
+                </span>.
+              </p>
+            </div>
+
+            {/* Story & Approach (Authentic Portfolio Narrative) */}
+            <div className="space-y-4 text-base sm:text-lg text-[#8DA1B4] font-normal leading-relaxed">
+              <p>
+                I am not trying to be limited to just UI/UX. I want to grow into a{' '}
+                <strong className="font-medium text-[#F1E3CC]">design entrepreneur</strong> who understands
+                products, businesses, brands, people, and technology as interconnected parts of a living whole.
+              </p>
+              <p>
+                Too often in technology, teams jump straight into the <em>what</em> before thoroughly interrogating
+                the <em>why</em>. My work starts with relentless curiosity: uncovering the underlying human motivations,
+                emotional frictions, and mental models that determine whether a product actually sticks.
+              </p>
+              <p>
+                Whether structuring complex clinical workflows, designing shared audio platforms, or crafting physical
+                wayfinding that guides thousands through real space, I bring a builder's curiosity and a founder's
+                accountability to every system I touch.
+              </p>
+            </div>
+
+            {/* Tactical Pillars / Attribute Pills */}
+            <div className="pt-2 flex flex-wrap gap-2.5 font-mono text-xs">
+              <span className="px-3.5 py-1.5 rounded-full bg-[#0B3272]/50 border border-[#0B3272] text-[#F1E3CC] flex items-center gap-1.5">
+                <span className="text-[#E4BA83]">✦</span>
+                <span>Product Strategy</span>
+              </span>
+              <span className="px-3.5 py-1.5 rounded-full bg-[#0B3272]/50 border border-[#0B3272] text-[#F1E3CC] flex items-center gap-1.5">
+                <span className="text-[#E4BA83]">✦</span>
+                <span>0-to-1 Systems</span>
+              </span>
+              <span className="px-3.5 py-1.5 rounded-full bg-[#0B3272]/50 border border-[#0B3272] text-[#F1E3CC] flex items-center gap-1.5">
+                <span className="text-[#E4BA83]">✦</span>
+                <span>Behavioral UX</span>
+              </span>
+              <span className="px-3.5 py-1.5 rounded-full bg-[#0B3272]/50 border border-[#0B3272] text-[#F1E3CC] flex items-center gap-1.5">
+                <span className="text-[#E4BA83]">✦</span>
+                <span>Design Entrepreneurship</span>
+              </span>
+            </div>
+
+            {/* Link to Full About Document */}
+            <div className="pt-2">
+              <Link
+                to="/about"
+                className="inline-flex items-center gap-2 font-mono text-sm text-[#E4BA83] font-semibold hover:text-[#F1E3CC] hover:translate-x-1 transition-all"
+              >
+                <span>Read full background, principles & story</span>
+                <span>→</span>
+              </Link>
+            </div>
+
+          </div>
+
+          {/* --------------------------------------------------------------------- */}
+          {/* RIGHT SIDE: LARGE PERSONAL VISUAL (TILTED TACTILE FRAMED COMPOSITION) */}
+          {/* Layered paper / photo treatment, washi tape, stamps & annotations      */}
+          {/* --------------------------------------------------------------------- */}
+          <div className="lg:col-span-5 relative flex justify-center items-center py-6">
+            
+            {/* Background Accent Glow */}
+            <div className="absolute inset-0 bg-radial from-[#0B3272]/30 via-transparent to-transparent blur-2xl pointer-events-none"></div>
+
+            {/* Main Tilted Art / Photo Frame */}
+            <div className="relative w-full max-w-[380px] sm:max-w-[420px] bg-[#F6E8D2] p-4 sm:p-5 pb-7 sm:pb-9 rounded-2xl shadow-[0_30px_70px_-15px_rgba(0,0,0,0.85)] border border-[#E8DEC8] transform rotate-2 hover:rotate-0 transition-transform duration-500 select-none group">
+              
+              {/* Translucent Washi Tape Strip at Top */}
+              <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 z-30 w-28 sm:w-32 h-7 bg-[#E8DEC8]/90 backdrop-blur-xs border-y border-[#0B3272]/15 shadow-xs transform -rotate-1 pointer-events-none"></div>
+
+              {/* Tilted Sticker 1: Top Left - "DESIGN ENTREPRENEUR" */}
+              <div className="absolute -top-4 -left-4 z-40 bg-[#0B3272] text-[#F1E3CC] border border-[#E4BA83] px-3.5 py-1.5 rounded-full font-mono text-[11px] shadow-xl flex items-center gap-1.5 transform -rotate-6 hover:scale-105 transition-transform">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#E4BA83] animate-pulse"></span>
+                <span className="font-bold tracking-wider">FOUNDER MINDSET</span>
+              </div>
+
+              {/* Framed Image Container: Ruchi's Signature Living Ecosystem Artwork */}
+              <div className="relative w-full rounded-xl overflow-hidden border border-[#0B3272]/20 shadow-inner bg-[#061840] aspect-4/3 flex items-center justify-center">
+                <img
+                  src="/og-image.jpg"
+                  alt="Ruchi Bheda - Living Human Ecosystems Signature Artwork"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                />
+                
+                {/* Overlay Vignette */}
+                <div className="absolute inset-0 bg-linear-to-t from-[#061840]/60 via-transparent to-transparent pointer-events-none"></div>
+
+                {/* Stamped Watermark in artwork */}
+                <div className="absolute bottom-2.5 left-3 font-mono text-[10px] text-[#F1E3CC]/90 bg-[#061840]/80 backdrop-blur-xs px-2 py-0.5 rounded border border-[#0B3272]">
+                  ✦ @withloveruchi
+                </div>
+              </div>
+
+              {/* Polaroids / Art Print Caption Footer */}
+              <div className="mt-4 flex items-center justify-between font-serif text-[#061840]">
+                <div>
+                  <div className="font-hand text-xl sm:text-2xl font-bold text-[#0B3272] leading-none">
+                    Ruchi Bheda
+                  </div>
+                  <div className="font-mono text-[10px] text-[#061840]/70 uppercase tracking-wider mt-0.5">
+                    Mumbai • Product Designer
+                  </div>
+                </div>
+
+                <div className="text-right font-mono text-[10px] text-[#0B3272] bg-[#E4BA83]/25 px-2 py-1 rounded border border-[#0B3272]/20 font-bold">
+                  2026 SPECIMEN
+                </div>
+              </div>
+
+              {/* Overlapping Floating Card: Bottom Right Note */}
+              <div className="absolute -bottom-6 -right-3 sm:-right-6 z-40 bg-[#061840] border border-[#0B3272] text-[#8DA1B4] p-3.5 sm:p-4 rounded-xl shadow-2xl font-mono text-xs max-w-[210px] sm:max-w-[230px] transform rotate-4 hover:rotate-0 transition-transform">
+                <div className="flex items-center gap-1.5 text-[#E4BA83] font-bold text-[10px] uppercase mb-1">
+                  <span>✦</span>
+                  <span>CORE INTENTION</span>
+                </div>
+                <p className="font-serif italic text-sm text-[#F1E3CC] leading-snug">
+                  "Software should feel thoughtful & empowering."
+                </p>
+                <div className="text-right font-hand text-base text-[#E4BA83] mt-1 select-none">
+                  — Ruchi ツ
+                </div>
+              </div>
+
+              {/* Hand-drawn ink arrow annotation pointing to the frame */}
+              <div className="absolute -bottom-8 -left-6 z-20 pointer-events-none select-none hidden sm:block">
+                <svg width="80" height="60" viewBox="0 0 80 60" fill="none" stroke="#E4BA83" strokeWidth="1.8" strokeLinecap="round">
+                  <path d="M12 48 Q32 52 50 36 Q64 24 68 12" />
+                  <path d="M60 14 L68 12 L70 20" />
+                  <text x="0" y="58" fill="#8DA1B4" stroke="none" fontFamily="monospace" fontSize="8" letterSpacing="0.5">tactile craft</text>
+                </svg>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+      {/* ========================================================================= */}
+      {/* 5. CONTACT ME SECTION (STEPPING OUTSIDE THE DIARY)                        */}
       {/* Separate visual moment in the #061840 Midnight Forest environment         */}
       {/* ========================================================================= */}
       <section className="relative z-20 w-full max-w-5xl mx-auto px-6 sm:px-12 pt-20 pb-16">
@@ -498,7 +717,7 @@ export default function Home() {
       </section>
 
       {/* ========================================================================= */}
-      {/* 5. TYPOGRAPHIC FABRIC (VERY LAST MAJOR VISUAL ELEMENT ON THE WEBSITE)     */}
+      {/* 6. TYPOGRAPHIC FABRIC (VERY LAST MAJOR VISUAL ELEMENT ON THE WEBSITE)     */}
       {/* Positioned strictly AFTER Contact Me!                                     */}
       {/* 🚨 LOCKED COMPONENT: Physical canvas & Web Audio chimes 100% untouched    */}
       {/* ========================================================================= */}
@@ -536,7 +755,7 @@ export default function Home() {
       </section>
 
       {/* ========================================================================= */}
-      {/* 6. FOOTER                                                                 */}
+      {/* 7. FOOTER                                                                 */}
       {/* ========================================================================= */}
       <footer className="w-full py-8 text-center font-mono text-xs text-[#8DA1B4] border-t border-[#0B3272]">
         <span>✦ Ruchi Bheda © 2026 • UI/UX Designer & Product Designer • Mumbai, India</span>
