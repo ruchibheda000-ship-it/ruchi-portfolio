@@ -8,12 +8,12 @@
   --font-mono: "JetBrains Mono", monospace;
   --font-display: "Averia Serif Libre", "Syne", serif;
   --font-body: "DM Sans", "Space Grotesk", sans-serif;
-  --color-bg-parchment: #F5EFEB;
-  --color-ink: #171717;
-  --color-coral: #E35342;
-  --color-sand: #F2E3CF;
-  --color-primary-blue: #173C64;
-  --color-primary-cream: #FFFED8;
+  --color-bg-midnight: #061840;
+  --color-forest-blue: #0B3272;
+  --color-warm-ivory: #F1E3CC;
+  --color-mist-blue: #8DA1B4;
+  --color-path-gold: #E4BA83;
+  --color-soft-cream: #F6E8D2;
 }
 
 /* Typography Utilities */
@@ -50,41 +50,41 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Custom Jackie Zhang-style Minimal Scrollbar */
+/* Custom Minimal Scrollbar */
 ::-webkit-scrollbar {
   width: 7px;
   height: 7px;
 }
 ::-webkit-scrollbar-track {
-  background: #F5EFEB;
+  background: #061840;
 }
 ::-webkit-scrollbar-thumb {
-  background: #171717;
+  background: #0B3272;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #E35342;
+  background: #E4BA83;
 }
 
-/* Tactile Studio Cutting Mat Grid Texture (Jackie Zhang Workbench) */
+/* Tactile Studio Cutting Mat Grid Texture (Midnight Forest Palette) */
 .cutting-mat-grid {
-  background-color: #171717;
+  background-color: #061840;
   background-image:
-    linear-gradient(rgba(242, 227, 207, 0.14) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(242, 227, 207, 0.14) 1px, transparent 1px),
-    linear-gradient(rgba(242, 227, 207, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(242, 227, 207, 0.05) 1px, transparent 1px);
+    linear-gradient(rgba(11, 50, 114, 0.45) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(11, 50, 114, 0.45) 1px, transparent 1px),
+    linear-gradient(rgba(228, 186, 131, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(228, 186, 131, 0.08) 1px, transparent 1px);
   background-size: 50px 50px, 50px 50px, 10px 10px, 10px 10px;
 }
 
-/* Light Studio Cutting Mat Grid */
-.cutting-mat-parchment {
-  background-color: #F5EFEB;
+/* Secondary Surface Grid */
+.cutting-mat-forest {
+  background-color: #0B3272;
   background-image:
-    linear-gradient(rgba(23, 23, 23, 0.1) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(23, 23, 23, 0.1) 1px, transparent 1px),
-    linear-gradient(rgba(23, 23, 23, 0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(23, 23, 23, 0.04) 1px, transparent 1px);
+    linear-gradient(rgba(241, 227, 204, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(241, 227, 204, 0.08) 1px, transparent 1px),
+    linear-gradient(rgba(228, 186, 131, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(228, 186, 131, 0.04) 1px, transparent 1px);
   background-size: 40px 40px, 40px 40px, 10px 10px, 10px 10px;
 }
 
