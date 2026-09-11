@@ -423,13 +423,6 @@ export default function Home() {
           </svg>
         </div>
 
-        {/* Top Micro-Metadata Header */}
-        <div className="flex items-center gap-2.5 font-mono text-xs uppercase tracking-widest text-[#E4BA83] mb-8">
-          <span className="w-2 h-2 rounded-full bg-[#E4BA83]"></span>
-          <span>STEPPING BEYOND THE PAGES // THE PERSPECTIVE</span>
-          <span className="opacity-40">•</span>
-          <span className="text-[#8DA1B4]">RUCHI BHEDA</span>
-        </div>
 
         {/* Asymmetrical Layout: Left (Expressive Typography & Narrative) | Right (Layered Tactile Visual) */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
