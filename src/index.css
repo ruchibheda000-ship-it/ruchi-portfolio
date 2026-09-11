@@ -90,44 +90,44 @@ html {
 
 /* Diary Notebook Grid Texture (Warm Cream Page with subtle grid) */
 .bg-diary-grid {
-  background-color: #FAF4EB;
+  background-color: #F6E8D2;
   background-image:
-    linear-gradient(rgba(180, 195, 215, 0.45) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(180, 195, 215, 0.45) 1px, transparent 1px);
+    linear-gradient(rgba(11, 50, 114, 0.12) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(11, 50, 114, 0.12) 1px, transparent 1px);
   background-size: 32px 32px;
 }
 
-/* Torn Lined Notebook Scrap (Blue ruled lines with red vertical margin line) */
+/* Torn Lined Notebook Scrap (Forest Blue ruled lines with Path Gold vertical margin) */
 .bg-notebook-ruled {
-  background-color: #FDFBF7;
+  background-color: #F1E3CC;
   background-image:
     repeating-linear-gradient(
       transparent,
       transparent 26px,
-      rgba(100, 149, 237, 0.4) 27px,
-      rgba(100, 149, 237, 0.4) 28px
+      rgba(11, 50, 114, 0.25) 27px,
+      rgba(11, 50, 114, 0.25) 28px
     ),
     linear-gradient(
       90deg,
       transparent 32px,
-      rgba(235, 87, 87, 0.45) 32px,
-      rgba(235, 87, 87, 0.45) 34px,
+      rgba(228, 186, 131, 0.6) 32px,
+      rgba(228, 186, 131, 0.6) 34px,
       transparent 34px
     );
 }
 
 /* Torn Graph Paper Scrap */
 .bg-torn-graph {
-  background-color: #E7E6E2;
+  background-color: #F1E3CC;
   background-image:
-    linear-gradient(rgba(120, 120, 120, 0.25) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(120, 120, 120, 0.25) 1px, transparent 1px);
+    linear-gradient(rgba(11, 50, 114, 0.18) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(11, 50, 114, 0.18) 1px, transparent 1px);
   background-size: 16px 16px;
 }
 
-/* Kraft Sticky Note */
+/* Soft Cream Sticky Note */
 .bg-kraft-note {
-  background-color: #D3C2AF;
+  background-color: #F6E8D2;
 }
 
 /* ======================================================================== */
