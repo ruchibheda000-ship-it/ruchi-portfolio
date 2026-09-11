@@ -1,97 +1,38 @@
 import React from 'react'
-import { NavLink, Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
+
+const navLinks = [
+  { to: '/', label: ':)', fullLabel: 'Home', ariaLabel: 'Home' },
+  { to: '/about', label: 'about', fullLabel: 'About', ariaLabel: 'About' },
+  { to: '/work', label: 'work', fullLabel: 'Work', ariaLabel: 'Work' },
+  { to: '/contact', label: 'Connect', fullLabel: 'Contact', ariaLabel: 'Contact' },
+]
 
 export default function Nav() {
   return (
-    <header className="w-full z-50 pt-8 sm:pt-12 pb-4 sm:pb-6 px-6 sm:px-12 lg:px-20">
+    <header className="sticky top-4 sm:top-6 z-50 w-full flex justify-center px-4 mb-6 sm:mb-10 pointer-events-none">
       <nav
-        className="max-w-7xl mx-auto flex items-baseline justify-between"
+        className="pointer-events-auto bg-[#171717] text-[#F5EFEB] px-8 sm:px-12 py-2 sm:py-2.5 rounded-full shadow-2xl border border-white/10 flex items-center justify-center gap-7 sm:gap-11 font-hand text-2xl sm:text-3xl tracking-wide select-none backdrop-blur-md"
         aria-label="Main Navigation"
       >
-        {/* Left: Designer Name / Wordmark */}
-        <Link
-          to="/"
-          className="group flex flex-col sm:flex-row sm:items-baseline sm:gap-3 text-[#171717] no-underline focus:outline-hidden"
-        >
-          <span className="font-serif text-2xl sm:text-3xl md:text-4xl font-normal tracking-tight group-hover:text-[#E35342] transition-colors duration-200">
-            ruchi bheda
-          </span>
-          <span className="font-mono text-[10px] sm:text-xs text-[#171717]/50 tracking-wider uppercase">
-            product designer
-          </span>
-        </Link>
-
-        {/* Right: Editorial Links (about, Work, Connect) */}
-        <div className="flex items-center gap-6 sm:gap-10 md:gap-14 text-[#171717]">
+        {navLinks.map((link) => (
           <NavLink
-            to="/about"
+            key={link.to}
+            to={link.to}
+            end={link.to === '/'}
+            title={link.fullLabel}
+            aria-label={link.ariaLabel}
             className={({ isActive }) =>
-              `group relative py-1 text-sm sm:text-base md:text-lg transition-colors duration-200 ${
+              `relative inline-block transition-colors duration-200 cursor-pointer ${
                 isActive
-                  ? 'font-bold text-[#E35342]'
-                  : 'font-normal text-[#171717]/80 hover:text-[#E35342]'
+                  ? 'text-[#E35342] font-bold underline decoration-[#E35342] decoration-2 underline-offset-6'
+                  : 'text-[#F5EFEB]/85 no-underline hover:text-[#E35342] hover:underline hover:decoration-[#E35342] hover:decoration-2 hover:underline-offset-4'
               }`
             }
           >
-            {({ isActive }) => (
-              <>
-                <span>about</span>
-                <span
-                  className={`block absolute -bottom-0.5 left-0 h-[1.5px] bg-[#E35342] transition-all duration-200 ease-out ${
-                    isActive ? 'w-full' : 'w-0 group-hover:w-full'
-                  }`}
-                  aria-hidden="true"
-                />
-              </>
-            )}
+            {link.label}
           </NavLink>
-
-          <NavLink
-            to="/work"
-            className={({ isActive }) =>
-              `group relative py-1 text-sm sm:text-base md:text-lg transition-colors duration-200 ${
-                isActive
-                  ? 'font-bold text-[#E35342]'
-                  : 'font-normal text-[#171717]/80 hover:text-[#E35342]'
-              }`
-            }
-          >
-            {({ isActive }) => (
-              <>
-                <span>Work</span>
-                <span
-                  className={`block absolute -bottom-0.5 left-0 h-[1.5px] bg-[#E35342] transition-all duration-200 ease-out ${
-                    isActive ? 'w-full' : 'w-0 group-hover:w-full'
-                  }`}
-                  aria-hidden="true"
-                />
-              </>
-            )}
-          </NavLink>
-
-          <NavLink
-            to="/contact"
-            className={({ isActive }) =>
-              `group relative py-1 text-sm sm:text-base md:text-lg transition-colors duration-200 ${
-                isActive
-                  ? 'font-bold text-[#E35342]'
-                  : 'font-normal text-[#171717]/80 hover:text-[#E35342]'
-              }`
-            }
-          >
-            {({ isActive }) => (
-              <>
-                <span>Connect</span>
-                <span
-                  className={`block absolute -bottom-0.5 left-0 h-[1.5px] bg-[#E35342] transition-all duration-200 ease-out ${
-                    isActive ? 'w-full' : 'w-0 group-hover:w-full'
-                  }`}
-                  aria-hidden="true"
-                />
-              </>
-            )}
-          </NavLink>
-        </div>
+        ))}
       </nav>
     </header>
   )
