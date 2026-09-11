@@ -156,30 +156,73 @@ html {
 }
 
 /* ======================================================================== */
-/* 2-PAGE PHYSICAL OPEN DIARY 90° ROTATION & OPENING ANIMATION             */
+/* 2-PAGE PHYSICAL OPEN DIARY SPINE-HINGING ANIMATION                      */
+/* The central horizontal spine is the stationary anchor.                   */
+/* Page 1 hinges open upwards from the spine.                               */
+/* Page 2 hinges open downwards from the spine.                             */
 /* ======================================================================== */
 
-@keyframes diaryRotateOpen90 {
+.diary-spine-anchor {
+  perspective: 2200px;
+  transform-style: preserve-3d;
+}
+
+/* Page 1 (Top half): Hinges up around the bottom edge (central spine) */
+@keyframes hingeOpenPage1 {
   0% {
-    opacity: 0.7;
-    transform: perspective(2000px) rotate(-90deg) scale(0.68);
+    transform: rotateX(-85deg);
+    opacity: 0.2;
+    filter: brightness(0.85);
   }
-  35% {
+  50% {
+    transform: rotateX(12deg);
     opacity: 0.95;
-    transform: perspective(2000px) rotate(-32deg) scale(0.88);
+    filter: brightness(1.03);
   }
-  70% {
-    transform: perspective(2000px) rotate(-3deg) scale(1.012);
+  75% {
+    transform: rotateX(-3.5deg);
+    filter: brightness(1);
   }
   100% {
+    transform: rotateX(0deg);
     opacity: 1;
-    transform: perspective(2000px) rotate(0deg) scale(1);
+    filter: brightness(1);
   }
 }
 
-.animate-diary-rotate-open {
-  animation: diaryRotateOpen90 1.35s cubic-bezier(0.2, 0.9, 0.3, 1) forwards;
-  transform-origin: center center;
+.animate-hinge-page1 {
+  transform-origin: bottom center;
+  animation: hingeOpenPage1 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: transform, opacity;
+}
+
+/* Page 2 (Bottom half): Hinges down around the top edge (central spine) */
+@keyframes hingeOpenPage2 {
+  0% {
+    transform: rotateX(65deg);
+    opacity: 0.3;
+    filter: brightness(0.88);
+  }
+  50% {
+    transform: rotateX(-8deg);
+    opacity: 0.98;
+    filter: brightness(1.02);
+  }
+  75% {
+    transform: rotateX(2.5deg);
+    filter: brightness(1);
+  }
+  100% {
+    transform: rotateX(0deg);
+    opacity: 1;
+    filter: brightness(1);
+  }
+}
+
+.animate-hinge-page2 {
+  transform-origin: top center;
+  animation: hingeOpenPage2 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: transform, opacity;
 }
 
 /* Notebook horizontal spine fold shadow & page depth */
