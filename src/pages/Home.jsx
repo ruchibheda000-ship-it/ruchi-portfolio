@@ -439,19 +439,19 @@ export default function Home() {
           {/* --------------------------------------------------------------------- */}
           <div className="lg:col-span-7 space-y-6 sm:space-y-8">
             
-            {/* Bold Expressive Heading */}
+            {/* About Me Heading (Single Line, Balanced Proportion) */}
             <div className="relative inline-block select-none">
-              <h2 className="font-serif text-6xl sm:text-7xl lg:text-8xl xl:text-9xl text-[#F1E3CC] leading-[0.88] tracking-tighter uppercase font-normal">
-                ABOUT<br />
-                <span className="font-hand text-[#E4BA83] tracking-normal lowercase text-7xl sm:text-8xl lg:text-9xl xl:text-[9.5rem] inline-block transform -rotate-3 ml-1 sm:ml-2">
+              <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl text-[#F1E3CC] tracking-tight font-normal flex items-baseline gap-2 sm:gap-3">
+                <span className="uppercase">About</span>
+                <span className="font-hand text-[#E4BA83] tracking-normal lowercase text-4xl sm:text-5xl lg:text-6xl inline-block transform -rotate-2">
                   me<span className="text-[#F1E3CC] font-serif">!</span>
                 </span>
               </h2>
 
               {/* Hand-drawn swirl underline in Path Gold */}
-              <div className="absolute -bottom-3 left-2 sm:left-4 pointer-events-none">
-                <svg width="200" height="24" viewBox="0 0 200 24" fill="none" stroke="#E4BA83" strokeWidth="2.5" strokeLinecap="round">
-                  <path d="M4 14 Q65 2 130 16 Q165 22 194 10" />
+              <div className="absolute -bottom-2 left-1 pointer-events-none">
+                <svg width="150" height="16" viewBox="0 0 150 16" fill="none" stroke="#E4BA83" strokeWidth="2" strokeLinecap="round">
+                  <path d="M4 10 Q50 2 100 11 Q130 14 146 6" />
                 </svg>
               </div>
             </div>
@@ -474,26 +474,6 @@ export default function Home() {
               <p>
                 What hasn't changed is a commitment to designing with empathy first, clarity always, and care for the people who'll actually use what I make. Still learning, still building, still moving forward.
               </p>
-            </div>
-
-            {/* Tactical Pillars / Attribute Pills */}
-            <div className="pt-2 flex flex-wrap gap-2.5 font-mono text-xs">
-              <span className="px-3.5 py-1.5 rounded-full bg-[#0B3272]/50 border border-[#0B3272] text-[#F1E3CC] flex items-center gap-1.5">
-                <span className="text-[#E4BA83]">✦</span>
-                <span>Product Strategy</span>
-              </span>
-              <span className="px-3.5 py-1.5 rounded-full bg-[#0B3272]/50 border border-[#0B3272] text-[#F1E3CC] flex items-center gap-1.5">
-                <span className="text-[#E4BA83]">✦</span>
-                <span>0-to-1 Systems</span>
-              </span>
-              <span className="px-3.5 py-1.5 rounded-full bg-[#0B3272]/50 border border-[#0B3272] text-[#F1E3CC] flex items-center gap-1.5">
-                <span className="text-[#E4BA83]">✦</span>
-                <span>Behavioral UX</span>
-              </span>
-              <span className="px-3.5 py-1.5 rounded-full bg-[#0B3272]/50 border border-[#0B3272] text-[#F1E3CC] flex items-center gap-1.5">
-                <span className="text-[#E4BA83]">✦</span>
-                <span>Design Entrepreneurship</span>
-              </span>
             </div>
 
             {/* Link to Full About Document */}
