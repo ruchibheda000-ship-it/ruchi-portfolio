@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import Nav from '../components/Nav'
 import HangingCloth from '../components/HangingCloth'
 import TransparentVideo from '../components/TransparentVideo'
+import PaperStack from '../components/PaperStack'
 
 export default function Home() {
   // Live Mumbai IST Time
@@ -428,58 +429,63 @@ export default function Home() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           
           {/* --------------------------------------------------------------------- */}
-          {/* LEFT SIDE: BOLD "ABOUT ME!" TYPOGRAPHY + PERSONAL INTRODUCTION        */}
+          {/* LEFT SIDE: TACTILE STACKED PAPERS WITH PINS & ABOUT ME NARRATIVE      */}
+          {/* Modeled directly from the user's pinned document reference            */}
           {/* --------------------------------------------------------------------- */}
-          <div className="lg:col-span-7 space-y-6 sm:space-y-8">
-            
-            {/* About Me Heading (Single Line, Balanced Proportion) */}
-            <div className="relative inline-block select-none">
-              <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl text-[#F1E3CC] tracking-tight font-normal flex items-baseline gap-2 sm:gap-3">
-                <span className="uppercase">About</span>
-                <span className="font-hand text-[#E4BA83] tracking-normal lowercase text-4xl sm:text-5xl lg:text-6xl inline-block transform -rotate-2">
-                  me<span className="text-[#F1E3CC] font-serif">!</span>
-                </span>
-              </h2>
+          <div className="lg:col-span-7 relative z-10">
+            <PaperStack>
+              <div className="space-y-6 sm:space-y-7">
+                
+                {/* About Me Heading (Single Line, Balanced Proportion) */}
+                <div className="relative inline-block select-none">
+                  <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl text-[#061840] tracking-tight font-normal flex items-baseline gap-2 sm:gap-3">
+                    <span className="uppercase">About</span>
+                    <span className="font-hand text-[#0B3272] tracking-normal lowercase text-4xl sm:text-5xl lg:text-6xl inline-block transform -rotate-2">
+                      me<span className="text-[#B88438] font-serif">!</span>
+                    </span>
+                  </h2>
 
-              {/* Hand-drawn swirl underline in Path Gold */}
-              <div className="absolute -bottom-2 left-1 pointer-events-none">
-                <svg width="150" height="16" viewBox="0 0 150 16" fill="none" stroke="#E4BA83" strokeWidth="2" strokeLinecap="round">
-                  <path d="M4 10 Q50 2 100 11 Q130 14 146 6" />
-                </svg>
+                  {/* Hand-drawn swirl underline in Path Gold */}
+                  <div className="absolute -bottom-2 left-1 pointer-events-none">
+                    <svg width="150" height="16" viewBox="0 0 150 16" fill="none" stroke="#B88438" strokeWidth="2.2" strokeLinecap="round">
+                      <path d="M4 10 Q50 2 100 11 Q130 14 146 6" />
+                    </svg>
+                  </div>
+                </div>
+
+                {/* Core Philosophy Statement */}
+                <div className="pt-1">
+                  <p className="font-serif text-xl sm:text-2xl lg:text-2xl text-[#061840] font-normal leading-snug">
+                    I design the way I've lived;{' '}
+                    <span className="text-[#B88438] underline decoration-[#B88438]/70 decoration-wavy decoration-2 font-medium">
+                      not in a straight line.
+                    </span>
+                  </p>
+                </div>
+
+                {/* Story & Approach (Authentic Portfolio Narrative) */}
+                <div className="space-y-3.5 text-base sm:text-base text-[#1C2D4A]/90 font-normal leading-relaxed">
+                  <p>
+                    HI, I'm Ruchi. A UI/UX designer who believes the best design work doesn't announce itself, it just makes the way forward clearer. My path here hasn't been linear; I've tried different roles, tools, and approaches, and kept what worked.
+                  </p>
+                  <p>
+                    What hasn't changed is a commitment to designing with empathy first, clarity always, and care for the people who'll actually use what I make. Still learning, still building, still moving forward.
+                  </p>
+                </div>
+
+                {/* Link to Full About Document */}
+                <div className="pt-1">
+                  <Link
+                    to="/about"
+                    className="inline-flex items-center gap-2 font-mono text-xs sm:text-sm text-[#0B3272] font-semibold hover:text-[#B88438] hover:translate-x-1 transition-all"
+                  >
+                    <span>Read full background, principles & story</span>
+                    <span>→</span>
+                  </Link>
+                </div>
+
               </div>
-            </div>
-
-            {/* Core Philosophy Statement */}
-            <div className="pt-2">
-              <p className="font-serif text-2xl sm:text-3xl lg:text-3xl text-[#F1E3CC] font-normal leading-snug">
-                I design the way I've lived;{' '}
-                <span className="text-[#E4BA83] underline decoration-[#E4BA83]/60 decoration-wavy decoration-2">
-                  not in a straight line.
-                </span>
-              </p>
-            </div>
-
-            {/* Story & Approach (Authentic Portfolio Narrative) */}
-            <div className="space-y-4 text-base sm:text-lg text-[#8DA1B4] font-normal leading-relaxed">
-              <p>
-                HI, I'm Ruchi. A UI/UX designer who believes the best design work doesn't announce itself, it just makes the way forward clearer. My path here hasn't been linear; I've tried different roles, tools, and approaches, and kept what worked.
-              </p>
-              <p>
-                What hasn't changed is a commitment to designing with empathy first, clarity always, and care for the people who'll actually use what I make. Still learning, still building, still moving forward.
-              </p>
-            </div>
-
-            {/* Link to Full About Document */}
-            <div className="pt-2">
-              <Link
-                to="/about"
-                className="inline-flex items-center gap-2 font-mono text-sm text-[#E4BA83] font-semibold hover:text-[#F1E3CC] hover:translate-x-1 transition-all"
-              >
-                <span>Read full background, principles & story</span>
-                <span>→</span>
-              </Link>
-            </div>
-
+            </PaperStack>
           </div>
 
           {/* --------------------------------------------------------------------- */}
