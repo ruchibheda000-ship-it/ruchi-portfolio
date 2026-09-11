@@ -1,7 +1,5 @@
 import React, { useState } from 'react'
 import Nav from '../components/Nav'
-import PixelSparkle from '../components/PixelSparkle'
-import { Link } from 'react-router-dom'
 
 export default function Contact() {
   const [submitted, setSubmitted] = useState(false)
@@ -22,114 +20,114 @@ export default function Contact() {
   }
 
   return (
-    <div className="min-h-screen bg-[#FFFED8] bg-notebook-grid text-[#173C64] font-body selection:bg-[#173C64] selection:text-[#FFFED8] flex flex-col justify-between overflow-x-hidden">
+    <div className="min-h-screen bg-[#F5EFEB] text-[#171717] font-sans selection:bg-[#E35342] selection:text-[#F5EFEB] flex flex-col justify-between overflow-x-hidden">
       
       {/* Editorial Navigation */}
       <Nav />
 
       {/* Main Connect Content */}
-      <main className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-8 py-8 sm:py-16 flex-grow">
+      <main className="relative z-10 w-full max-w-6xl mx-auto px-6 sm:px-12 lg:px-20 py-8 sm:py-16 flex-grow">
         
         {/* Top Header */}
-        <div className="pb-6 mb-10 border-b-2 border-[#173C64]">
-          <div className="flex items-center gap-2 mb-2 font-mono text-xs uppercase tracking-widest text-[#173C64]">
-            <span className="w-2.5 h-2.5 rounded-full bg-[#173C64] animate-pulse"></span>
+        <div className="pb-6 mb-12 border-b border-[#171717]/15">
+          <div className="flex items-center gap-2 mb-3 font-mono text-xs uppercase tracking-widest text-[#171717]/60">
+            <span className="w-2 h-2 rounded-full bg-[#E35342] animate-pulse"></span>
             <span>CONNECT // INQUIRIES & COLLABORATIONS</span>
           </div>
-          <h1 className="font-serif text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-[#173C64]">
+          <h1 className="font-serif text-4xl sm:text-6xl lg:text-7xl font-normal tracking-tight text-[#171717]">
             Let’s start a conversation.
           </h1>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
           
           {/* Left Column: Interactive Checklist & Socials (Jackie Zhang Blueprint) */}
           <div className="lg:col-span-5 space-y-8">
             
             {/* Interactive Checklist Card */}
-            <div className="bg-[#FFFED8] bg-notebook-grid p-6 sm:p-8 rounded-xs border-2 border-[#173C64] shadow-xl">
-              <div className="flex items-center justify-between pb-3 mb-4 border-b border-[#173C64]/20 font-mono text-xs">
-                <span className="font-bold uppercase tracking-wider">
+            <div className="bg-[#F5EFEB] p-6 sm:p-8 rounded-lg border border-[#171717]/15 shadow-sm">
+              <div className="flex items-center justify-between pb-3 mb-5 border-b border-[#171717]/10 font-mono text-xs">
+                <span className="font-semibold uppercase tracking-wider text-[#171717]">
                   WHAT I LOOK FOR IN WORK
                 </span>
-                <span className="text-[#173C64]/60">CHECKLIST</span>
+                <span className="text-[#171717]/50">CHECKLIST</span>
               </div>
 
-              <div className="space-y-3 font-display font-bold text-sm sm:text-base">
+              <div className="space-y-3 font-sans text-sm sm:text-base">
                 <button
                   type="button"
                   onClick={() => toggleCheck('opt1')}
-                  className="w-full flex items-center gap-3 p-3 rounded-xs border border-[#173C64]/30 hover:bg-[#173C64]/5 transition-colors cursor-pointer text-left"
+                  className="w-full flex items-center gap-3 p-3.5 rounded-md border border-[#171717]/15 bg-white/50 hover:border-[#171717]/40 transition-colors cursor-pointer text-left"
                 >
-                  <span className={`w-5 h-5 rounded-xs border-2 border-[#173C64] flex items-center justify-center font-mono text-xs ${checkedItems.opt1 ? 'bg-[#173C64] text-[#FFFED8]' : 'bg-transparent'}`}>
+                  <span className={`w-5 h-5 rounded border border-[#171717]/40 flex items-center justify-center font-mono text-xs ${checkedItems.opt1 ? 'bg-[#E35342] text-white border-[#E35342]' : 'bg-white'}`}>
                     {checkedItems.opt1 ? '✓' : ''}
                   </span>
-                  <span>Product Strategy & 0-to-1 UX Systems</span>
+                  <span className="text-[#171717] font-medium">Product Strategy & 0-to-1 UX Systems</span>
                 </button>
 
                 <button
                   type="button"
                   onClick={() => toggleCheck('opt2')}
-                  className="w-full flex items-center gap-3 p-3 rounded-xs border border-[#173C64]/30 hover:bg-[#173C64]/5 transition-colors cursor-pointer text-left"
+                  className="w-full flex items-center gap-3 p-3.5 rounded-md border border-[#171717]/15 bg-white/50 hover:border-[#171717]/40 transition-colors cursor-pointer text-left"
                 >
-                  <span className={`w-5 h-5 rounded-xs border-2 border-[#173C64] flex items-center justify-center font-mono text-xs ${checkedItems.opt2 ? 'bg-[#173C64] text-[#FFFED8]' : 'bg-transparent'}`}>
+                  <span className={`w-5 h-5 rounded border border-[#171717]/40 flex items-center justify-center font-mono text-xs ${checkedItems.opt2 ? 'bg-[#E35342] text-white border-[#E35342]' : 'bg-white'}`}>
                     {checkedItems.opt2 ? '✓' : ''}
                   </span>
-                  <span>High-impact, meaningful problems</span>
+                  <span className="text-[#171717] font-medium">High-impact, meaningful problems</span>
                 </button>
 
                 <button
                   type="button"
                   onClick={() => toggleCheck('opt3')}
-                  className="w-full flex items-center gap-3 p-3 rounded-xs border border-[#173C64]/30 hover:bg-[#173C64]/5 transition-colors cursor-pointer text-left"
+                  className="w-full flex items-center gap-3 p-3.5 rounded-md border border-[#171717]/15 bg-white/50 hover:border-[#171717]/40 transition-colors cursor-pointer text-left"
                 >
-                  <span className={`w-5 h-5 rounded-xs border-2 border-[#173C64] flex items-center justify-center font-mono text-xs ${checkedItems.opt3 ? 'bg-[#173C64] text-[#FFFED8]' : 'bg-transparent'}`}>
+                  <span className={`w-5 h-5 rounded border border-[#171717]/40 flex items-center justify-center font-mono text-xs ${checkedItems.opt3 ? 'bg-[#E35342] text-white border-[#E35342]' : 'bg-white'}`}>
                     {checkedItems.opt3 ? '✓' : ''}
                   </span>
-                  <span>Empathetic, ambitious teams</span>
+                  <span className="text-[#171717] font-medium">Empathetic, ambitious teams</span>
                 </button>
               </div>
 
-              <div className="mt-4 pt-3 border-t border-[#173C64]/15 text-[11px] font-mono text-[#173C64]/70">
+              <div className="mt-5 pt-3 border-t border-[#171717]/10 text-[11px] font-mono text-[#171717]/60">
                 ✦ Click items to toggle values
               </div>
             </div>
 
             {/* Direct Connect & Social Links */}
-            <div className="p-6 rounded-xs border-2 border-[#173C64] bg-[#173C64] text-[#FFFED8] shadow-lg space-y-4">
-              <div className="font-mono text-xs uppercase tracking-widest text-[#FFFED8]/70">
+            <div className="p-6 sm:p-8 rounded-lg border border-[#171717] bg-[#171717] text-[#F5EFEB] shadow-md space-y-5">
+              <div className="font-mono text-xs uppercase tracking-widest text-[#F5EFEB]/60">
                 ✦ DIRECT CHANNELS
               </div>
-              <div className="space-y-2 font-display text-sm font-semibold">
+              <div className="space-y-2.5 font-sans text-sm">
                 <a
                   href="https://www.linkedin.com/in/ruchibheda/"
                   target="_blank"
                   rel="noreferrer"
-                  className="flex items-center justify-between p-2.5 rounded hover:bg-[#FFFED8]/10 transition-colors"
+                  className="flex items-center justify-between p-3 rounded hover:bg-white/10 transition-colors"
                 >
-                  <span>LinkedIn</span>
-                  <span className="font-mono text-xs text-[#FFFED8]/70">in/ruchibheda ↗</span>
+                  <span className="font-medium">LinkedIn</span>
+                  <span className="font-mono text-xs text-[#F5EFEB]/60">in/ruchibheda ↗</span>
                 </a>
                 <a
                   href="https://www.behance.net/ruchibheda2"
                   target="_blank"
                   rel="noreferrer"
-                  className="flex items-center justify-between p-2.5 rounded hover:bg-[#FFFED8]/10 transition-colors"
+                  className="flex items-center justify-between p-3 rounded hover:bg-white/10 transition-colors"
                 >
-                  <span>Behance</span>
-                  <span className="font-mono text-xs text-[#FFFED8]/70">ruchibheda2 ↗</span>
+                  <span className="font-medium">Behance</span>
+                  <span className="font-mono text-xs text-[#F5EFEB]/60">ruchibheda2 ↗</span>
                 </a>
                 <a
                   href="https://www.instagram.com/withloveruchi/"
                   target="_blank"
                   rel="noreferrer"
-                  className="flex items-center justify-between p-2.5 rounded hover:bg-[#FFFED8]/10 transition-colors"
+                  className="flex items-center justify-between p-3 rounded hover:bg-white/10 transition-colors"
                 >
-                  <span>Instagram</span>
-                  <span className="font-mono text-xs text-[#FFFED8]/70">@withloveruchi ↗</span>
+                  <span className="font-medium">Instagram</span>
+                  <span className="font-mono text-xs text-[#F5EFEB]/60">@withloveruchi ↗</span>
                 </a>
               </div>
-              <div className="pt-3 border-t border-[#FFFED8]/20 text-[11px] font-mono text-[#FFFED8]/60">
+              <div className="pt-4 border-t border-white/15 text-[11px] font-mono text-[#F5EFEB]/60">
                 Location: Mumbai, India • Time zone: GMT +5:30
               </div>
             </div>
@@ -138,105 +136,106 @@ export default function Contact() {
 
           {/* Right Column: Dispatch Form Card */}
           <div className="lg:col-span-7">
-            <div className="relative bg-[#FFFED8] bg-notebook-grid text-[#173C64] p-6 sm:p-10 rounded-xs border-2 sm:border-4 border-[#173C64] shadow-2xl">
+            <div className="relative bg-[#F5EFEB] text-[#171717] p-8 sm:p-12 rounded-lg border border-[#171717]/15 shadow-sm">
               
-              <div className="flex items-center justify-between pb-3 mb-6 border-b border-[#173C64]/20 font-mono text-xs">
-                <span className="font-bold uppercase tracking-wider">
+              <div className="flex items-center justify-between pb-4 mb-8 border-b border-[#171717]/10 font-mono text-xs">
+                <span className="font-semibold uppercase tracking-wider text-[#171717]">
                   DISPATCH CARD
                 </span>
-                <span className="text-[#173C64]/70">RESPONSE: 24–48 HRS</span>
+                <span className="text-[#171717]/60">RESPONSE: 24–48 HRS</span>
               </div>
 
               {submitted ? (
-                <div className="py-12 px-6 text-center space-y-4">
-                  <div className="flex justify-center">
-                    <PixelSparkle size={36} className="text-[#173C64]" />
-                  </div>
-                  <h2 className="font-serif text-3xl font-bold text-[#173C64]">
+                <div className="py-16 px-6 text-center space-y-4">
+                  <div className="text-3xl text-[#E35342]">✦</div>
+                  <h2 className="font-serif text-3xl sm:text-4xl font-normal text-[#171717]">
                     Message Dispatched!
                   </h2>
-                  <p className="text-sm sm:text-base text-[#173C64]/85 max-w-md mx-auto">
+                  <p className="text-sm sm:text-base text-[#171717]/80 max-w-md mx-auto">
                     Thank you for reaching out, <strong>{formData.name || 'friend'}</strong>. I have received your note and will get back to you shortly.
                   </p>
-                  <div className="pt-6">
-                    <button
-                      type="button"
-                      onClick={() => setSubmitted(false)}
-                      className="px-6 py-2.5 rounded-full border border-[#173C64] font-display font-bold text-xs hover:bg-[#173C64] hover:text-[#FFFED8] transition-colors cursor-pointer"
-                    >
-                      Send Another Note
-                    </button>
-                  </div>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setSubmitted(false)
+                      setFormData({ name: '', email: '', projectType: '', message: '' })
+                    }}
+                    className="mt-6 px-6 py-2.5 rounded-full border border-[#171717]/30 text-xs font-mono hover:border-[#171717] transition-colors"
+                  >
+                    Send another note
+                  </button>
                 </div>
               ) : (
-                <form onSubmit={handleSubmit} className="space-y-5">
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  
                   <div>
-                    <label className="block font-mono text-xs uppercase tracking-wider font-bold mb-1.5 text-[#173C64]">
-                      Your Name *
+                    <label className="block font-mono text-xs uppercase tracking-wider text-[#171717]/70 mb-2">
+                      01. What is your name? *
                     </label>
                     <input
                       type="text"
                       required
-                      placeholder="e.g. Alex Miller"
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className="w-full bg-[#FFFED8] border-2 border-[#173C64] rounded-xs px-4 py-2.5 text-sm sm:text-base font-display text-[#173C64] focus:outline-hidden focus:ring-2 focus:ring-[#173C64]/30"
+                      placeholder="e.g., Alex Carter"
+                      className="w-full px-4 py-3 rounded-md border border-[#171717]/20 bg-white/70 text-[#171717] text-sm focus:outline-hidden focus:border-[#E35342] transition-colors"
                     />
                   </div>
 
                   <div>
-                    <label className="block font-mono text-xs uppercase tracking-wider font-bold mb-1.5 text-[#173C64]">
-                      Email Address *
+                    <label className="block font-mono text-xs uppercase tracking-wider text-[#171717]/70 mb-2">
+                      02. Your Email Address *
                     </label>
                     <input
                       type="email"
                       required
-                      placeholder="e.g. alex@company.com"
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      className="w-full bg-[#FFFED8] border-2 border-[#173C64] rounded-xs px-4 py-2.5 text-sm sm:text-base font-display text-[#173C64] focus:outline-hidden focus:ring-2 focus:ring-[#173C64]/30"
+                      placeholder="e.g., alex@company.com"
+                      className="w-full px-4 py-3 rounded-md border border-[#171717]/20 bg-white/70 text-[#171717] text-sm focus:outline-hidden focus:border-[#E35342] transition-colors"
                     />
                   </div>
 
                   <div>
-                    <label className="block font-mono text-xs uppercase tracking-wider font-bold mb-1.5 text-[#173C64]">
-                      Project Type or Topic
+                    <label className="block font-mono text-xs uppercase tracking-wider text-[#171717]/70 mb-2">
+                      03. Project Scope / Inquiries
                     </label>
-                    <input
-                      type="text"
-                      placeholder="e.g. HealthTech UX, Design System, Advisory"
+                    <select
                       value={formData.projectType}
                       onChange={(e) => setFormData({ ...formData, projectType: e.target.value })}
-                      className="w-full bg-[#FFFED8] border-2 border-[#173C64] rounded-xs px-4 py-2.5 text-sm sm:text-base font-display text-[#173C64] focus:outline-hidden focus:ring-2 focus:ring-[#173C64]/30"
-                    />
+                      className="w-full px-4 py-3 rounded-md border border-[#171717]/20 bg-white/70 text-[#171717] text-sm focus:outline-hidden focus:border-[#E35342] transition-colors cursor-pointer"
+                    >
+                      <option value="">Select scope...</option>
+                      <option value="full-time">Full-time Product Designer Role</option>
+                      <option value="design-system">Design System & Complex UX</option>
+                      <option value="mobile-web">0-to-1 Web / Mobile App</option>
+                      <option value="wayfinding">Spatial & Environmental Wayfinding</option>
+                      <option value="say-hi">Casual Coffee / Say Hello</option>
+                    </select>
                   </div>
 
                   <div>
-                    <label className="block font-mono text-xs uppercase tracking-wider font-bold mb-1.5 text-[#173C64]">
-                      Message / Project Details *
+                    <label className="block font-mono text-xs uppercase tracking-wider text-[#171717]/70 mb-2">
+                      04. How can I help? *
                     </label>
                     <textarea
                       required
                       rows={5}
-                      placeholder="Tell me a bit about what you're building, the challenges you're facing, and how you envision us collaborating..."
                       value={formData.message}
                       onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                      className="w-full bg-[#FFFED8] border-2 border-[#173C64] rounded-xs px-4 py-2.5 text-sm sm:text-base font-display text-[#173C64] focus:outline-hidden focus:ring-2 focus:ring-[#173C64]/30 resize-none"
-                    ></textarea>
+                      placeholder="Share a bit about what you're working on, timelines, and how you think we can work together..."
+                      className="w-full px-4 py-3 rounded-md border border-[#171717]/20 bg-white/70 text-[#171717] text-sm focus:outline-hidden focus:border-[#E35342] transition-colors resize-none"
+                    />
                   </div>
 
-                  <div className="pt-2 flex items-center justify-between">
-                    <span className="font-mono text-xs text-[#173C64]/60">
-                      ✦ Direct reply guaranteed
-                    </span>
-                    <button
-                      type="submit"
-                      className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-[#173C64] text-[#FFFED8] font-display font-bold text-sm tracking-wide shadow-md hover:bg-[#0e2640] hover:-translate-y-0.5 transition-all cursor-pointer"
-                    >
-                      <span>Send Dispatch</span>
-                      <span className="font-mono">→</span>
-                    </button>
-                  </div>
+                  <button
+                    type="submit"
+                    className="w-full py-4 rounded-full bg-[#171717] text-[#F5EFEB] font-medium text-sm hover:bg-[#E35342] transition-colors cursor-pointer flex items-center justify-center gap-2"
+                  >
+                    <span>Dispatch Note</span>
+                    <span>→</span>
+                  </button>
+
                 </form>
               )}
 
@@ -247,10 +246,10 @@ export default function Contact() {
 
       </main>
 
-      {/* Page Footer */}
-      <footer className="w-full border-t border-[#173C64]/20 py-6 px-4 sm:px-8 text-center text-xs font-mono text-[#173C64]/70 bg-[#FFFED8]">
-        <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
-          <span>✦ Ruchi Bheda © 2026</span>
+      {/* Editorial Footer */}
+      <footer className="w-full border-t border-[#171717]/15 py-8 px-6 sm:px-12 lg:px-20 text-xs font-mono text-[#171717]/60 bg-[#F5EFEB]">
+        <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+          <span className="text-[#171717]">✦ Ruchi Bheda © 2026</span>
           <span>UI/UX Designer & Product Designer</span>
           <span>Mumbai, India • GMT +5:30</span>
         </div>

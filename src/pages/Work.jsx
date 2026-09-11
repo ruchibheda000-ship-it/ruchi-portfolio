@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import Nav from '../components/Nav'
-import PixelSparkle from '../components/PixelSparkle'
 import { Link } from 'react-router-dom'
 
 const allProjects = [
@@ -100,42 +99,42 @@ export default function Work() {
       })
 
   return (
-    <div className="min-h-screen bg-[#FFFED8] bg-notebook-grid text-[#173C64] font-body selection:bg-[#173C64] selection:text-[#FFFED8] flex flex-col justify-between overflow-x-hidden">
+    <div className="min-h-screen bg-[#F5EFEB] text-[#171717] font-sans selection:bg-[#E35342] selection:text-[#F5EFEB] flex flex-col justify-between overflow-x-hidden">
       
       {/* Top Editorial Navigation */}
       <Nav />
 
       {/* Main Studio Archive Header */}
-      <main className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-8 lg:px-16 pt-6 sm:pt-10 pb-16 sm:pb-24 flex-grow">
+      <main className="relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-12 lg:px-20 pt-6 sm:pt-10 pb-20 sm:pb-32 flex-grow">
         
         {/* Top Header Bar */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 mb-10 border-b-2 border-[#173C64]">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 mb-10 border-b border-[#171717]/20">
           <div>
-            <div className="flex items-center gap-2 mb-3 font-mono text-xs uppercase tracking-widest text-[#173C64]">
-              <span className="w-2.5 h-2.5 rounded-full bg-[#173C64]"></span>
+            <div className="flex items-center gap-2 mb-3 font-mono text-xs uppercase tracking-widest text-[#171717]/60">
+              <span className="w-2 h-2 rounded-full bg-[#E35342]"></span>
               <span>INDEX // SELECTED CASE STUDIES</span>
               <span className="opacity-40">•</span>
               <span>2024–2025</span>
             </div>
-            <h1 className="font-serif text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-[#173C64]">
+            <h1 className="font-serif text-4xl sm:text-6xl lg:text-7xl font-normal tracking-tight text-[#171717]">
               Work & Product Systems
             </h1>
           </div>
 
-          <div className="flex flex-col md:items-end gap-2 text-xs font-mono text-[#173C64]/80">
-            <span className="font-bold uppercase tracking-wider bg-[#FFFED8] px-3 py-1 border border-[#173C64] rounded-full shadow-2xs">
+          <div className="flex flex-col md:items-end gap-2 text-xs font-mono text-[#171717]/70">
+            <span className="font-medium uppercase tracking-wider bg-white/60 px-3.5 py-1.5 border border-[#171717]/20 rounded-full">
               ✦ {allProjects.length} Case Studies Documented
             </span>
-            <span className="text-[11px] text-[#173C64]/60">
-              Healthcare · Social Audio · Spatial Wayfinding · Cyber Sec · Behavioral UX
+            <span className="text-[11px] text-[#171717]/50">
+              Healthcare · Social Audio · Wayfinding · SOC · Behavioral UX
             </span>
           </div>
         </div>
 
         {/* Filter Bar (Jackie Zhang Blueprint style) */}
-        <div className="flex flex-wrap items-center gap-2 mb-10 pb-4 border-b border-[#173C64]/20 font-mono text-xs">
-          <span className="text-[#173C64]/60 mr-2 flex items-center gap-1">
-            <PixelSparkle size={12} />
+        <div className="flex flex-wrap items-center gap-2 mb-12 pb-4 border-b border-[#171717]/10 font-mono text-xs">
+          <span className="text-[#171717]/50 mr-2 flex items-center gap-1.5">
+            <span className="text-[#E35342]">✦</span>
             <span>FILTER:</span>
           </span>
           {filterOptions.map((opt) => (
@@ -143,10 +142,10 @@ export default function Work() {
               key={opt}
               type="button"
               onClick={() => setSelectedFilter(opt)}
-              className={`px-3.5 py-1 rounded-full border transition-all cursor-pointer ${
+              className={`px-4 py-1.5 rounded-full border transition-all cursor-pointer ${
                 selectedFilter === opt
-                  ? 'bg-[#173C64] text-[#FFFED8] border-[#173C64] font-bold shadow-xs'
-                  : 'bg-[#FFFED8] text-[#173C64] border-[#173C64]/30 hover:border-[#173C64]'
+                  ? 'bg-[#171717] text-[#F5EFEB] border-[#171717] font-medium shadow-xs'
+                  : 'bg-transparent text-[#171717]/70 border-[#171717]/20 hover:border-[#171717] hover:text-[#171717]'
               }`}
             >
               {opt}
@@ -155,10 +154,10 @@ export default function Work() {
         </div>
 
         {/* Tactile Cutting Mat Workbench Archive */}
-        <div className="relative rounded-xs border-2 sm:border-4 border-[#173C64] cutting-mat-grid p-4 sm:p-8 lg:p-12 shadow-2xl text-[#FFFED8] overflow-hidden mb-12">
+        <div className="relative rounded-lg border border-[#171717]/20 cutting-mat-grid p-6 sm:p-10 lg:p-14 shadow-xl text-[#F5EFEB] overflow-hidden mb-16">
           
           {/* Cutting Mat Measurement Numbers */}
-          <div className="absolute top-2 left-4 flex gap-8 text-[10px] font-mono text-[#FFFED8]/40 select-none hidden sm:flex">
+          <div className="absolute top-3 left-6 flex gap-8 text-[10px] font-mono text-[#F5EFEB]/30 select-none hidden sm:flex">
             <span>01</span>
             <span>02</span>
             <span>03</span>
@@ -169,8 +168,8 @@ export default function Work() {
             <span>08</span>
           </div>
 
-          <div className="absolute bottom-2 right-4 text-[10px] font-mono text-[#FFFED8]/40 select-none hidden sm:block">
-            TACTILE PROJECT MAT // RUCHI BHEDA
+          <div className="absolute bottom-3 right-6 text-[10px] font-mono text-[#F5EFEB]/30 select-none hidden sm:block">
+            TACTILE WORKBENCH // RUCHI BHEDA STUDIO
           </div>
 
           {/* Project Cards Stack */}
@@ -178,25 +177,25 @@ export default function Work() {
             {filteredProjects.map((proj) => (
               <div
                 key={proj.id}
-                className="group relative bg-[#FFFED8] bg-notebook-grid text-[#173C64] p-6 sm:p-10 rounded-xs border-2 border-[#173C64] shadow-xl hover:-translate-y-1 hover:shadow-2xl transition-all duration-300"
+                className="group relative bg-[#F5EFEB] text-[#171717] p-6 sm:p-10 rounded-md border border-[#171717]/20 shadow-md hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300"
               >
                 {/* Header Row */}
-                <div className="flex flex-wrap items-center justify-between gap-3 pb-4 mb-6 border-b border-[#173C64]/20">
+                <div className="flex flex-wrap items-center justify-between gap-3 pb-4 mb-6 border-b border-[#171717]/10">
                   <div className="flex items-center gap-3">
-                    <span className="font-mono text-xs font-bold px-2.5 py-0.5 rounded-full bg-[#173C64] text-[#FFFED8]">
+                    <span className="font-mono text-xs font-bold px-2.5 py-0.5 rounded-full bg-[#E35342] text-white">
                       {proj.number}
                     </span>
-                    <span className="font-mono text-xs uppercase tracking-wider text-[#173C64] font-semibold">
+                    <span className="font-mono text-xs uppercase tracking-wider text-[#171717]/80 font-medium">
                       {proj.category}
                     </span>
-                    <span className="opacity-40 font-mono text-xs">•</span>
-                    <span className="font-mono text-xs text-[#173C64]/70">
+                    <span className="opacity-30 font-mono text-xs">•</span>
+                    <span className="font-mono text-xs text-[#171717]/50">
                       {proj.year}
                     </span>
                   </div>
 
-                  <div className="font-mono text-xs text-[#173C64]/70">
-                    Role: <strong className="text-[#173C64]">{proj.role}</strong>
+                  <div className="font-mono text-xs text-[#171717]/60">
+                    Role: <strong className="text-[#171717]">{proj.role}</strong>
                   </div>
                 </div>
 
@@ -205,40 +204,40 @@ export default function Work() {
                   
                   {/* Left Column: Title & Overview */}
                   <div className="lg:col-span-8">
-                    <h2 className="font-serif text-3xl sm:text-4xl font-bold tracking-tight text-[#173C64] mb-2">
+                    <h2 className="font-serif text-3xl sm:text-4xl font-normal tracking-tight text-[#171717] group-hover:text-[#E35342] transition-colors duration-200 mb-2">
                       {proj.title}
                     </h2>
-                    <div className="font-display font-semibold text-xs sm:text-sm text-[#173C64]/70 uppercase tracking-wider mb-4">
+                    <div className="font-mono text-xs text-[#171717]/60 uppercase tracking-wider mb-4">
                       {proj.subtitle}
                     </div>
-                    <p className="text-sm sm:text-base text-[#173C64]/90 leading-relaxed font-normal mb-4">
+                    <p className="text-sm sm:text-base text-[#171717]/80 leading-relaxed font-normal mb-5">
                       {proj.overview}
                     </p>
-                    <div className="p-3.5 bg-[#173C64]/5 rounded-xs border border-[#173C64]/20 text-xs sm:text-sm font-mono text-[#173C64]">
-                      <strong>Impact:</strong> {proj.impact}
+                    <div className="p-3.5 bg-white/70 rounded border border-[#171717]/15 text-xs sm:text-sm font-mono text-[#171717]">
+                      <strong className="text-[#E35342]">Impact:</strong> {proj.impact}
                     </div>
                   </div>
 
-                  {/* Right Column: Disciplines & Action */}
-                  <div className="lg:col-span-4 flex flex-col justify-between h-full space-y-4 pt-2">
+                  {/* Right Column: Disciplines & Tags */}
+                  <div className="lg:col-span-4 flex flex-col justify-between h-full space-y-4 pt-1">
                     <div>
-                      <div className="font-mono text-xs uppercase tracking-wider text-[#173C64]/70 mb-2 font-bold">
+                      <div className="font-mono text-xs uppercase tracking-wider text-[#171717]/60 mb-2.5 font-semibold">
                         Disciplines & Systems:
                       </div>
-                      <ul className="space-y-1.5 text-xs font-medium text-[#173C64]/80">
+                      <ul className="space-y-1.5 text-xs font-normal text-[#171717]/80">
                         {proj.disciplines.map((d) => (
                           <li key={d} className="flex items-center gap-2">
-                            <span className="text-[#173C64]">✦</span> {d}
+                            <span className="text-[#E35342]">✦</span> {d}
                           </li>
                         ))}
                       </ul>
                     </div>
 
-                    <div className="pt-4 border-t border-[#173C64]/15 flex flex-wrap gap-1.5">
+                    <div className="pt-4 border-t border-[#171717]/10 flex flex-wrap gap-1.5">
                       {proj.tags.map((tag) => (
                         <span
                           key={tag}
-                          className="text-[11px] font-mono text-[#173C64]/80 bg-[#FFFED8] px-2 py-0.5 rounded border border-[#173C64]/20"
+                          className="text-[11px] font-mono text-[#171717]/70 bg-white/60 px-2.5 py-0.5 rounded-full border border-[#171717]/15"
                         >
                           #{tag}
                         </span>
@@ -255,16 +254,16 @@ export default function Work() {
         </div>
 
         {/* Back to Home & Connect Jump */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-6 border-t border-[#173C64]/20 font-mono text-xs">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-6 border-t border-[#171717]/20 font-mono text-xs">
           <Link
             to="/"
-            className="inline-flex items-center gap-2 font-bold text-[#173C64] hover:underline"
+            className="inline-flex items-center gap-2 font-medium text-[#171717] hover:text-[#E35342] transition-colors"
           >
             ← Back to Homepage
           </Link>
           <Link
             to="/contact"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#173C64] text-[#FFFED8] font-bold shadow-xs hover:bg-[#0e2640] transition-colors"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#171717] text-[#F5EFEB] font-medium hover:bg-[#E35342] transition-colors"
           >
             <span>Have a project in mind? Let's chat</span>
             <span>→</span>
@@ -273,10 +272,10 @@ export default function Work() {
 
       </main>
 
-      {/* Footer */}
-      <footer className="w-full border-t border-[#173C64]/20 py-6 px-4 sm:px-8 text-center text-xs font-mono text-[#173C64]/70 bg-[#FFFED8]">
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
-          <span>✦ Ruchi Bheda © 2026</span>
+      {/* Editorial Footer */}
+      <footer className="w-full border-t border-[#171717]/15 py-8 px-6 sm:px-12 lg:px-20 text-xs font-mono text-[#171717]/60 bg-[#F5EFEB]">
+        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+          <span className="text-[#171717]">✦ Ruchi Bheda © 2026</span>
           <span>UI/UX Designer & Product Designer</span>
           <span>Mumbai, India • GMT +5:30</span>
         </div>

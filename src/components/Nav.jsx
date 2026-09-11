@@ -3,41 +3,41 @@ import { NavLink, Link } from 'react-router-dom'
 
 export default function Nav() {
   return (
-    <header className="w-full z-50 pt-6 sm:pt-10 pb-4 sm:pb-6 px-5 sm:px-10 lg:px-16">
+    <header className="w-full z-50 pt-8 sm:pt-12 pb-4 sm:pb-6 px-6 sm:px-12 lg:px-20">
       <nav
         className="max-w-7xl mx-auto flex items-baseline justify-between"
         aria-label="Main Navigation"
       >
-        {/* Left: Designer / Portfolio Name */}
+        {/* Left: Designer Name / Wordmark */}
         <Link
           to="/"
-          className="group flex flex-col sm:flex-row sm:items-baseline sm:gap-3 text-[#173C64] no-underline focus:outline-hidden"
+          className="group flex flex-col sm:flex-row sm:items-baseline sm:gap-3 text-[#171717] no-underline focus:outline-hidden"
         >
-          <span className="font-display text-xl sm:text-2xl md:text-3xl font-bold tracking-tight group-hover:opacity-70 transition-opacity duration-200">
-            Ruchi Bheda
+          <span className="font-serif text-2xl sm:text-3xl md:text-4xl font-normal tracking-tight group-hover:text-[#E35342] transition-colors duration-200">
+            ruchi bheda
           </span>
-          <span className="font-mono text-[11px] sm:text-xs text-[#173C64]/60 tracking-wider uppercase">
-            UI/UX Designer
+          <span className="font-mono text-[10px] sm:text-xs text-[#171717]/50 tracking-wider uppercase">
+            product designer
           </span>
         </Link>
 
-        {/* Right: Editorial Navigation Links */}
-        <div className="flex items-center gap-6 sm:gap-10 md:gap-14 text-[#173C64]">
+        {/* Right: Editorial Links (about, Work, Connect) */}
+        <div className="flex items-center gap-6 sm:gap-10 md:gap-14 text-[#171717]">
           <NavLink
-            to="/work"
+            to="/about"
             className={({ isActive }) =>
               `group relative py-1 text-sm sm:text-base md:text-lg transition-colors duration-200 ${
                 isActive
-                  ? 'font-bold text-[#173C64]'
-                  : 'font-normal text-[#173C64]/70 hover:text-[#173C64]'
+                  ? 'font-bold text-[#E35342]'
+                  : 'font-normal text-[#171717]/80 hover:text-[#E35342]'
               }`
             }
           >
             {({ isActive }) => (
               <>
-                <span>Work</span>
+                <span>about</span>
                 <span
-                  className={`block absolute bottom-0 left-0 h-[1.5px] bg-[#173C64] transition-all duration-200 ease-out ${
+                  className={`block absolute -bottom-0.5 left-0 h-[1.5px] bg-[#E35342] transition-all duration-200 ease-out ${
                     isActive ? 'w-full' : 'w-0 group-hover:w-full'
                   }`}
                   aria-hidden="true"
@@ -47,20 +47,20 @@ export default function Nav() {
           </NavLink>
 
           <NavLink
-            to="/about"
+            to="/work"
             className={({ isActive }) =>
               `group relative py-1 text-sm sm:text-base md:text-lg transition-colors duration-200 ${
                 isActive
-                  ? 'font-bold text-[#173C64]'
-                  : 'font-normal text-[#173C64]/70 hover:text-[#173C64]'
+                  ? 'font-bold text-[#E35342]'
+                  : 'font-normal text-[#171717]/80 hover:text-[#E35342]'
               }`
             }
           >
             {({ isActive }) => (
               <>
-                <span>About</span>
+                <span>Work</span>
                 <span
-                  className={`block absolute bottom-0 left-0 h-[1.5px] bg-[#173C64] transition-all duration-200 ease-out ${
+                  className={`block absolute -bottom-0.5 left-0 h-[1.5px] bg-[#E35342] transition-all duration-200 ease-out ${
                     isActive ? 'w-full' : 'w-0 group-hover:w-full'
                   }`}
                   aria-hidden="true"
@@ -74,8 +74,8 @@ export default function Nav() {
             className={({ isActive }) =>
               `group relative py-1 text-sm sm:text-base md:text-lg transition-colors duration-200 ${
                 isActive
-                  ? 'font-bold text-[#173C64]'
-                  : 'font-normal text-[#173C64]/70 hover:text-[#173C64]'
+                  ? 'font-bold text-[#E35342]'
+                  : 'font-normal text-[#171717]/80 hover:text-[#E35342]'
               }`
             }
           >
@@ -83,7 +83,7 @@ export default function Nav() {
               <>
                 <span>Connect</span>
                 <span
-                  className={`block absolute bottom-0 left-0 h-[1.5px] bg-[#173C64] transition-all duration-200 ease-out ${
+                  className={`block absolute -bottom-0.5 left-0 h-[1.5px] bg-[#E35342] transition-all duration-200 ease-out ${
                     isActive ? 'w-full' : 'w-0 group-hover:w-full'
                   }`}
                   aria-hidden="true"

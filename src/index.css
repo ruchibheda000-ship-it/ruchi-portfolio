@@ -6,13 +6,17 @@
   --font-script: "Pinyon Script", "Alex Brush", cursive;
   --font-pixel: "Pixelify Sans", "Silkscreen", monospace;
   --font-mono: "JetBrains Mono", monospace;
-  --font-display: "Syne", "Space Grotesk", sans-serif;
+  --font-display: "Averia Serif Libre", "Syne", serif;
   --font-body: "DM Sans", "Space Grotesk", sans-serif;
+  --color-bg-parchment: #F5EFEB;
+  --color-ink: #171717;
+  --color-coral: #E35342;
+  --color-sand: #F2E3CF;
   --color-primary-blue: #173C64;
   --color-primary-cream: #FFFED8;
 }
 
-/* Custom Utilities for Retro Graphic Design Poster & Editorial aesthetic */
+/* Typography Utilities */
 .font-serif {
   font-family: var(--font-serif);
 }
@@ -37,65 +41,57 @@
   font-family: var(--font-display);
 }
 
+.font-body {
+  font-family: var(--font-body);
+}
+
 /* Smooth Scroll */
 html {
   scroll-behavior: smooth;
 }
 
-/* Custom Editorial Scrollbar */
+/* Custom Jackie Zhang-style Minimal Scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
 }
 ::-webkit-scrollbar-track {
-  background: #FFFED8;
+  background: #F5EFEB;
 }
 ::-webkit-scrollbar-thumb {
-  background: #173C64;
+  background: #171717;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #0e2640;
+  background: #E35342;
 }
 
-/* Editorial Graph Paper Grid Texture (Cream #FFFED8 with subtle Blue #173C64 rules) */
-.bg-notebook-grid {
-  background-color: #FFFED8;
-  background-image:
-    linear-gradient(rgba(23, 60, 100, 0.08) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(23, 60, 100, 0.08) 1px, transparent 1px);
-  background-size: 22px 22px;
-}
-
-/* Tactile Studio Cutting Mat Grid (Deep Blue with Cream measurement rules) */
+/* Tactile Studio Cutting Mat Grid Texture (Jackie Zhang Workbench) */
 .cutting-mat-grid {
-  background-color: #173C64;
+  background-color: #171717;
   background-image:
-    linear-gradient(rgba(255, 254, 216, 0.12) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 254, 216, 0.12) 1px, transparent 1px),
-    linear-gradient(rgba(255, 254, 216, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 254, 216, 0.05) 1px, transparent 1px);
+    linear-gradient(rgba(242, 227, 207, 0.14) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(242, 227, 207, 0.14) 1px, transparent 1px),
+    linear-gradient(rgba(242, 227, 207, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(242, 227, 207, 0.05) 1px, transparent 1px);
   background-size: 50px 50px, 50px 50px, 10px 10px, 10px 10px;
 }
 
-/* Cream Cutting Mat Grid (Cream surface with Blue measurement rules) */
-.cutting-mat-cream {
-  background-color: #FFFED8;
+/* Light Studio Cutting Mat Grid */
+.cutting-mat-parchment {
+  background-color: #F5EFEB;
   background-image:
-    linear-gradient(rgba(23, 60, 100, 0.16) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(23, 60, 100, 0.16) 1px, transparent 1px),
-    linear-gradient(rgba(23, 60, 100, 0.06) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(23, 60, 100, 0.06) 1px, transparent 1px);
+    linear-gradient(rgba(23, 23, 23, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(23, 23, 23, 0.1) 1px, transparent 1px),
+    linear-gradient(rgba(23, 23, 23, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(23, 23, 23, 0.04) 1px, transparent 1px);
   background-size: 40px 40px, 40px 40px, 10px 10px, 10px 10px;
 }
 
-/* Deep Editorial Canvas Surround */
-.bg-editorial-surround {
-  background-color: #0e2640;
-  background-image:
-    radial-gradient(rgba(255, 254, 216, 0.07) 1px, transparent 1px);
-  background-size: 20px 20px;
-}
+/* ======================================================================== */
+/* PRESERVED ESSENTIAL STYLES FOR LOCKED TYPOGRAPHIC FABRIC (HangingCloth)  */
+/* DO NOT REMOVE: These ensure the locked component renders 100% identically */
+/* ======================================================================== */
 
 /* Realistic Cork Texture */
 .bg-cork {
@@ -108,13 +104,13 @@ html {
   background-position: 0 0, 12px 12px, 20px 20px;
 }
 
-/* Vintage Blue Locker Texture */
-.bg-locker {
-  background-color: #173c64;
+/* Notebook Graph Paper Grid Texture for Typographic Fabric */
+.bg-notebook-grid {
+  background-color: #FFFED8;
   background-image:
-    linear-gradient(90deg, rgba(0,0,0,0.2) 1px, transparent 1px),
-    linear-gradient(rgba(255,254,216,0.05) 1px, transparent 1px);
-  background-size: 280px 100%, 100% 20px;
+    linear-gradient(rgba(23, 60, 100, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(23, 60, 100, 0.08) 1px, transparent 1px);
+  background-size: 22px 22px;
 }
 
 /* Paper Crease Effect */
@@ -139,27 +135,7 @@ html {
   z-index: 20;
 }
 
-/* Washi / Masking Tape Style */
-.tape-strip {
-  background: rgba(255, 254, 216, 0.85);
-  backdrop-filter: blur(1px);
-  border: 1px dashed rgba(23, 60, 100, 0.35);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
-}
-
-/* Retro Pill Badge */
-.retro-pill {
-  border: 1.5px solid #173C64;
-  border-radius: 9999px;
-  padding: 0.2rem 0.85rem;
-  font-family: var(--font-display);
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  color: #173C64;
-  background-color: #FFFED8;
-}
-
-/* Pushpin effect */
+/* Pushpin effect for Typographic Fabric */
 .push-pin {
   width: 14px;
   height: 14px;
@@ -167,4 +143,12 @@ html {
   background: radial-gradient(circle at 35% 35%, #1d4d80, #0d2238);
   box-shadow: 0 3px 6px rgba(0,0,0,0.35), inset 0 1px 2px rgba(255,254,216,0.6);
   border: 1px solid rgba(255,254,216,0.3);
+}
+
+/* Washi Tape Strip */
+.tape-strip {
+  background: rgba(255, 254, 216, 0.85);
+  backdrop-filter: blur(1px);
+  border: 1px dashed rgba(23, 60, 100, 0.35);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
 }
