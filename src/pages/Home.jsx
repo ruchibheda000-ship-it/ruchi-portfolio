@@ -434,28 +434,28 @@ export default function Home() {
           {/* --------------------------------------------------------------------- */}
           <div className="lg:col-span-7 relative z-10">
             <PaperStack>
-              <div className="space-y-6 sm:space-y-7">
+              <div className="space-y-4 sm:space-y-5">
                 
                 {/* About Me Heading (Single Line, Balanced Proportion) */}
                 <div className="relative inline-block select-none">
-                  <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl text-[#061840] tracking-tight font-normal flex items-baseline gap-2 sm:gap-3">
-                    <span className="uppercase">About</span>
-                    <span className="font-hand text-[#0B3272] tracking-normal lowercase text-4xl sm:text-5xl lg:text-6xl inline-block transform -rotate-2">
+                  <h2 className="font-serif text-2xl sm:text-3xl lg:text-[2.15rem] text-[#061840] tracking-tight font-normal flex items-baseline gap-2 sm:gap-2.5">
+                    <span className="uppercase font-medium">About</span>
+                    <span className="font-hand text-[#0B3272] tracking-normal lowercase text-3xl sm:text-4xl lg:text-5xl inline-block transform -rotate-2">
                       me<span className="text-[#B88438] font-serif">!</span>
                     </span>
                   </h2>
 
                   {/* Hand-drawn swirl underline in Path Gold */}
-                  <div className="absolute -bottom-2 left-1 pointer-events-none">
-                    <svg width="150" height="16" viewBox="0 0 150 16" fill="none" stroke="#B88438" strokeWidth="2.2" strokeLinecap="round">
-                      <path d="M4 10 Q50 2 100 11 Q130 14 146 6" />
+                  <div className="absolute -bottom-1.5 left-1 pointer-events-none">
+                    <svg width="130" height="14" viewBox="0 0 130 14" fill="none" stroke="#B88438" strokeWidth="2" strokeLinecap="round">
+                      <path d="M4 9 Q45 2 90 10 Q115 12 126 5" />
                     </svg>
                   </div>
                 </div>
 
                 {/* Core Philosophy Statement */}
-                <div className="pt-1">
-                  <p className="font-serif text-xl sm:text-2xl lg:text-2xl text-[#061840] font-normal leading-snug">
+                <div className="pt-0.5">
+                  <p className="font-serif text-base sm:text-lg lg:text-[1.28rem] text-[#061840] font-normal leading-snug">
                     I design the way I've lived;{' '}
                     <span className="text-[#B88438] underline decoration-[#B88438]/70 decoration-wavy decoration-2 font-medium">
                       not in a straight line.
@@ -464,7 +464,7 @@ export default function Home() {
                 </div>
 
                 {/* Story & Approach (Authentic Portfolio Narrative) */}
-                <div className="space-y-3.5 text-base sm:text-base text-[#1C2D4A]/90 font-normal leading-relaxed">
+                <div className="space-y-2 sm:space-y-2.5 text-[12.5px] sm:text-[13.5px] lg:text-[14.5px] text-[#1C2D4A]/90 font-normal leading-relaxed">
                   <p>
                     HI, I'm Ruchi. A UI/UX designer who believes the best design work doesn't announce itself, it just makes the way forward clearer. My path here hasn't been linear; I've tried different roles, tools, and approaches, and kept what worked.
                   </p>
@@ -474,10 +474,10 @@ export default function Home() {
                 </div>
 
                 {/* Link to Full About Document */}
-                <div className="pt-1">
+                <div className="pt-0.5">
                   <Link
                     to="/about"
-                    className="inline-flex items-center gap-2 font-mono text-xs sm:text-sm text-[#0B3272] font-semibold hover:text-[#B88438] hover:translate-x-1 transition-all"
+                    className="inline-flex items-center gap-1.5 font-mono text-[11px] sm:text-xs lg:text-sm text-[#0B3272] font-semibold hover:text-[#B88438] hover:translate-x-1 transition-all"
                   >
                     <span>Read full background, principles & story</span>
                     <span>→</span>
