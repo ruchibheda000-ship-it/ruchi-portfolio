@@ -37,6 +37,27 @@
   font-family: var(--font-display);
 }
 
+/* Smooth Scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom Editorial Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #FFFED8;
+}
+::-webkit-scrollbar-thumb {
+  background: #173C64;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #0e2640;
+}
+
 /* Editorial Graph Paper Grid Texture (Cream #FFFED8 with subtle Blue #173C64 rules) */
 .bg-notebook-grid {
   background-color: #FFFED8;
@@ -44,6 +65,28 @@
     linear-gradient(rgba(23, 60, 100, 0.08) 1px, transparent 1px),
     linear-gradient(90deg, rgba(23, 60, 100, 0.08) 1px, transparent 1px);
   background-size: 22px 22px;
+}
+
+/* Tactile Studio Cutting Mat Grid (Deep Blue with Cream measurement rules) */
+.cutting-mat-grid {
+  background-color: #173C64;
+  background-image:
+    linear-gradient(rgba(255, 254, 216, 0.12) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 254, 216, 0.12) 1px, transparent 1px),
+    linear-gradient(rgba(255, 254, 216, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 254, 216, 0.05) 1px, transparent 1px);
+  background-size: 50px 50px, 50px 50px, 10px 10px, 10px 10px;
+}
+
+/* Cream Cutting Mat Grid (Cream surface with Blue measurement rules) */
+.cutting-mat-cream {
+  background-color: #FFFED8;
+  background-image:
+    linear-gradient(rgba(23, 60, 100, 0.16) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(23, 60, 100, 0.16) 1px, transparent 1px),
+    linear-gradient(rgba(23, 60, 100, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(23, 60, 100, 0.06) 1px, transparent 1px);
+  background-size: 40px 40px, 40px 40px, 10px 10px, 10px 10px;
 }
 
 /* Deep Editorial Canvas Surround */

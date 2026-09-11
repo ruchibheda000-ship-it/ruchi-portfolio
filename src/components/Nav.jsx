@@ -24,29 +24,6 @@ export default function Nav() {
         {/* Right: Editorial Navigation Links */}
         <div className="flex items-center gap-6 sm:gap-10 md:gap-14 text-[#173C64]">
           <NavLink
-            to="/about"
-            className={({ isActive }) =>
-              `group relative py-1 text-sm sm:text-base md:text-lg transition-colors duration-200 ${
-                isActive
-                  ? 'font-bold text-[#173C64]'
-                  : 'font-normal text-[#173C64]/70 hover:text-[#173C64]'
-              }`
-            }
-          >
-            {({ isActive }) => (
-              <>
-                <span>About</span>
-                <span
-                  className={`block absolute bottom-0 left-0 h-[1.5px] bg-[#173C64] transition-all duration-200 ease-out ${
-                    isActive ? 'w-full' : 'w-0 group-hover:w-full'
-                  }`}
-                  aria-hidden="true"
-                />
-              </>
-            )}
-          </NavLink>
-
-          <NavLink
             to="/work"
             className={({ isActive }) =>
               `group relative py-1 text-sm sm:text-base md:text-lg transition-colors duration-200 ${
@@ -59,6 +36,29 @@ export default function Nav() {
             {({ isActive }) => (
               <>
                 <span>Work</span>
+                <span
+                  className={`block absolute bottom-0 left-0 h-[1.5px] bg-[#173C64] transition-all duration-200 ease-out ${
+                    isActive ? 'w-full' : 'w-0 group-hover:w-full'
+                  }`}
+                  aria-hidden="true"
+                />
+              </>
+            )}
+          </NavLink>
+
+          <NavLink
+            to="/about"
+            className={({ isActive }) =>
+              `group relative py-1 text-sm sm:text-base md:text-lg transition-colors duration-200 ${
+                isActive
+                  ? 'font-bold text-[#173C64]'
+                  : 'font-normal text-[#173C64]/70 hover:text-[#173C64]'
+              }`
+            }
+          >
+            {({ isActive }) => (
+              <>
+                <span>About</span>
                 <span
                   className={`block absolute bottom-0 left-0 h-[1.5px] bg-[#173C64] transition-all duration-200 ease-out ${
                     isActive ? 'w-full' : 'w-0 group-hover:w-full'
