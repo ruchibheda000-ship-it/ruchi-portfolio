@@ -459,29 +459,20 @@ export default function Home() {
             {/* Core Philosophy Statement */}
             <div className="pt-2">
               <p className="font-serif text-2xl sm:text-3xl lg:text-3xl text-[#F1E3CC] font-normal leading-snug">
-                I don't design in isolation. I design for{' '}
-                <span className="text-[#E4BA83] underline decoration-[#E4BA83]/50 decoration-wavy decoration-2">
-                  living human ecosystems
-                </span>.
+                I design the way I've lived;{' '}
+                <span className="text-[#E4BA83] underline decoration-[#E4BA83]/60 decoration-wavy decoration-2">
+                  not in a straight line.
+                </span>
               </p>
             </div>
 
             {/* Story & Approach (Authentic Portfolio Narrative) */}
             <div className="space-y-4 text-base sm:text-lg text-[#8DA1B4] font-normal leading-relaxed">
               <p>
-                I am not trying to be limited to just UI/UX. I want to grow into a{' '}
-                <strong className="font-medium text-[#F1E3CC]">design entrepreneur</strong> who understands
-                products, businesses, brands, people, and technology as interconnected parts of a living whole.
+                HI, I'm Ruchi. A UI/UX designer who believes the best design work doesn't announce itself, it just makes the way forward clearer. My path here hasn't been linear; I've tried different roles, tools, and approaches, and kept what worked.
               </p>
               <p>
-                Too often in technology, teams jump straight into the <em>what</em> before thoroughly interrogating
-                the <em>why</em>. My work starts with relentless curiosity: uncovering the underlying human motivations,
-                emotional frictions, and mental models that determine whether a product actually sticks.
-              </p>
-              <p>
-                Whether structuring complex clinical workflows, designing shared audio platforms, or crafting physical
-                wayfinding that guides thousands through real space, I bring a builder's curiosity and a founder's
-                accountability to every system I touch.
+                What hasn't changed is a commitment to designing with empathy first, clarity always, and care for the people who'll actually use what I make. Still learning, still building, still moving forward.
               </p>
             </div>
 

@@ -30,26 +30,26 @@ export default function About() {
           {/* Title & Core Philosophy Statement */}
           <div className="mb-12">
             <span className="font-mono text-xs uppercase tracking-widest text-[#E4BA83] block mb-3 font-semibold">
-              ✦ DESIGN ENTREPRENEUR & PRODUCT DESIGNER
+              ✦ UI/UX DESIGNER & BUILDER
             </span>
             <h1 className="font-serif text-4xl sm:text-6xl lg:text-7xl font-normal tracking-tight text-[#F1E3CC] leading-tight mb-6">
-              I find the <span className="font-hand text-5xl sm:text-7xl lg:text-8xl text-[#E4BA83] underline decoration-[#E4BA83]/40 decoration-wavy decoration-2">why’s</span> before the what’s.
+              I design the way I've lived;{' '}
+              <span className="text-[#E4BA83] underline decoration-[#E4BA83]/60 decoration-wavy decoration-2">
+                not in a straight line.
+              </span>
             </h1>
             <p className="font-sans text-lg sm:text-xl text-[#8DA1B4] font-normal leading-relaxed">
-              Designing at the intersection of human empathy, business systems, and tactile digital craft.
+              HI, I'm Ruchi. A UI/UX designer who believes the best design work doesn't announce itself, it just makes the way forward clearer.
             </p>
           </div>
 
           {/* Main Story & Approach */}
           <div className="space-y-6 text-base sm:text-lg text-[#8DA1B4] font-normal leading-relaxed border-t border-[#0B3272] pt-8">
             <p>
-              I am not trying to be limited to just UI/UX. I want to grow into a <strong className="font-medium text-[#F1E3CC]">design entrepreneur</strong> who understands products, businesses, brands, people, and technology as interconnected parts of a living whole.
+              My path here hasn't been linear; I've tried different roles, tools, and approaches, and kept what worked.
             </p>
             <p>
-              Too often in technology, teams jump straight into the <em>what</em>—the wireframes, the design systems, the feature checklists—before thoroughly interrogating the <em>why</em>. My work starts with relentless curiosity: uncovering the underlying human motivations, emotional frictions, and mental models that determine whether a product actually sticks.
-            </p>
-            <p>
-              Whether structuring complex clinical workflows in healthcare management, designing shared spatial music listening experiences, or creating physical wayfinding that guides thousands of visitors through real space, I bring a builder's curiosity and a founder's accountability to every project.
+              What hasn't changed is a commitment to designing with empathy first, clarity always, and care for the people who'll actually use what I make. Still learning, still building, still moving forward.
             </p>
           </div>
 
