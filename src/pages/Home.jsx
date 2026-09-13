@@ -53,75 +53,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-[#061840] text-[#F1E3CC] font-body selection:bg-[#E4BA83] selection:text-[#061840] relative overflow-x-hidden pb-24">
       
-      {/* ========================================================================= */}
-      {/* 1. OUTER CHALK DOODLES (Floating in the Midnight Forest background)       */}
-      {/* Hand-drawn in Soft Mist Blue & Warm Ivory strokes                         */}
-      {/* ========================================================================= */}
-      
-      {/* Juice Box with Straw */}
-      <div className="absolute top-28 left-4 sm:left-10 lg:left-20 pointer-events-none select-none z-10 opacity-60 hidden md:block">
-        <svg width="68" height="90" viewBox="0 0 68 90" fill="none" stroke="#8DA1B4" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M42 22 L42 6 L32 6 L28 14" strokeDasharray="3 2" />
-          <path d="M16 22 L50 22 L48 84 L14 84 Z" />
-          <path d="M16 22 L24 16 L56 16 L50 22" />
-          <path d="M56 16 L54 78 L48 84" />
-          <circle cx="32" cy="52" r="9" />
-          <path d="M32 43 L32 39" />
-          <path d="M22 66 Q32 72 42 66" />
-        </svg>
-      </div>
 
-      {/* Bowl of Noodles & Chopsticks */}
-      <div className="absolute top-32 right-4 sm:right-10 lg:right-20 pointer-events-none select-none z-10 opacity-60 hidden md:block">
-        <svg width="95" height="70" viewBox="0 0 95 70" fill="none" stroke="#8DA1B4" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M10 18 L68 6" />
-          <path d="M12 26 L72 10" />
-          <path d="M34 18 Q44 10 56 18 Q62 24 68 20" />
-          <path d="M38 22 Q48 14 58 22" />
-          <ellipse cx="50" cy="30" rx="30" ry="10" />
-          <path d="M22 32 Q26 56 50 56 Q74 56 78 32" />
-          <path d="M38 56 L38 60 L62 60 L62 56" />
-        </svg>
-      </div>
-
-      {/* Cute Dinosaur / Monster */}
-      <div className="absolute top-[480px] right-4 sm:right-8 lg:right-16 pointer-events-none select-none z-10 opacity-60 hidden md:block">
-        <svg width="85" height="110" viewBox="0 0 85 110" fill="none" stroke="#8DA1B4" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M62 30 L74 38 L64 46 L76 54 L66 62 L78 70 L68 78" />
-          <path d="M24 64 L16 54 L14 36 Q18 20 44 20 Q64 20 62 48 L64 86 Q62 96 46 96 L28 96" />
-          <rect x="36" y="32" width="10" height="14" rx="2" />
-          <path d="M41 38 L41 42" strokeWidth="3" />
-          <path d="M16 48 L32 48" />
-          <path d="M20 48 L23 44 L26 48 L29 44" />
-        </svg>
-      </div>
-
-      {/* Swimming Fish */}
-      <div className="absolute top-[820px] left-4 sm:left-8 lg:left-16 pointer-events-none select-none z-10 opacity-60 hidden md:block">
-        <svg width="80" height="55" viewBox="0 0 80 55" fill="none" stroke="#8DA1B4" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M68 28 Q48 10 24 20 Q12 28 24 36 Q48 46 68 28 Z" />
-          <path d="M20 28 L6 14 L12 28 L6 42 Z" />
-          <circle cx="56" cy="24" r="3" fill="#8DA1B4" />
-          <path d="M44 22 Q40 28 44 34" />
-          <path d="M36 24 Q32 28 36 32" />
-        </svg>
-      </div>
-
-      {/* Little Daisy Flower */}
-      <div className="absolute top-[960px] right-4 sm:right-10 lg:right-20 pointer-events-none select-none z-10 opacity-60 hidden md:block">
-        <svg width="75" height="90" viewBox="0 0 75 90" fill="none" stroke="#8DA1B4" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M38 46 Q36 68 40 88" />
-          <path d="M36 64 Q22 62 26 52 Q34 54 36 64" />
-          <path d="M38 72 Q52 70 48 60 Q40 62 38 72" />
-          <circle cx="38" cy="32" r="6" />
-          <ellipse cx="38" cy="18" rx="5" ry="8" />
-          <ellipse cx="38" cy="46" rx="5" ry="8" />
-          <ellipse cx="24" cy="32" rx="8" ry="5" />
-          <ellipse cx="52" cy="32" rx="8" ry="5" />
-          <ellipse cx="28" cy="22" rx="7" ry="6" transform="rotate(-30 28 22)" />
-          <ellipse cx="48" cy="22" rx="7" ry="6" transform="rotate(30 48 22)" />
-        </svg>
-      </div>
 
       {/* ========================================================================= */}
       {/* 2. TOP NAVIGATION                                                         */}
@@ -417,12 +349,7 @@ export default function Home() {
           aboutVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
         }`}
       >
-        {/* Subtle Decorative Background Chalk Doodle */}
-        <div className="absolute -top-6 right-12 pointer-events-none select-none opacity-40 hidden md:block">
-          <svg width="120" height="40" viewBox="0 0 120 40" fill="none" stroke="#8DA1B4" strokeWidth="1.8" strokeLinecap="round" strokeDasharray="3 3">
-            <path d="M10 30 Q60 5 110 25" />
-          </svg>
-        </div>
+
 
 
         {/* Asymmetrical Layout: Left (Expressive Typography & Narrative) | Right (Layered Tactile Visual) */}
