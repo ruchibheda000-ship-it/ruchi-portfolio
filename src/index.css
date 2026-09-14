@@ -206,6 +206,39 @@ html {
   }
 }
 
+/* Interactive Cursor Click Doodle Sparkle (✨) Animation */
+@keyframes doodleSparklePop {
+  0% {
+    transform: translate(-50%, -50%) scale(0.2) rotate(calc(var(--sparkle-rot, 0deg) - 16deg));
+    opacity: 0;
+  }
+  22% {
+    transform: translate(-50%, -50%) scale(calc(var(--sparkle-scale, 1) * 1.24)) rotate(calc(var(--sparkle-rot, 0deg) + 6deg));
+    opacity: 1;
+  }
+  42% {
+    transform: translate(-50%, -55%) scale(calc(var(--sparkle-scale, 1) * 1.0)) rotate(var(--sparkle-rot, 0deg));
+    opacity: 1;
+  }
+  75% {
+    transform: translate(-50%, -75%) scale(calc(var(--sparkle-scale, 1) * 0.9)) rotate(calc(var(--sparkle-rot, 0deg) + 12deg));
+    opacity: 0.85;
+  }
+  100% {
+    transform: translate(-50%, -96%) scale(calc(var(--sparkle-scale, 1) * 0.6)) rotate(calc(var(--sparkle-rot, 0deg) + 20deg));
+    opacity: 0;
+  }
+}
+
+.animate-doodle-sparkle {
+  position: absolute;
+  transform-origin: center center;
+  animation: doodleSparklePop 0.75s cubic-bezier(0.18, 0.89, 0.32, 1.25) forwards;
+  pointer-events: none;
+  user-select: none;
+  will-change: transform, opacity;
+}
+
 /* Notebook horizontal spine fold shadow & page depth */
 .spine-crease-shadow {
   background: linear-gradient(

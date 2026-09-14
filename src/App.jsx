@@ -3,10 +3,13 @@ import Home from './pages/Home'
 import Work from './pages/Work'
 import About from './pages/About'
 import Contact from './pages/Contact'
+import ClickSparkle from './components/ClickSparkle'
 
 function App() {
   return (
     <BrowserRouter>
+      {/* Global interactive cursor click doodle sparkle (✨) */}
+      <ClickSparkle />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/work" element={<Work />} />
