@@ -99,7 +99,7 @@ export default function Work() {
       })
 
   return (
-    <div className="min-h-screen bg-[#061840] text-[#F1E3CC] font-sans selection:bg-[#E4BA83] selection:text-[#061840] flex flex-col justify-between overflow-x-hidden">
+    <div className="min-h-screen bg-charcoal-texture text-[#F1E3CC] font-sans selection:bg-[#E4BA83] selection:text-[#121316] flex flex-col justify-between overflow-x-hidden">
       
       {/* Top Editorial Navigation */}
       <Nav />
@@ -108,7 +108,7 @@ export default function Work() {
       <main className="relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-12 lg:px-20 pt-6 sm:pt-10 pb-20 sm:pb-32 flex-grow">
         
         {/* Top Header Bar */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 mb-10 border-b border-[#0B3272]">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 mb-10 border-b border-[#2A2E38]">
           <div>
             <div className="flex items-center gap-2 mb-3 font-mono text-xs uppercase tracking-widest text-[#8DA1B4]">
               <span className="w-2 h-2 rounded-full bg-[#E4BA83]"></span>
@@ -122,7 +122,7 @@ export default function Work() {
           </div>
 
           <div className="flex flex-col md:items-end gap-2 text-xs font-mono text-[#8DA1B4]">
-            <span className="font-medium uppercase tracking-wider bg-[#0B3272] px-3.5 py-1.5 border border-[#0B3272] rounded-full text-[#F1E3CC]">
+            <span className="font-medium uppercase tracking-wider bg-[#1E222B] px-3.5 py-1.5 border border-[#2A2E38] rounded-full text-[#F1E3CC]">
               ✦ {allProjects.length} Case Studies Documented
             </span>
             <span className="text-[11px] text-[#8DA1B4]/70">
@@ -132,7 +132,7 @@ export default function Work() {
         </div>
 
         {/* Filter Bar (Jackie Zhang Blueprint style) */}
-        <div className="flex flex-wrap items-center gap-2 mb-12 pb-4 border-b border-[#0B3272] font-mono text-xs">
+        <div className="flex flex-wrap items-center gap-2 mb-12 pb-4 border-b border-[#2A2E38] font-mono text-xs">
           <span className="text-[#8DA1B4] mr-2 flex items-center gap-1.5">
             <span className="text-[#E4BA83]">✦</span>
             <span>FILTER:</span>
@@ -144,8 +144,8 @@ export default function Work() {
               onClick={() => setSelectedFilter(opt)}
               className={`px-4 py-1.5 rounded-full border transition-all cursor-pointer ${
                 selectedFilter === opt
-                  ? 'bg-[#0B3272] text-[#E4BA83] border-[#E4BA83] font-medium shadow-xs'
-                  : 'bg-transparent text-[#8DA1B4] border-[#0B3272] hover:border-[#E4BA83] hover:text-[#F1E3CC]'
+                  ? 'bg-[#1E222B] text-[#E4BA83] border-[#E4BA83] font-medium shadow-xs'
+                  : 'bg-transparent text-[#8DA1B4] border-[#2A2E38] hover:border-[#E4BA83] hover:text-[#F1E3CC]'
               }`}
             >
               {opt}
@@ -154,7 +154,7 @@ export default function Work() {
         </div>
 
         {/* Tactile Cutting Mat Workbench Archive */}
-        <div className="relative rounded-lg border border-[#0B3272] cutting-mat-grid p-6 sm:p-10 lg:p-14 shadow-xl text-[#F1E3CC] overflow-hidden mb-16">
+        <div className="relative rounded-lg border border-[#2A2E38] cutting-mat-grid p-6 sm:p-10 lg:p-14 shadow-xl text-[#F1E3CC] overflow-hidden mb-16">
           
           {/* Cutting Mat Measurement Numbers */}
           <div className="absolute top-3 left-6 flex gap-8 text-[10px] font-mono text-[#8DA1B4]/40 select-none hidden sm:flex">
@@ -177,12 +177,12 @@ export default function Work() {
             {filteredProjects.map((proj) => (
               <div
                 key={proj.id}
-                className="group relative bg-[#061840] text-[#F1E3CC] p-6 sm:p-10 rounded-md border border-[#0B3272] shadow-md hover:border-[#E4BA83]/60 hover:-translate-y-0.5 transition-all duration-300"
+                className="group relative bg-[#181A20]/90 text-[#F1E3CC] p-6 sm:p-10 rounded-md border border-[#2A2E38] shadow-md hover:border-[#E4BA83]/60 hover:-translate-y-0.5 transition-all duration-300"
               >
                 {/* Header Row */}
-                <div className="flex flex-wrap items-center justify-between gap-3 pb-4 mb-6 border-b border-[#0B3272]">
+                <div className="flex flex-wrap items-center justify-between gap-3 pb-4 mb-6 border-b border-[#2A2E38]">
                   <div className="flex items-center gap-3">
-                    <span className="font-mono text-xs font-bold px-2.5 py-0.5 rounded-full bg-[#0B3272] text-[#E4BA83]">
+                    <span className="font-mono text-xs font-bold px-2.5 py-0.5 rounded-full bg-[#222630] text-[#E4BA83]">
                       {proj.number}
                     </span>
                     <span className="font-mono text-xs uppercase tracking-wider text-[#8DA1B4] font-medium">
@@ -213,7 +213,7 @@ export default function Work() {
                     <p className="text-sm sm:text-base text-[#8DA1B4] leading-relaxed font-normal mb-5">
                       {proj.overview}
                     </p>
-                    <div className="p-3.5 bg-[#0B3272]/30 rounded border border-[#0B3272] text-xs sm:text-sm font-mono text-[#F1E3CC]">
+                    <div className="p-3.5 bg-[#121316] rounded border border-[#2A2E38] text-xs sm:text-sm font-mono text-[#F1E3CC]">
                       <strong className="text-[#E4BA83]">Impact:</strong> {proj.impact}
                     </div>
                   </div>
@@ -233,11 +233,11 @@ export default function Work() {
                       </ul>
                     </div>
 
-                    <div className="pt-4 border-t border-[#0B3272] flex flex-wrap gap-1.5">
+                    <div className="pt-4 border-t border-[#2A2E38] flex flex-wrap gap-1.5">
                       {proj.tags.map((tag) => (
                         <span
                           key={tag}
-                          className="text-[11px] font-mono text-[#8DA1B4] bg-[#0B3272]/40 px-2.5 py-0.5 rounded-full border border-[#0B3272]"
+                          className="text-[11px] font-mono text-[#8DA1B4] bg-[#222630] px-2.5 py-0.5 rounded-full border border-[#2A2E38]"
                         >
                           #{tag}
                         </span>
@@ -254,7 +254,7 @@ export default function Work() {
         </div>
 
         {/* Back to Home & Connect Jump */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-6 border-t border-[#0B3272] font-mono text-xs">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-6 border-t border-[#2A2E38] font-mono text-xs">
           <Link
             to="/"
             className="inline-flex items-center gap-2 font-medium text-[#8DA1B4] hover:text-[#E4BA83] transition-colors"
@@ -263,7 +263,7 @@ export default function Work() {
           </Link>
           <Link
             to="/contact"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#0B3272] text-[#F1E3CC] font-medium border border-[#0B3272] hover:bg-[#E4BA83] hover:text-[#061840] hover:border-[#E4BA83] transition-colors"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#1E222B] text-[#F1E3CC] font-medium border border-[#2A2E38] hover:bg-[#E4BA83] hover:text-[#121316] hover:border-[#E4BA83] transition-colors"
           >
             <span>Have a project in mind? Let's chat</span>
             <span>→</span>
@@ -273,7 +273,7 @@ export default function Work() {
       </main>
 
       {/* Editorial Footer */}
-      <footer className="w-full border-t border-[#0B3272] py-8 px-6 sm:px-12 lg:px-20 text-xs font-mono text-[#8DA1B4] bg-[#061840]">
+      <footer className="w-full border-t border-[#2A2E38] py-8 px-6 sm:px-12 lg:px-20 text-xs font-mono text-[#8DA1B4] bg-[#121316]">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
           <span className="text-[#F1E3CC]">✦ Ruchi Bheda © 2026</span>
           <span>UI/UX Designer & Product Designer</span>

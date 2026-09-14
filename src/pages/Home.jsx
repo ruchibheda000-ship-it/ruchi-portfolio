@@ -51,7 +51,7 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-[#061840] text-[#F1E3CC] font-body selection:bg-[#E4BA83] selection:text-[#061840] relative overflow-x-hidden pb-24">
+    <div className="min-h-screen bg-charcoal-texture text-[#F1E3CC] font-body selection:bg-[#E4BA83] selection:text-[#121316] relative overflow-x-hidden pb-24">
       
 
 
@@ -466,9 +466,9 @@ export default function Home() {
               <button
                 type="button"
                 onClick={() => toggleCheck('opt1')}
-                className="w-full flex items-center gap-3.5 p-3.5 rounded-xl bg-[#061840]/60 border border-[#0B3272] text-left cursor-pointer hover:border-[#E4BA83]/50 transition-colors"
+                className="w-full flex items-center gap-3.5 p-3.5 rounded-xl bg-[#121316]/80 border border-[#0B3272] text-left cursor-pointer hover:border-[#E4BA83]/50 transition-colors"
               >
-                <span className={`w-5 h-5 rounded border border-[#0B3272] flex items-center justify-center font-mono text-xs ${checkedItems.opt1 ? 'bg-[#E4BA83] text-[#061840] border-[#E4BA83]' : 'bg-transparent'}`}>
+                <span className={`w-5 h-5 rounded border border-[#0B3272] flex items-center justify-center font-mono text-xs ${checkedItems.opt1 ? 'bg-[#E4BA83] text-[#121316] border-[#E4BA83]' : 'bg-transparent'}`}>
                   {checkedItems.opt1 ? '✓' : ''}
                 </span>
                 <span className="text-[#F1E3CC] font-medium">Product Strategy & 0-to-1 UX Systems</span>
@@ -477,9 +477,9 @@ export default function Home() {
               <button
                 type="button"
                 onClick={() => toggleCheck('opt2')}
-                className="w-full flex items-center gap-3.5 p-3.5 rounded-xl bg-[#061840]/60 border border-[#0B3272] text-left cursor-pointer hover:border-[#E4BA83]/50 transition-colors"
+                className="w-full flex items-center gap-3.5 p-3.5 rounded-xl bg-[#121316]/80 border border-[#0B3272] text-left cursor-pointer hover:border-[#E4BA83]/50 transition-colors"
               >
-                <span className={`w-5 h-5 rounded border border-[#0B3272] flex items-center justify-center font-mono text-xs ${checkedItems.opt2 ? 'bg-[#E4BA83] text-[#061840] border-[#E4BA83]' : 'bg-transparent'}`}>
+                <span className={`w-5 h-5 rounded border border-[#0B3272] flex items-center justify-center font-mono text-xs ${checkedItems.opt2 ? 'bg-[#E4BA83] text-[#121316] border-[#E4BA83]' : 'bg-transparent'}`}>
                   {checkedItems.opt2 ? '✓' : ''}
                 </span>
                 <span className="text-[#F1E3CC] font-medium">High-impact, meaningful problems</span>
@@ -488,9 +488,9 @@ export default function Home() {
               <button
                 type="button"
                 onClick={() => toggleCheck('opt3')}
-                className="w-full flex items-center gap-3.5 p-3.5 rounded-xl bg-[#061840]/60 border border-[#0B3272] text-left cursor-pointer hover:border-[#E4BA83]/50 transition-colors"
+                className="w-full flex items-center gap-3.5 p-3.5 rounded-xl bg-[#121316]/80 border border-[#0B3272] text-left cursor-pointer hover:border-[#E4BA83]/50 transition-colors"
               >
-                <span className={`w-5 h-5 rounded border border-[#0B3272] flex items-center justify-center font-mono text-xs ${checkedItems.opt3 ? 'bg-[#E4BA83] text-[#061840] border-[#E4BA83]' : 'bg-transparent'}`}>
+                <span className={`w-5 h-5 rounded border border-[#0B3272] flex items-center justify-center font-mono text-xs ${checkedItems.opt3 ? 'bg-[#E4BA83] text-[#121316] border-[#E4BA83]' : 'bg-transparent'}`}>
                   {checkedItems.opt3 ? '✓' : ''}
                 </span>
                 <span className="text-[#F1E3CC] font-medium">Empathetic, ambitious product teams</span>
@@ -519,7 +519,7 @@ export default function Home() {
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
               <Link
                 to="/contact"
-                className="px-8 py-3.5 rounded-full bg-[#0B3272] text-[#F1E3CC] font-serif font-bold text-sm sm:text-base border border-[#E4BA83] shadow-md hover:bg-[#E4BA83] hover:text-[#061840] transition-colors"
+                className="px-8 py-3.5 rounded-full bg-[#0B3272] text-[#F1E3CC] font-serif font-bold text-sm sm:text-base border border-[#E4BA83] shadow-md hover:bg-[#E4BA83] hover:text-[#121316] transition-colors"
               >
                 <span>Go to Contact Page</span>
                 <span className="ml-2 font-mono">→</span>

@@ -9,11 +9,29 @@
   --font-display: "Averia Serif Libre", "Syne", serif;
   --font-body: "DM Sans", "Space Grotesk", sans-serif;
   --color-bg-midnight: #061840;
+  --color-bg-charcoal: #121316;
+  --color-charcoal-surface: #181A20;
+  --color-charcoal-border: #2A2E38;
   --color-forest-blue: #0B3272;
   --color-warm-ivory: #F1E3CC;
   --color-mist-blue: #8DA1B4;
   --color-path-gold: #E4BA83;
   --color-soft-cream: #F6E8D2;
+}
+
+/* Global Textured Charcoal Background */
+html,
+body {
+  background-color: #121316;
+  background-image: url('/charcoal-texture.png');
+  background-repeat: repeat;
+  color: #F1E3CC;
+}
+
+.bg-charcoal-texture {
+  background-color: #121316;
+  background-image: url('/charcoal-texture.png');
+  background-repeat: repeat;
 }
 
 /* Typography Utilities */
@@ -56,22 +74,22 @@ html {
   height: 7px;
 }
 ::-webkit-scrollbar-track {
-  background: #061840;
+  background: #121316;
 }
 ::-webkit-scrollbar-thumb {
-  background: #0B3272;
+  background: #282C34;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #E4BA83;
 }
 
-/* Tactile Studio Cutting Mat Grid Texture (Midnight Forest Palette) */
+/* Tactile Studio Cutting Mat Grid Texture (Charcoal Studio Palette) */
 .cutting-mat-grid {
-  background-color: #061840;
+  background-color: #121316;
   background-image:
-    linear-gradient(rgba(11, 50, 114, 0.45) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(11, 50, 114, 0.45) 1px, transparent 1px),
+    linear-gradient(rgba(42, 46, 56, 0.7) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(42, 46, 56, 0.7) 1px, transparent 1px),
     linear-gradient(rgba(228, 186, 131, 0.08) 1px, transparent 1px),
     linear-gradient(90deg, rgba(228, 186, 131, 0.08) 1px, transparent 1px);
   background-size: 50px 50px, 50px 50px, 10px 10px, 10px 10px;
