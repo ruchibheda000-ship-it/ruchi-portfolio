@@ -3,155 +3,158 @@ import React, { useState, useEffect, useCallback } from 'react'
 // Unique ID counter for sparkle instances
 let sparkleId = 0
 
-// A palette of authentic hand-drawn doodle sparkle SVG variations
-function DoodleSparkleSVG({ size = 42, color = '#E4BA83', accentColor = '#F1E3CC', variant = 0 }) {
+// A palette of authentic handmade doodle sparkle SVG variations (Strictly 3 stars, #FFBA26)
+function DoodleSparkleSVG({ size = 46, color = '#FFBA26', variant = 0 }) {
   if (variant === 1) {
-    // Variant 1: Bold playful doodle with 3 sparkles & accent dots
+    // Variant 1: Sketched / Crayon-style handmade doodle (3 stars only)
     return (
       <svg
         width={size}
         height={size}
-        viewBox="0 0 52 52"
+        viewBox="0 0 54 54"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        className="filter drop-shadow-[0_2px_8px_rgba(228,186,131,0.5)]"
+        className="filter drop-shadow-[0_2px_10px_rgba(255,186,38,0.65)]"
       >
-        {/* Main 4-pointed organic doodle star */}
+        {/* 1. Large Central Star - Hand-drawn organic sketch */}
         <path
-          d="M 26 4 C 26 15, 29 22, 44 26 C 29 30, 26 37, 26 48 C 26 37, 23 30, 8 26 C 23 22, 26 15, 26 4 Z"
+          d="M 27 5.5 C 27 16, 29.5 22.5, 43.5 25.5 C 29.5 28.5, 27 35, 27 46.5 C 27 35, 24.5 28.5, 10.5 25.5 C 24.5 22.5, 27 16, 27 5.5 Z"
           fill={color}
-          stroke={accentColor}
-          strokeWidth="1.4"
+          stroke={color}
+          strokeWidth="1.6"
           strokeLinejoin="round"
-        />
-        {/* Inner hand-drawn cross highlight */}
-        <path
-          d="M 26 14 L 26 38 M 14 26 L 38 26"
-          stroke={accentColor}
-          strokeWidth="1"
           strokeLinecap="round"
-          opacity="0.75"
         />
-        {/* Secondary buddy sparkle (top-right) */}
+        {/* Handmade crayon-style inner twinkle line */}
         <path
-          d="M 41 7 C 41 11, 42 13, 47 14 C 42 15, 41 17, 41 21 C 41 17, 40 15, 35 14 C 40 13, 41 11, 41 7 Z"
-          fill={accentColor}
+          d="M 27 13 L 27 38 M 15 25.5 L 39 25.5"
+          stroke="#FFF2C6"
+          strokeWidth="1.2"
+          strokeLinecap="round"
+          opacity="0.85"
+        />
+
+        {/* 2. Medium Star (Top-Right) */}
+        <path
+          d="M 42.5 6.5 C 42.5 11.5, 44 13.5, 48.5 14.5 C 44 15.5, 42.5 17.5, 42.5 22.5 C 42.5 17.5, 41 15.5, 36.5 14.5 C 41 13.5, 42.5 11.5, 42.5 6.5 Z"
+          fill={color}
+          stroke={color}
+          strokeWidth="1.2"
+          strokeLinejoin="round"
+          strokeLinecap="round"
+        />
+        <path
+          d="M 42.5 10 L 42.5 19 M 38.5 14.5 L 46.5 14.5"
+          stroke="#FFF2C6"
+          strokeWidth="0.9"
+          strokeLinecap="round"
+          opacity="0.8"
+        />
+
+        {/* 3. Small Star (Bottom-Left) */}
+        <path
+          d="M 11.5 35.5 C 11.5 39.5, 12.5 41, 16 42 C 12.5 43, 11.5 44.5, 11.5 48.5 C 11.5 44.5, 10.5 43, 7 42 C 10.5 41, 11.5 39.5, 11.5 35.5 Z"
+          fill={color}
           stroke={color}
           strokeWidth="1"
           strokeLinejoin="round"
+          strokeLinecap="round"
         />
-        {/* Tertiary mini sparkle (bottom-left) */}
-        <path
-          d="M 11 36 C 11 39, 12 40, 15 41 C 12 42, 11 43, 11 46 C 11 43, 10 42, 7 41 C 10 40, 11 39, 11 36 Z"
-          fill={accentColor}
-          stroke={color}
-          strokeWidth="0.8"
-          strokeLinejoin="round"
-        />
-        {/* Playful hand-drawn dust dots */}
-        <circle cx="10" cy="14" r="1.6" fill={color} />
-        <circle cx="43" cy="40" r="1.4" fill={accentColor} />
       </svg>
     )
   }
 
   if (variant === 2) {
-    // Variant 2: Delicate sketched fairy-dust sparkle cluster
+    // Variant 2: Slightly playful tilted hand-drawn doodle (3 stars only)
     return (
       <svg
         width={size}
         height={size}
-        viewBox="0 0 52 52"
+        viewBox="0 0 54 54"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        className="filter drop-shadow-[0_2px_8px_rgba(241,227,204,0.5)]"
+        className="filter drop-shadow-[0_2px_10px_rgba(255,186,38,0.65)]"
       >
-        {/* Main star: slightly tilted hand-drawn diamond */}
+        {/* 1. Large Central Star - slightly tilted organic doodle */}
         <path
-          d="M 26 6 C 26 16, 29 23, 42 26 C 29 29, 26 36, 26 46 C 26 36, 23 29, 10 26 C 23 23, 26 16, 26 6 Z"
-          fill={accentColor}
+          d="M 27 6 C 27.5 16, 30.5 22.5, 43 25 C 30 28.5, 27 35.5, 26.5 46 C 26 35.5, 23 28.5, 11 26 C 23.5 22.5, 26.5 16, 27 6 Z"
+          fill={color}
           stroke={color}
           strokeWidth="1.5"
           strokeLinejoin="round"
-        />
-        {/* Center core highlight */}
-        <circle cx="26" cy="26" r="2.2" fill="#FFFFFF" opacity="0.9" />
-
-        {/* Top-right sparkle */}
-        <path
-          d="M 40 8 C 40 12, 41 14, 46 15 C 41 16, 40 18, 40 22 C 40 18, 39 16, 34 15 C 39 14, 40 12, 40 8 Z"
-          fill={color}
-          stroke={accentColor}
-          strokeWidth="1"
-          strokeLinejoin="round"
-        />
-        {/* Lower-left sparkle */}
-        <path
-          d="M 12 34 C 12 37, 13 38, 17 39 C 13 40, 12 41, 12 44 C 12 41, 11 40, 7 39 C 11 38, 12 37, 12 34 Z"
-          fill={color}
-          stroke={accentColor}
-          strokeWidth="0.8"
-        />
-        {/* Hand-drawn tiny twinkle cross */}
-        <path
-          d="M 41 38 L 41 44 M 38 41 L 44 41"
-          stroke={color}
-          strokeWidth="1.2"
           strokeLinecap="round"
         />
+        {/* Soft core highlight */}
+        <circle cx="27" cy="25.5" r="2.8" fill="#FFF4D0" opacity="0.9" />
+
+        {/* 2. Medium Star (Top-Right) */}
         <path
-          d="M 12 14 L 12 18 M 10 16 L 14 16"
-          stroke={accentColor}
+          d="M 43 7 C 43 11.5, 44.5 13.5, 49 14.5 C 44.5 15.5, 43 17.5, 43 22 C 43 17.5, 41.5 15.5, 37 14.5 C 41.5 13.5, 43 11.5, 43 7 Z"
+          fill={color}
+          stroke={color}
           strokeWidth="1.2"
+          strokeLinejoin="round"
+          strokeLinecap="round"
+        />
+
+        {/* 3. Small Star (Bottom-Left) */}
+        <path
+          d="M 12 36 C 12 39.5, 13 41, 16.5 42 C 13 43, 12 44.5, 12 48 C 12 44.5, 11 43, 7.5 42 C 11 41, 12 39.5, 12 36 Z"
+          fill={color}
+          stroke={color}
+          strokeWidth="1"
+          strokeLinejoin="round"
           strokeLinecap="round"
         />
       </svg>
     )
   }
 
-  // Variant 0 (Default): Classic ✨ doodle emoji layout
+  // Variant 0 (Default): Classic ✨ Handmade 3-Star Doodle in #FFBA26
   return (
     <svg
       width={size}
       height={size}
-      viewBox="0 0 52 52"
+      viewBox="0 0 54 54"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className="filter drop-shadow-[0_2px_10px_rgba(228,186,131,0.6)]"
+      className="filter drop-shadow-[0_2px_12px_rgba(255,186,38,0.7)]"
     >
-      {/* Primary Central Sparkle */}
+      {/* 1. Large Central Star */}
       <path
-        d="M 26 5 C 26 16, 29 23, 44 26 C 29 29, 26 36, 26 47 C 26 36, 23 29, 8 26 C 23 23, 26 16, 26 5 Z"
+        d="M 27 5 C 27 16, 29.5 22.5, 44 25.5 C 29.5 28.5, 27 35.5, 27 47 C 27 35.5, 24.5 28.5, 10 25.5 C 24.5 22.5, 27 16, 27 5 Z"
         fill={color}
-        stroke={accentColor}
-        strokeWidth="1.3"
-        strokeLinejoin="round"
-      />
-      {/* Hand-drawn organic interior star reflection */}
-      <path
-        d="M 26 12 C 26 19, 28 23, 37 26 C 28 29, 26 33, 26 40 C 26 33, 24 29, 15 26 C 24 23, 26 19, 26 12 Z"
-        fill={accentColor}
-        opacity="0.45"
-      />
-      {/* Upper-right buddy star */}
-      <path
-        d="M 41 8 C 41 12, 42 14, 47 15 C 42 16, 41 18, 41 22 C 41 18, 40 16, 35 15 C 40 14, 41 12, 41 8 Z"
-        fill={accentColor}
         stroke={color}
-        strokeWidth="1.1"
+        strokeWidth="1.5"
         strokeLinejoin="round"
+        strokeLinecap="round"
       />
-      {/* Lower-left buddy star */}
+      {/* Hand-drawn organic inner facet */}
       <path
-        d="M 12 34 C 12 37, 13 39, 16 40 C 13 41, 12 43, 12 46 C 12 43, 11 41, 8 40 C 11 39, 12 37, 12 34 Z"
-        fill={accentColor}
-        stroke={color}
-        strokeWidth="0.9"
-        strokeLinejoin="round"
+        d="M 27 12 C 27 19, 28.5 22.5, 37 25.5 C 28.5 28.5, 27 32.5, 27 39.5 C 27 32.5, 25.5 28.5, 17 25.5 C 25.5 22.5, 27 19, 27 12 Z"
+        fill="#FFE899"
+        opacity="0.55"
       />
-      {/* Little magical dust dots */}
-      <circle cx="12" cy="12" r="1.5" fill={color} />
-      <circle cx="43" cy="38" r="1.8" fill={color} />
+
+      {/* 2. Medium Star (Top-Right) */}
+      <path
+        d="M 42 7.5 C 42 12, 43.5 14, 48 15 C 43.5 16, 42 18, 42 22.5 C 42 18, 40.5 16, 36 15 C 40.5 14, 42 12, 42 7.5 Z"
+        fill={color}
+        stroke={color}
+        strokeWidth="1.2"
+        strokeLinejoin="round"
+        strokeLinecap="round"
+      />
+
+      {/* 3. Small Star (Bottom-Left) */}
+      <path
+        d="M 12 35.5 C 12 39, 13 40.5, 16.5 41.5 C 13 42.5, 12 44, 12 47.5 C 12 44, 11 42.5, 7.5 41.5 C 11 40.5, 12 39, 12 35.5 Z"
+        fill={color}
+        stroke={color}
+        strokeWidth="1"
+        strokeLinejoin="round"
+        strokeLinecap="round"
+      />
     </svg>
   )
 }
@@ -218,8 +221,7 @@ export default function ClickSparkle() {
         >
           <DoodleSparkleSVG
             size={48}
-            color="#E4BA83"
-            accentColor="#F1E3CC"
+            color="#FFBA26"
             variant={sparkle.variant}
           />
         </div>
