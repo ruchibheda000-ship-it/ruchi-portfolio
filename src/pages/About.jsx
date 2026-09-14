@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 
 export default function About() {
   return (
-    <div className="min-h-screen bg-charcoal-texture text-[#F1E3CC] font-sans selection:bg-[#E4BA83] selection:text-[#121316] flex flex-col justify-between overflow-x-hidden">
+    <div className="min-h-screen bg-dark-blue-texture text-[#F1E3CC] font-sans selection:bg-[#E4BA83] selection:text-[#030d24] flex flex-col justify-between overflow-x-hidden">
       
       {/* Editorial Navigation */}
       <Nav />
@@ -13,10 +13,10 @@ export default function About() {
       <main className="relative z-10 w-full max-w-5xl mx-auto px-6 sm:px-12 lg:px-20 py-8 sm:py-16 flex-grow">
         
         {/* Editorial Paper Document Container */}
-        <div className="relative bg-[#181A20]/85 text-[#F1E3CC] p-8 sm:p-14 lg:p-20 rounded-lg shadow-sm border border-[#2A2E38]">
+        <div className="relative bg-[#0B3272]/20 text-[#F1E3CC] p-8 sm:p-14 lg:p-20 rounded-lg shadow-sm border border-[#0B3272]">
           
           {/* Header Metadata Bar */}
-          <div className="flex flex-wrap items-center justify-between gap-4 pb-5 mb-10 border-b border-[#2A2E38]">
+          <div className="flex flex-wrap items-center justify-between gap-4 pb-5 mb-10 border-b border-[#0B3272]">
             <div className="flex items-center gap-2.5 font-mono text-xs uppercase tracking-widest text-[#8DA1B4]">
               <span className="w-2 h-2 rounded-full bg-[#E4BA83]"></span>
               <span>PERSPECTIVE // ABOUT RUCHI BHEDA</span>
@@ -44,7 +44,7 @@ export default function About() {
           </div>
 
           {/* Main Story & Approach */}
-          <div className="space-y-6 text-base sm:text-lg text-[#8DA1B4] font-normal leading-relaxed border-t border-[#2A2E38] pt-8">
+          <div className="space-y-6 text-base sm:text-lg text-[#8DA1B4] font-normal leading-relaxed border-t border-[#0B3272] pt-8">
             <p>
               My path here hasn't been linear; I've tried different roles, tools, and approaches, and kept what worked.
             </p>
@@ -54,13 +54,13 @@ export default function About() {
           </div>
 
           {/* Core Operating Principles (Jackie Zhang Blueprint style) */}
-          <div className="mt-14 pt-10 border-t border-[#2A2E38]">
+          <div className="mt-14 pt-10 border-t border-[#0B3272]">
             <div className="font-mono text-xs uppercase tracking-widest text-[#E4BA83] font-semibold mb-8">
               ✦ CORE PRINCIPLES & ATTRIBUTES
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5 text-sm sm:text-base">
-              <div className="p-6 rounded-md border border-[#2A2E38] bg-[#121316] space-y-2.5">
+              <div className="p-6 rounded-md border border-[#0B3272] bg-[#030d24] space-y-2.5">
                 <div className="font-serif text-lg font-normal text-[#F1E3CC] flex items-center gap-2">
                   <span className="font-mono text-xs text-[#E4BA83] font-semibold">01.</span> Human-Centered & Empathetic
                 </div>
@@ -69,7 +69,7 @@ export default function About() {
                 </p>
               </div>
 
-              <div className="p-6 rounded-md border border-[#2A2E38] bg-[#121316] space-y-2.5">
+              <div className="p-6 rounded-md border border-[#0B3272] bg-[#030d24] space-y-2.5">
                 <div className="font-serif text-lg font-normal text-[#F1E3CC] flex items-center gap-2">
                   <span className="font-mono text-xs text-[#E4BA83] font-semibold">02.</span> Business-Minded & Strategic
                 </div>
@@ -78,7 +78,7 @@ export default function About() {
                 </p>
               </div>
 
-              <div className="p-6 rounded-md border border-[#2A2E38] bg-[#121316] space-y-2.5">
+              <div className="p-6 rounded-md border border-[#0B3272] bg-[#030d24] space-y-2.5">
                 <div className="font-serif text-lg font-normal text-[#F1E3CC] flex items-center gap-2">
                   <span className="font-mono text-xs text-[#E4BA83] font-semibold">03.</span> Experimental & Constantly Learning
                 </div>
@@ -87,7 +87,7 @@ export default function About() {
                 </p>
               </div>
 
-              <div className="p-6 rounded-md border border-[#2A2E38] bg-[#121316] space-y-2.5">
+              <div className="p-6 rounded-md border border-[#0B3272] bg-[#030d24] space-y-2.5">
                 <div className="font-serif text-lg font-normal text-[#F1E3CC] flex items-center gap-2">
                   <span className="font-mono text-xs text-[#E4BA83] font-semibold">04.</span> Systems Thinking & Clarity
                 </div>
@@ -99,7 +99,7 @@ export default function About() {
           </div>
 
           {/* Selected Toolkit */}
-          <div className="mt-12 pt-8 border-t border-[#2A2E38]">
+          <div className="mt-12 pt-8 border-t border-[#0B3272]">
             <div className="font-mono text-xs uppercase tracking-widest text-[#8DA1B4] mb-4">
               ✦ TOOLKIT & COMPETENCIES
             </div>
@@ -116,7 +116,7 @@ export default function About() {
               ].map((tool) => (
                 <span
                   key={tool}
-                  className="px-3.5 py-1.5 bg-[#1E222B] rounded-full border border-[#2A2E38] text-[#8DA1B4] hover:border-[#E4BA83]/50 hover:text-[#F1E3CC] transition-colors"
+                  className="px-3.5 py-1.5 bg-[#0B3272]/30 rounded-full border border-[#0B3272] text-[#8DA1B4] hover:border-[#E4BA83]/50 hover:text-[#F1E3CC] transition-colors"
                 >
                   {tool}
                 </span>
@@ -125,7 +125,7 @@ export default function About() {
           </div>
 
           {/* Footer Navigation Jump */}
-          <div className="mt-14 pt-8 border-t border-[#2A2E38] flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-xs">
+          <div className="mt-14 pt-8 border-t border-[#0B3272] flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-xs">
             <Link
               to="/work"
               className="inline-flex items-center gap-2 font-medium text-[#8DA1B4] hover:text-[#E4BA83] transition-colors"
@@ -135,7 +135,7 @@ export default function About() {
 
             <Link
               to="/contact"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#1E222B] text-[#F1E3CC] font-medium border border-[#2A2E38] hover:bg-[#E4BA83] hover:text-[#121316] hover:border-[#E4BA83] transition-colors"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#0B3272] text-[#F1E3CC] font-medium border border-[#0B3272] hover:bg-[#E4BA83] hover:text-[#030d24] hover:border-[#E4BA83] transition-colors"
             >
               <span>Get in Touch / Let's Connect</span>
               <span>→</span>
@@ -147,7 +147,7 @@ export default function About() {
       </main>
 
       {/* Page Footer */}
-      <footer className="w-full border-t border-[#2A2E38] py-8 px-6 sm:px-12 lg:px-20 text-xs font-mono text-[#8DA1B4] bg-[#121316]">
+      <footer className="w-full border-t border-[#0B3272] py-8 px-6 sm:px-12 lg:px-20 text-xs font-mono text-[#8DA1B4] bg-[#030d24]">
         <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
           <span className="text-[#F1E3CC]">✦ Ruchi Bheda © 2026</span>
           <span>UI/UX Designer & Design Entrepreneur</span>

@@ -9,9 +9,7 @@
   --font-display: "Averia Serif Libre", "Syne", serif;
   --font-body: "DM Sans", "Space Grotesk", sans-serif;
   --color-bg-midnight: #061840;
-  --color-bg-charcoal: #121316;
-  --color-charcoal-surface: #181A20;
-  --color-charcoal-border: #2A2E38;
+  --color-bg-deep-blue: #030d24;
   --color-forest-blue: #0B3272;
   --color-warm-ivory: #F1E3CC;
   --color-mist-blue: #8DA1B4;
@@ -19,18 +17,18 @@
   --color-soft-cream: #F6E8D2;
 }
 
-/* Global Textured Charcoal Background */
+/* Global Textured Dark Midnight Blue Background */
 html,
 body {
-  background-color: #121316;
-  background-image: url('/charcoal-texture.png');
+  background-color: #030d24;
+  background-image: url('/dark-blue-texture.png');
   background-repeat: repeat;
   color: #F1E3CC;
 }
 
-.bg-charcoal-texture {
-  background-color: #121316;
-  background-image: url('/charcoal-texture.png');
+.bg-dark-blue-texture {
+  background-color: #030d24;
+  background-image: url('/dark-blue-texture.png');
   background-repeat: repeat;
 }
 
@@ -74,22 +72,22 @@ html {
   height: 7px;
 }
 ::-webkit-scrollbar-track {
-  background: #121316;
+  background: #030d24;
 }
 ::-webkit-scrollbar-thumb {
-  background: #282C34;
+  background: #0B3272;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #E4BA83;
 }
 
-/* Tactile Studio Cutting Mat Grid Texture (Charcoal Studio Palette) */
+/* Tactile Studio Cutting Mat Grid Texture (Deep Midnight Palette) */
 .cutting-mat-grid {
-  background-color: #121316;
+  background-color: #030d24;
   background-image:
-    linear-gradient(rgba(42, 46, 56, 0.7) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(42, 46, 56, 0.7) 1px, transparent 1px),
+    linear-gradient(rgba(11, 50, 114, 0.45) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(11, 50, 114, 0.45) 1px, transparent 1px),
     linear-gradient(rgba(228, 186, 131, 0.08) 1px, transparent 1px),
     linear-gradient(90deg, rgba(228, 186, 131, 0.08) 1px, transparent 1px);
   background-size: 50px 50px, 50px 50px, 10px 10px, 10px 10px;

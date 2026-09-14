@@ -51,7 +51,7 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-charcoal-texture text-[#F1E3CC] font-body selection:bg-[#E4BA83] selection:text-[#121316] relative overflow-x-hidden pb-24">
+    <div className="min-h-screen bg-dark-blue-texture text-[#F1E3CC] font-body selection:bg-[#E4BA83] selection:text-[#030d24] relative overflow-x-hidden pb-24">
       
 
 
@@ -519,7 +519,7 @@ export default function Home() {
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
               <Link
                 to="/contact"
-                className="px-8 py-3.5 rounded-full bg-[#0B3272] text-[#F1E3CC] font-serif font-bold text-sm sm:text-base border border-[#E4BA83] shadow-md hover:bg-[#E4BA83] hover:text-[#121316] transition-colors"
+                className="px-8 py-3.5 rounded-full bg-[#0B3272] text-[#F1E3CC] font-serif font-bold text-sm sm:text-base border border-[#E4BA83] shadow-md hover:bg-[#E4BA83] hover:text-[#030d24] transition-colors"
               >
                 <span>Go to Contact Page</span>
                 <span className="ml-2 font-mono">→</span>
