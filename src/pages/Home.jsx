@@ -5,8 +5,18 @@ import HangingCloth from '../components/HangingCloth'
 import TransparentVideo from '../components/TransparentVideo'
 import PaperStack from '../components/PaperStack'
 import InteractiveRole from '../components/InteractiveRole'
+import {
+  usePageWakeup,
+  InteractiveSmile,
+  InteractiveRibbon,
+  InteractiveScrap,
+  InteractivePerchedBirds
+} from '../components/AmbientMicroInteractions'
 
 export default function Home() {
+  // Page entry wakeup trigger for decorative elements
+  const isWakingUp = usePageWakeup()
+
   // Live Mumbai IST Time
   const [timeString, setTimeString] = useState('')
 
@@ -73,14 +83,18 @@ export default function Home() {
         
         {/* SILK BOOKMARK RIBBON (Gold #E4BA83 silk ribbon peeking from the central fold / spine seam) */}
         <div className="absolute -left-4 sm:-left-6 top-1/2 -translate-y-1/2 z-40 pointer-events-none select-none">
-          <svg width="50" height="30" viewBox="0 0 50 30" fill="none">
-            <path d="M50 10 C32 6, 12 18, 0 28 L0 18 C12 8, 32 2, 50 4 Z" fill="#E4BA83" />
-          </svg>
+          <InteractiveRibbon side="left" isWakingUp={isWakingUp}>
+            <svg width="50" height="30" viewBox="0 0 50 30" fill="none">
+              <path d="M50 10 C32 6, 12 18, 0 28 L0 18 C12 8, 32 2, 50 4 Z" fill="#E4BA83" />
+            </svg>
+          </InteractiveRibbon>
         </div>
         <div className="absolute -right-4 sm:-right-6 top-1/2 -translate-y-1/2 z-40 pointer-events-none select-none">
-          <svg width="50" height="30" viewBox="0 0 50 30" fill="none" className="transform scale-x-[-1]">
-            <path d="M50 10 C32 6, 12 18, 0 28 L0 18 C12 8, 32 2, 50 4 Z" fill="#E4BA83" />
-          </svg>
+          <InteractiveRibbon side="right" isWakingUp={isWakingUp}>
+            <svg width="50" height="30" viewBox="0 0 50 30" fill="none" className="transform scale-x-[-1]">
+              <path d="M50 10 C32 6, 12 18, 0 28 L0 18 C12 8, 32 2, 50 4 Z" fill="#E4BA83" />
+            </svg>
+          </InteractiveRibbon>
         </div>
 
         {/* ----------------------------------------------------------------------- */}
@@ -102,7 +116,7 @@ export default function Home() {
                 {/* Hand-drawn wordmark in Forest Blue with Path Gold dot */}
                 <div>
                   <span className="font-hand text-4xl sm:text-5xl lg:text-6xl text-[#0B3272] font-bold tracking-tight inline-block transform -rotate-1 select-none">
-                    Ruchi<span className="text-2xl sm:text-3xl font-mono ml-1 text-[#E4BA83]">ツ</span>
+                    Ruchi<InteractiveSmile isWakingUp={isWakingUp} />
                   </span>
                   <div className="font-serif text-lg sm:text-xl md:text-2xl text-[#0B3272] tracking-wide mt-1">
                     <InteractiveRole text="UI/UX Designer" />
@@ -151,17 +165,19 @@ export default function Home() {
                     <line x1="262" y1="76" x2="274" y2="76" />
 
                     {/* Birds perched on the window */}
-                    <path d="M102 60 C102 46, 116 46, 116 60 Z" />
-                    <circle cx="111" cy="51" r="1" fill="#E4BA83" />
-                    <path d="M115 52 L119 53" />
-                    
-                    <path d="M124 60 C124 46, 138 46, 138 60 Z" />
-                    <circle cx="133" cy="51" r="1" fill="#E4BA83" />
-                    <path d="M137 52 L141 53" />
-                    
-                    <path d="M236 60 C236 46, 250 46, 250 60 Z" />
-                    <circle cx="240" cy="51" r="1" fill="#E4BA83" />
-                    <path d="M236 52 L232 53" />
+                    <InteractivePerchedBirds isWakingUp={isWakingUp}>
+                      <path d="M102 60 C102 46, 116 46, 116 60 Z" />
+                      <circle cx="111" cy="51" r="1" fill="#E4BA83" />
+                      <path d="M115 52 L119 53" />
+                      
+                      <path d="M124 60 C124 46, 138 46, 138 60 Z" />
+                      <circle cx="133" cy="51" r="1" fill="#E4BA83" />
+                      <path d="M137 52 L141 53" />
+                      
+                      <path d="M236 60 C236 46, 250 46, 250 60 Z" />
+                      <circle cx="240" cy="51" r="1" fill="#E4BA83" />
+                      <path d="M236 52 L232 53" />
+                    </InteractivePerchedBirds>
 
                     {/* Search pill inside window */}
                     <rect x="130" y="105" width="80" height="20" rx="10" />
@@ -244,7 +260,12 @@ export default function Home() {
             <div className="relative min-h-[340px] sm:min-h-[360px] max-w-2xl mx-auto my-auto w-full">
               
               {/* SCRAP 1: Torn Lined Notebook Paper (Top Left, tilted -3°) */}
-              <div className="absolute top-0 left-0 sm:left-4 z-10 w-[240px] sm:w-[310px] p-6 rounded-xs bg-notebook-ruled shadow-xl border border-[#0B3272]/20 transform -rotate-3 hover:rotate-0 transition-transform duration-300">
+              <InteractiveScrap
+                baseRotate={-3}
+                staggerIndex={0}
+                isWakingUp={isWakingUp}
+                className="absolute top-0 left-0 sm:left-4 z-10 w-[240px] sm:w-[310px] p-6 rounded-xs bg-notebook-ruled shadow-xl border border-[#0B3272]/20 select-none cursor-default"
+              >
                 {/* Jagged Torn Edge */}
                 <div className="absolute -top-1.5 left-0 right-0 h-2 bg-[#F6E8D2]" style={{ clipPath: 'polygon(0% 100%, 5% 0%, 10% 100%, 15% 0%, 20% 100%, 25% 0%, 30% 100%, 35% 0%, 40% 100%, 45% 0%, 50% 100%, 55% 0%, 60% 100%, 65% 0%, 70% 100%, 75% 0%, 80% 100%, 85% 0%, 90% 100%, 95% 0%, 100% 100%)' }}></div>
                 
@@ -256,10 +277,15 @@ export default function Home() {
                 <div className="text-[11px] font-mono text-[#0B3272] pt-4 pl-4 uppercase font-semibold">
                   01 // The why before what
                 </div>
-              </div>
+              </InteractiveScrap>
 
               {/* SCRAP 2: Torn Graph Paper (Top Right, overlapping, tilted +4°) */}
-              <div className="absolute top-4 right-0 sm:right-6 z-20 w-[250px] sm:w-[320px] p-6 rounded-xs bg-torn-graph shadow-2xl border border-[#0B3272]/25 transform rotate-4 hover:rotate-0 transition-transform duration-300">
+              <InteractiveScrap
+                baseRotate={4}
+                staggerIndex={1}
+                isWakingUp={isWakingUp}
+                className="absolute top-4 right-0 sm:right-6 z-20 w-[250px] sm:w-[320px] p-6 rounded-xs bg-torn-graph shadow-2xl border border-[#0B3272]/25 select-none cursor-default"
+              >
                 {/* Jagged Torn Right Edge */}
                 <div className="absolute -right-1 top-0 bottom-0 w-2 bg-[#F6E8D2]" style={{ clipPath: 'polygon(0% 0%, 100% 5%, 0% 10%, 100% 15%, 0% 20%, 100% 25%, 0% 30%, 100% 35%, 0% 40%, 100% 45%, 0% 50%, 100% 55%, 0% 60%, 100% 65%, 0% 70%, 100% 75%, 0% 80%, 100% 85%, 0% 90%, 100% 95%, 0% 100%)' }}></div>
                 
@@ -271,11 +297,15 @@ export default function Home() {
                 <div className="text-[11px] font-mono text-[#0B3272] pt-4 uppercase font-semibold">
                   02 // Design as an entrepreneurial lever
                 </div>
-              </div>
+              </InteractiveScrap>
 
               {/* SCRAP 3: Soft Cream Sticky Note with Paperclip (Center Bottom, overlapping both, tilted -1°) */}
-              <div className="absolute top-44 sm:top-48 left-1/2 -translate-x-1/2 z-30 w-[260px] sm:w-[330px] p-6 sm:p-8 rounded-sm bg-kraft-note shadow-2xl border border-[#0B3272]/30 transform -rotate-1 hover:rotate-0 transition-transform duration-300">
-                
+              <InteractiveScrap
+                baseRotate={-1}
+                staggerIndex={2}
+                isWakingUp={isWakingUp}
+                className="absolute top-44 sm:top-48 left-1/2 -translate-x-1/2 z-30 w-[260px] sm:w-[330px] p-6 sm:p-8 rounded-sm bg-kraft-note shadow-2xl border border-[#0B3272]/30 select-none cursor-default"
+              >
                 {/* Metallic Paperclip */}
                 <div className="absolute -top-5 left-10 pointer-events-none select-none">
                   <svg width="22" height="42" viewBox="0 0 22 42" fill="none">
@@ -290,7 +320,7 @@ export default function Home() {
                 <div className="text-[11px] font-mono text-[#0B3272] pt-4 uppercase font-semibold">
                   03 // Tactile & living tools
                 </div>
-              </div>
+              </InteractiveScrap>
 
             </div>
 
