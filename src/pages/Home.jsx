@@ -4,6 +4,7 @@ import Nav from '../components/Nav'
 import HangingCloth from '../components/HangingCloth'
 import TransparentVideo from '../components/TransparentVideo'
 import PaperStack from '../components/PaperStack'
+import InteractiveRole from '../components/InteractiveRole'
 
 export default function Home() {
   // Live Mumbai IST Time
@@ -104,7 +105,7 @@ export default function Home() {
                     Ruchi<span className="text-2xl sm:text-3xl font-mono ml-1 text-[#E4BA83]">ツ</span>
                   </span>
                   <div className="font-serif text-lg sm:text-xl md:text-2xl text-[#0B3272] tracking-wide mt-1">
-                    Product Designer
+                    <InteractiveRole text="UI/UX Designer" />
                   </div>
                 </div>
 
