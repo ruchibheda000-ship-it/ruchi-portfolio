@@ -442,3 +442,135 @@ export function InteractivePerchedBirds({ isWakingUp, children }) {
     </g>
   )
 }
+
+/**
+ * InteractiveIllustration
+ * Wraps the hand-drawn hero portrait illustration with subtle ambient page-entry wakeup
+ * and gentle buoyant reaction when the cursor nears it.
+ */
+export function InteractiveIllustration({ isWakingUp, className = "" }) {
+  const ref = useRef(null)
+  const isRunning = useRef(false)
+  const rafId = useRef(null)
+
+  const state = useRef({ y: 0, rot: 0, scale: 1, vy: 0, vrot: 0, vscale: 0 })
+  const target = useRef({ y: 0, rot: 0, scale: 1 })
+
+  // Wakeup reaction: gentle nod & breath
+  useEffect(() => {
+    if (!isWakingUp) return
+    const el = ref.current
+    if (!el) return
+
+    el.style.transition = 'transform 360ms cubic-bezier(0.34, 1.4, 0.64, 1)'
+    el.style.transform = 'translate3d(0, -3px, 0) rotate(-1.5deg) scale(1.02)'
+
+    const timer = setTimeout(() => {
+      if (ref.current) {
+        ref.current.style.transition = 'transform 450ms cubic-bezier(0.25, 1, 0.5, 1)'
+        ref.current.style.transform = 'translate3d(0, 0, 0) rotate(0deg) scale(1)'
+        setTimeout(() => {
+          if (ref.current) ref.current.style.transition = 'none'
+        }, 450)
+      }
+    }, 280)
+
+    return () => clearTimeout(timer)
+  }, [isWakingUp])
+
+  // Cursor proximity physics
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+
+    const PROXIMITY_RADIUS = 160
+    const SPRING_K = 0.08
+    const DAMPING = 0.82
+
+    const update = () => {
+      const s = state.current
+      const t = target.current
+
+      const aY = (t.y - s.y) * SPRING_K
+      s.vy = (s.vy + aY) * DAMPING
+      s.y += s.vy
+
+      const aRot = (t.rot - s.rot) * SPRING_K
+      s.vrot = (s.vrot + aRot) * DAMPING
+      s.rot += s.vrot
+
+      const aScale = (t.scale - s.scale) * SPRING_K
+      s.vscale = (s.vscale + aScale) * DAMPING
+      s.scale += s.vscale
+
+      el.style.transform = `translate3d(0, ${s.y.toFixed(2)}px, 0) rotate(${s.rot.toFixed(2)}deg) scale(${s.scale.toFixed(3)})`
+
+      const isMoving =
+        Math.abs(t.y - s.y) > 0.01 ||
+        Math.abs(t.rot - s.rot) > 0.01 ||
+        Math.abs(t.scale - s.scale) > 0.002 ||
+        Math.abs(s.vy) + Math.abs(s.vrot) + Math.abs(s.vscale) > 0.008
+
+      if (isMoving) {
+        rafId.current = requestAnimationFrame(update)
+      } else {
+        isRunning.current = false
+      }
+    }
+
+    const start = () => {
+      if (!isRunning.current) {
+        isRunning.current = true
+        rafId.current = requestAnimationFrame(update)
+      }
+    }
+
+    const onPointerMove = (e) => {
+      const rect = el.getBoundingClientRect()
+      if (rect.width === 0) return
+
+      const cx = rect.left + rect.width / 2
+      const cy = rect.top + rect.height / 2
+      const dx = cx - e.clientX
+      const dy = cy - e.clientY
+      const dist = Math.hypot(dx, dy)
+
+      if (dist < PROXIMITY_RADIUS) {
+        const rawT = 1 - dist / PROXIMITY_RADIUS
+        const t = rawT * rawT * (3 - 2 * rawT)
+
+        target.current.y = -t * 3
+        target.current.rot = (dx / PROXIMITY_RADIUS) * 1.8 * t
+        target.current.scale = 1 + 0.015 * t
+        start()
+      } else if (target.current.y !== 0 || target.current.rot !== 0 || target.current.scale !== 1) {
+        target.current.y = 0
+        target.current.rot = 0
+        target.current.scale = 1
+        start()
+      }
+    }
+
+    window.addEventListener('pointermove', onPointerMove, { passive: true })
+
+    return () => {
+      window.removeEventListener('pointermove', onPointerMove)
+      if (rafId.current) cancelAnimationFrame(rafId.current)
+    }
+  }, [])
+
+  return (
+    <div
+      ref={ref}
+      className={`will-change-transform origin-bottom select-none ${className}`}
+    >
+      <img
+        src="/hero-illustration.png"
+        alt="Hand-drawn portrait illustration of Ruchi"
+        className="w-full h-auto max-h-[360px] sm:max-h-[400px] md:max-h-[430px] object-contain drop-shadow-sm select-none pointer-events-none"
+        draggable="false"
+      />
+    </div>
+  )
+}
+

@@ -10,7 +10,7 @@ import {
   InteractiveSmile,
   InteractiveRibbon,
   InteractiveScrap,
-  InteractivePerchedBirds
+  InteractiveIllustration
 } from '../components/AmbientMicroInteractions'
 
 export default function Home() {
@@ -149,74 +149,10 @@ export default function Home() {
 
               </div>
 
-              {/* Right Column: Hand-Drawn SVG Botanical Window Illustration (Matching Image 2) */}
+              {/* Right Column: Hand-Drawn Hero Portrait Illustration */}
               <div className="md:col-span-6 lg:col-span-6 relative flex justify-center items-center">
-                <div className="relative w-full max-w-[340px] sm:max-w-[390px]">
-                  <svg viewBox="0 0 380 340" fill="none" stroke="#0B3272" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" className="w-full h-auto select-none">
-                    
-                    {/* Window Header Frame */}
-                    <rect x="65" y="60" width="220" height="230" rx="4" strokeWidth="2.5" />
-                    <line x1="65" y1="84" x2="285" y2="84" strokeWidth="2" />
-                    
-                    {/* Window Controls */}
-                    <rect x="75" y="68" width="8" height="8" rx="1" />
-                    <text x="145" y="77" fill="#0B3272" stroke="none" fontFamily="sans-serif" fontSize="9" fontWeight="bold" letterSpacing="1">UNTITLED</text>
-                    <line x1="262" y1="72" x2="274" y2="72" />
-                    <line x1="262" y1="76" x2="274" y2="76" />
-
-                    {/* Birds perched on the window */}
-                    <InteractivePerchedBirds isWakingUp={isWakingUp}>
-                      <path d="M102 60 C102 46, 116 46, 116 60 Z" />
-                      <circle cx="111" cy="51" r="1" fill="#E4BA83" />
-                      <path d="M115 52 L119 53" />
-                      
-                      <path d="M124 60 C124 46, 138 46, 138 60 Z" />
-                      <circle cx="133" cy="51" r="1" fill="#E4BA83" />
-                      <path d="M137 52 L141 53" />
-                      
-                      <path d="M236 60 C236 46, 250 46, 250 60 Z" />
-                      <circle cx="240" cy="51" r="1" fill="#E4BA83" />
-                      <path d="M236 52 L232 53" />
-                    </InteractivePerchedBirds>
-
-                    {/* Search pill inside window */}
-                    <rect x="130" y="105" width="80" height="20" rx="10" />
-                    <path d="M150 115 Q158 110 166 115" stroke="#E4BA83" />
-
-                    {/* Friendly Character holding screen */}
-                    <rect x="135" y="152" width="62" height="82" rx="12" strokeWidth="2.2" fill="#F6E8D2" />
-                    <circle cx="212" cy="180" r="18" fill="#F6E8D2" />
-                    <circle cx="206" cy="176" r="2" fill="#0B3272" />
-                    <circle cx="216" cy="178" r="2" fill="#0B3272" />
-                    <path d="M206 186 Q212 192 218 186" />
-                    <path d="M198 174 Q204 160 216 164 Q226 162 228 174" />
-                    <ellipse cx="140" cy="186" rx="6" ry="4" fill="#F6E8D2" />
-                    <ellipse cx="196" cy="204" rx="6" ry="5" fill="#F6E8D2" />
-                    <path d="M202 198 L196 245 L228 245 L224 198" />
-
-                    {/* Friendly Peeking Critter on Right */}
-                    <path d="M280 190 Q292 186 298 205 L292 270 L274 270" fill="#F6E8D2" />
-                    <ellipse cx="294" cy="200" rx="12" ry="16" fill="#F6E8D2" />
-                    <circle cx="292" cy="196" r="2" fill="#0B3272" />
-                    <path d="M298 190 Q310 188 304 200" />
-                    <path d="M304 202 L316 206" stroke="#E4BA83" />
-
-                    {/* Lush Foliage & Ferns */}
-                    <path d="M52 230 C30 200, 70 170, 95 190 C110 160, 150 170, 140 210" fill="#F6E8D2" />
-                    <path d="M62 255 C40 220, 80 190, 110 220" />
-                    <path d="M68 280 C35 240, 100 220, 140 250" fill="#F6E8D2" />
-
-                    <path d="M96 280 C80 250, 120 230, 146 250 C170 220, 220 225, 230 255 C250 225, 300 240, 290 280 Z" fill="#F6E8D2" />
-                    <path d="M102 284 L106 274 L110 284" />
-                    <path d="M174 286 L178 274 L182 286" />
-
-                    {/* Bottom-left blooming flower buds */}
-                    <path d="M4 275 Q24 235 48 200" strokeWidth="2.5" />
-                    <ellipse cx="24" cy="216" rx="10" ry="14" transform="rotate(-30 24 216)" fill="#F6E8D2" />
-                    <path d="M18 204 Q24 216 22 228" />
-                    <ellipse cx="50" cy="192" rx="10" ry="14" transform="rotate(-15 50 192)" fill="#F6E8D2" />
-                    <path d="M44 180 Q50 192 48 204" />
-                  </svg>
+                <div className="relative w-full max-w-[280px] sm:max-w-[320px] md:max-w-[360px] flex justify-center">
+                  <InteractiveIllustration isWakingUp={isWakingUp} />
                 </div>
               </div>
 
