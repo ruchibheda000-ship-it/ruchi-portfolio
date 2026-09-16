@@ -472,7 +472,7 @@ export function InteractiveIllustration({ isWakingUp, className = "" }) {
     }
   }, [])
 
-  // Character hover reaction: playful wink + small tongue
+  // Character hover reaction: playful wink + small tongue (persists while hovered)
   const handlePointerEnter = (e) => {
     // Preserve mobile touch behavior without hover interference
     if (e.pointerType === 'touch') return
@@ -480,27 +480,19 @@ export function InteractiveIllustration({ isWakingUp, className = "" }) {
     isHovered.current = true
 
     if (winkStartTimer.current) clearTimeout(winkStartTimer.current)
-    if (winkEndTimer.current) clearTimeout(winkEndTimer.current)
 
-    // Sequence:
-    // 0ms: hover detected, existing tilt begins
-    // 120ms: wink + tongue appear
-    // 500ms: wink/tongue return to normal
-    // Girl remains slightly tilted while hovered
+    // Natural brief lead-in so existing tilt begins first, then wink + tongue engage
     winkStartTimer.current = setTimeout(() => {
-      setIsWinking(true)
-    }, 120)
-
-    winkEndTimer.current = setTimeout(() => {
-      setIsWinking(false)
-    }, 500)
+      if (isHovered.current) {
+        setIsWinking(true)
+      }
+    }, 60)
   }
 
   const handlePointerLeave = (e) => {
     if (e.pointerType === 'touch') return
     isHovered.current = false
     if (winkStartTimer.current) clearTimeout(winkStartTimer.current)
-    if (winkEndTimer.current) clearTimeout(winkEndTimer.current)
     setIsWinking(false)
   }
 
