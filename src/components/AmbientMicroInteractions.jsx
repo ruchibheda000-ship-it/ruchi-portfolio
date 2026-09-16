@@ -445,8 +445,8 @@ export function InteractivePerchedBirds({ isWakingUp, children }) {
 
 /**
  * InteractiveIllustration
- * Wraps the hand-drawn hero portrait illustration with subtle ambient page-entry wakeup
- * and gentle buoyant reaction when the cursor nears it.
+ * Wraps the hand-drawn hero portrait illustration with subtle ambient page-entry wakeup,
+ * the existing gentle buoyant tilt reaction, and a cheeky wink + tongue reaction on hover.
  */
 export function InteractiveIllustration({ isWakingUp, className = "" }) {
   const ref = useRef(null)
@@ -455,6 +455,54 @@ export function InteractiveIllustration({ isWakingUp, className = "" }) {
 
   const state = useRef({ y: 0, rot: 0, scale: 1, vy: 0, vrot: 0, vscale: 0 })
   const target = useRef({ y: 0, rot: 0, scale: 1 })
+
+  // Wink & tongue character reaction state
+  const [isWinking, setIsWinking] = useState(false)
+  const winkStartTimer = useRef(null)
+  const winkEndTimer = useRef(null)
+  const isHovered = useRef(false)
+
+  // Preload wink illustration asset
+  useEffect(() => {
+    const img = new Image()
+    img.src = '/hero-illustration-wink.png'
+    return () => {
+      if (winkStartTimer.current) clearTimeout(winkStartTimer.current)
+      if (winkEndTimer.current) clearTimeout(winkEndTimer.current)
+    }
+  }, [])
+
+  // Character hover reaction: playful wink + small tongue
+  const handlePointerEnter = (e) => {
+    // Preserve mobile touch behavior without hover interference
+    if (e.pointerType === 'touch') return
+    if (isHovered.current) return
+    isHovered.current = true
+
+    if (winkStartTimer.current) clearTimeout(winkStartTimer.current)
+    if (winkEndTimer.current) clearTimeout(winkEndTimer.current)
+
+    // Sequence:
+    // 0ms: hover detected, existing tilt begins
+    // 120ms: wink + tongue appear
+    // 500ms: wink/tongue return to normal
+    // Girl remains slightly tilted while hovered
+    winkStartTimer.current = setTimeout(() => {
+      setIsWinking(true)
+    }, 120)
+
+    winkEndTimer.current = setTimeout(() => {
+      setIsWinking(false)
+    }, 500)
+  }
+
+  const handlePointerLeave = (e) => {
+    if (e.pointerType === 'touch') return
+    isHovered.current = false
+    if (winkStartTimer.current) clearTimeout(winkStartTimer.current)
+    if (winkEndTimer.current) clearTimeout(winkEndTimer.current)
+    setIsWinking(false)
+  }
 
   // Wakeup reaction: gentle nod & breath
   useEffect(() => {
@@ -478,7 +526,7 @@ export function InteractiveIllustration({ isWakingUp, className = "" }) {
     return () => clearTimeout(timer)
   }, [isWakingUp])
 
-  // Cursor proximity physics
+  // Existing cursor proximity & tilt physics (strictly preserved)
   useEffect(() => {
     const el = ref.current
     if (!el) return
@@ -562,12 +610,26 @@ export function InteractiveIllustration({ isWakingUp, className = "" }) {
   return (
     <div
       ref={ref}
-      className={`will-change-transform origin-bottom select-none ${className}`}
+      onPointerEnter={handlePointerEnter}
+      onPointerLeave={handlePointerLeave}
+      className={`relative will-change-transform origin-bottom select-none cursor-default ${className}`}
     >
+      {/* Base Normal Portrait */}
       <img
         src="/hero-illustration.png"
         alt="Hand-drawn portrait illustration of Ruchi"
-        className="w-full h-auto max-h-[360px] sm:max-h-[400px] md:max-h-[430px] object-contain drop-shadow-sm select-none pointer-events-none"
+        className="w-full h-auto max-h-[360px] sm:max-h-[400px] md:max-h-[430px] object-contain drop-shadow-sm select-none pointer-events-none transition-opacity duration-100 ease-in-out"
+        style={{ opacity: isWinking ? 0 : 1 }}
+        draggable="false"
+      />
+
+      {/* Layered Playful Wink + Tongue Reaction */}
+      <img
+        src="/hero-illustration-wink.png"
+        alt=""
+        aria-hidden="true"
+        className="absolute inset-0 w-full h-full object-contain pointer-events-none select-none transition-opacity duration-100 ease-in-out"
+        style={{ opacity: isWinking ? 1 : 0 }}
         draggable="false"
       />
     </div>
