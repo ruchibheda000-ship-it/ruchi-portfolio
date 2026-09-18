@@ -17,13 +17,13 @@ export default function Home() {
   // Page entry wakeup trigger for decorative elements
   const isWakingUp = usePageWakeup()
 
-  // Live Mumbai IST Time
+  // Live India IST Time
   const [timeString, setTimeString] = useState('')
 
   useEffect(() => {
     const updateTime = () => {
       const now = new Date()
-      const options = { timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit', hour12: true }
+      const options = { timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true }
       setTimeString(new Intl.DateTimeFormat('en-US', options).format(now))
     }
     updateTime()
@@ -136,9 +136,7 @@ export default function Home() {
 
                 {/* Location & Time Indicator */}
                 <div className="flex items-center gap-2 font-serif text-sm sm:text-base text-[#0B3272]/85 pt-1">
-                  <span>Mumbai</span>
-                  <span>•</span>
-                  <span>GMT +5:30</span>
+                  <span>India</span>
                   {timeString && (
                     <>
                       <span>•</span>
