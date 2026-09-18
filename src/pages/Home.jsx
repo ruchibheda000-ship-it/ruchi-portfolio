@@ -137,6 +137,8 @@ export default function Home() {
                 {/* Location & Time Indicator */}
                 <div className="flex items-center gap-2 font-serif text-sm sm:text-base text-[#0B3272]/85 pt-1">
                   <span>India</span>
+                  <span>•</span>
+                  <span>GMT +5:30</span>
                   {timeString && (
                     <>
                       <span>•</span>
