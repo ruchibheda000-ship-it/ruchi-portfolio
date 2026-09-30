@@ -10,7 +10,8 @@ import {
   InteractiveSmile,
   InteractiveRibbon,
   InteractiveScrap,
-  InteractiveIllustration
+  InteractiveIllustration,
+  InteractiveHeroPage
 } from '../components/AmbientMicroInteractions'
 
 export default function Home() {
@@ -102,7 +103,7 @@ export default function Home() {
         {/* ----------------------------------------------------------------------- */}
         <div className="relative rounded-t-[32px] sm:rounded-t-[44px] bg-crumpled-cover border-paper-cover border-b-0 p-2.5 sm:p-4 pb-0 shadow-[0_20px_50px_-10px_rgba(0,0,0,0.7)] animate-gentle-open-top">
           {/* PAGE 1 INTERIOR (Warm Cream Paper with Blue Grid - Equal Height to Page 2) */}
-          <div className="relative rounded-t-[24px] sm:rounded-t-[36px] bg-diary-grid text-[#061840] p-6 sm:p-10 lg:p-12 border border-[#E8DEC8] border-b-0 page-upper-depth overflow-hidden min-h-[500px] sm:min-h-[540px] lg:min-h-[560px] flex flex-col justify-center">
+          <InteractiveHeroPage className="relative rounded-t-[24px] sm:rounded-t-[36px] bg-diary-grid text-[#061840] p-6 sm:p-10 lg:p-12 border border-[#E8DEC8] border-b-0 page-upper-depth overflow-hidden min-h-[500px] sm:min-h-[540px] lg:min-h-[560px] flex flex-col justify-center">
             
             {/* Top margin wash */}
             <div className="absolute top-0 left-0 right-0 h-3 bg-linear-to-b from-[#E6D9C8] to-transparent opacity-60 pointer-events-none"></div>
@@ -158,7 +159,7 @@ export default function Home() {
 
             </div>
 
-          </div>
+          </InteractiveHeroPage>
         </div>
 
         {/* ----------------------------------------------------------------------- */}

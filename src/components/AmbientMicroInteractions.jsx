@@ -628,3 +628,124 @@ export function InteractiveIllustration({ isWakingUp, className = "" }) {
   )
 }
 
+/**
+ * InteractiveHeroPage
+ * Provides a tactile physical paper lift and subtle ambient "page life"
+ * whenever the mouse hovers over Page 1 of the diary.
+ * The cream paper sheet gently lifts (-5px) with spring physics and exhibits
+ * an organic, delicate 3D flex tracking cursor movement across the page.
+ */
+export function InteractiveHeroPage({ children, className = "" }) {
+  const ref = useRef(null)
+  const isHovered = useRef(false)
+  const isRunning = useRef(false)
+  const rafId = useRef(null)
+
+  // Spring physics state: y displacement, 3D tilt (rotX, rotY)
+  const state = useRef({ y: 0, rotX: 0, rotY: 0, vy: 0, vrotX: 0, vrotY: 0 })
+  const target = useRef({ y: 0, rotX: 0, rotY: 0 })
+
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+
+    // Spring constants tuned for authentic, supple art paper
+    const SPRING_K = 0.14
+    const DAMPING = 0.76
+
+    const update = () => {
+      const s = state.current
+      const t = target.current
+
+      const ay = (t.y - s.y) * SPRING_K
+      s.vy = (s.vy + ay) * DAMPING
+      s.y += s.vy
+
+      const aRotX = (t.rotX - s.rotX) * SPRING_K
+      s.vrotX = (s.vrotX + aRotX) * DAMPING
+      s.rotX += s.vrotX
+
+      const aRotY = (t.rotY - s.rotY) * SPRING_K
+      s.vrotY = (s.vrotY + aRotY) * DAMPING
+      s.rotY += s.vrotY
+
+      el.style.transform = `translate3d(0, ${s.y.toFixed(2)}px, 0) rotateX(${s.rotX.toFixed(2)}deg) rotateY(${s.rotY.toFixed(2)}deg)`
+
+      const isMoving =
+        Math.abs(t.y - s.y) > 0.01 ||
+        Math.abs(t.rotX - s.rotX) > 0.01 ||
+        Math.abs(t.rotY - s.rotY) > 0.01 ||
+        Math.abs(s.vy) + Math.abs(s.vrotX) + Math.abs(s.vrotY) > 0.005
+
+      if (isMoving) {
+        rafId.current = requestAnimationFrame(update)
+      } else {
+        isRunning.current = false
+      }
+    }
+
+    const start = () => {
+      if (!isRunning.current) {
+        isRunning.current = true
+        rafId.current = requestAnimationFrame(update)
+      }
+    }
+
+    const onPointerEnter = (e) => {
+      if (e.pointerType === 'touch') return
+      isHovered.current = true
+      // Tactile physical paper lift: elevates ~5px with soft shadow expansion
+      target.current.y = -5
+      el.style.boxShadow = '0 22px 48px -12px rgba(6, 24, 64, 0.28), 0 8px 20px -4px rgba(6, 24, 64, 0.16), inset 0 -14px 20px -8px rgba(11, 50, 114, 0.2)'
+      start()
+    }
+
+    const onPointerMove = (e) => {
+      if (e.pointerType === 'touch' || !isHovered.current) return
+      const rect = el.getBoundingClientRect()
+      if (rect.width === 0 || rect.height === 0) return
+
+      // Organic page life: delicate 3D flex responding to cursor position
+      const normX = (e.clientX - (rect.left + rect.width / 2)) / (rect.width / 2)
+      const normY = (e.clientY - (rect.top + rect.height / 2)) / (rect.height / 2)
+
+      target.current.rotX = -normY * 0.75
+      target.current.rotY = normX * 0.75
+      target.current.y = -5 - Math.max(0, -normY * 1.5)
+      start()
+    }
+
+    const onPointerLeave = (e) => {
+      if (e.pointerType === 'touch') return
+      isHovered.current = false
+      target.current.y = 0
+      target.current.rotX = 0
+      target.current.rotY = 0
+      el.style.boxShadow = ''
+      start()
+    }
+
+    el.addEventListener('pointerenter', onPointerEnter)
+    el.addEventListener('pointermove', onPointerMove, { passive: true })
+    el.addEventListener('pointerleave', onPointerLeave)
+
+    return () => {
+      el.removeEventListener('pointerenter', onPointerEnter)
+      el.removeEventListener('pointermove', onPointerMove)
+      el.removeEventListener('pointerleave', onPointerLeave)
+      if (rafId.current) cancelAnimationFrame(rafId.current)
+    }
+  }, [])
+
+  return (
+    <div
+      ref={ref}
+      style={{ perspective: 1200 }}
+      className={`will-change-transform transition-[box-shadow] duration-300 ease-out ${className}`}
+    >
+      {children}
+    </div>
+  )
+}
+
+
