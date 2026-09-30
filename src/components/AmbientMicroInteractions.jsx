@@ -630,56 +630,82 @@ export function InteractiveIllustration({ isWakingUp, className = "" }) {
 
 /**
  * InteractiveHeroPage
- * Provides a tactile physical paper lift and subtle ambient "page life"
- * whenever the mouse hovers over Page 1 of the diary.
- * The cream paper sheet gently lifts (-5px) with spring physics and exhibits
- * an organic, delicate 3D flex tracking cursor movement across the page.
+ * Provides a tactile physical corner page lift whenever the mouse hovers over Page 1 of the diary.
+ * The entire page sheet stays stationary (no whole-page shifting or translation).
+ * Instead, only the top-right unbound corner of the cream paper sheet gracefully uplifts and curls
+ * with supple paper spring physics, revealing the rich notebook backing beneath and casting a soft
+ * diffuse drop shadow across the paper grid.
  */
 export function InteractiveHeroPage({ children, className = "" }) {
-  const ref = useRef(null)
+  const containerRef = useRef(null)
+  const cutoutRef = useRef(null)
+  const creaseShadowRef = useRef(null)
+  const flapRef = useRef(null)
+
   const isHovered = useRef(false)
   const isRunning = useRef(false)
   const rafId = useRef(null)
 
-  // Spring physics state: y displacement, 3D tilt (rotX, rotY)
-  const state = useRef({ y: 0, rotX: 0, rotY: 0, vy: 0, vrotX: 0, vrotY: 0 })
-  const target = useRef({ y: 0, rotX: 0, rotY: 0 })
+  // Spring physics state for corner curl size (s in px)
+  const currentS = useRef(0)
+  const targetS = useRef(0)
+  const vS = useRef(0)
+
+  const W = 96 // Base dimension for corner curl viewBox
+
+  const renderCurl = (s) => {
+    if (!cutoutRef.current || !creaseShadowRef.current || !flapRef.current) return
+
+    if (s <= 0.4) {
+      cutoutRef.current.setAttribute('d', '')
+      creaseShadowRef.current.setAttribute('d', '')
+      flapRef.current.setAttribute('d', '')
+      return
+    }
+
+    // Cutout reveals dark blue cover well behind the lifted paper corner
+    const cutoutPath = `M ${(W - s).toFixed(1)} 0 L ${W} 0 L ${W} ${s.toFixed(1)} Z`
+    cutoutRef.current.setAttribute('d', cutoutPath)
+    creaseShadowRef.current.setAttribute('d', cutoutPath)
+
+    // Curled flap on top of the crease line
+    // Fold line runs from (W - s, 0) to (W, s)
+    // Curled tip arches down & left to (tipX, tipY)
+    const tipX = W - s * 0.94
+    const tipY = s * 0.94
+    const c1X = W - s * 1.05
+    const c1Y = s * 0.46
+    const c2X = W - s * 0.46
+    const c2Y = s * 1.05
+
+    const flapPath = `M ${(W - s).toFixed(1)} 0 Q ${c1X.toFixed(1)} ${c1Y.toFixed(1)} ${tipX.toFixed(1)} ${tipY.toFixed(1)} Q ${c2X.toFixed(1)} ${c2Y.toFixed(1)} ${W} ${s.toFixed(1)} Z`
+    flapRef.current.setAttribute('d', flapPath)
+  }
 
   useEffect(() => {
-    const el = ref.current
+    const el = containerRef.current
     if (!el) return
 
-    // Spring constants tuned for authentic, supple art paper
-    const SPRING_K = 0.14
+    // Spring constants tuned for supple, authentic art paper
+    const SPRING_K = 0.12
     const DAMPING = 0.76
 
     const update = () => {
-      const s = state.current
-      const t = target.current
+      const a = (targetS.current - currentS.current) * SPRING_K
+      vS.current = (vS.current + a) * DAMPING
+      currentS.current += vS.current
 
-      const ay = (t.y - s.y) * SPRING_K
-      s.vy = (s.vy + ay) * DAMPING
-      s.y += s.vy
-
-      const aRotX = (t.rotX - s.rotX) * SPRING_K
-      s.vrotX = (s.vrotX + aRotX) * DAMPING
-      s.rotX += s.vrotX
-
-      const aRotY = (t.rotY - s.rotY) * SPRING_K
-      s.vrotY = (s.vrotY + aRotY) * DAMPING
-      s.rotY += s.vrotY
-
-      el.style.transform = `translate3d(0, ${s.y.toFixed(2)}px, 0) rotateX(${s.rotX.toFixed(2)}deg) rotateY(${s.rotY.toFixed(2)}deg)`
+      renderCurl(currentS.current)
 
       const isMoving =
-        Math.abs(t.y - s.y) > 0.01 ||
-        Math.abs(t.rotX - s.rotX) > 0.01 ||
-        Math.abs(t.rotY - s.rotY) > 0.01 ||
-        Math.abs(s.vy) + Math.abs(s.vrotX) + Math.abs(s.vrotY) > 0.005
+        Math.abs(targetS.current - currentS.current) > 0.1 ||
+        Math.abs(vS.current) > 0.04
 
       if (isMoving) {
         rafId.current = requestAnimationFrame(update)
       } else {
+        currentS.current = targetS.current
+        renderCurl(currentS.current)
         isRunning.current = false
       }
     }
@@ -694,9 +720,7 @@ export function InteractiveHeroPage({ children, className = "" }) {
     const onPointerEnter = (e) => {
       if (e.pointerType === 'touch') return
       isHovered.current = true
-      // Tactile physical paper lift: elevates ~5px with soft shadow expansion
-      target.current.y = -5
-      el.style.boxShadow = '0 22px 48px -12px rgba(6, 24, 64, 0.28), 0 8px 20px -4px rgba(6, 24, 64, 0.16), inset 0 -14px 20px -8px rgba(11, 50, 114, 0.2)'
+      targetS.current = 50
       start()
     }
 
@@ -705,23 +729,25 @@ export function InteractiveHeroPage({ children, className = "" }) {
       const rect = el.getBoundingClientRect()
       if (rect.width === 0 || rect.height === 0) return
 
-      // Organic page life: delicate 3D flex responding to cursor position
-      const normX = (e.clientX - (rect.left + rect.width / 2)) / (rect.width / 2)
-      const normY = (e.clientY - (rect.top + rect.height / 2)) / (rect.height / 2)
+      // Measure cursor proximity to top-right corner
+      const dx = rect.right - e.clientX
+      const dy = e.clientY - rect.top
+      const dist = Math.hypot(dx, dy)
 
-      target.current.rotX = -normY * 0.75
-      target.current.rotY = normX * 0.75
-      target.current.y = -5 - Math.max(0, -normY * 1.5)
+      // Supple paper life: as cursor approaches top-right corner, gently lift higher (up to 62px)
+      if (dist < 220) {
+        const proximity = 1 - dist / 220
+        targetS.current = 50 + proximity * 14
+      } else {
+        targetS.current = 50
+      }
       start()
     }
 
     const onPointerLeave = (e) => {
       if (e.pointerType === 'touch') return
       isHovered.current = false
-      target.current.y = 0
-      target.current.rotX = 0
-      target.current.rotY = 0
-      el.style.boxShadow = ''
+      targetS.current = 0
       start()
     }
 
@@ -739,10 +765,66 @@ export function InteractiveHeroPage({ children, className = "" }) {
 
   return (
     <div
-      ref={ref}
-      style={{ perspective: 1200 }}
-      className={`will-change-transform transition-[box-shadow] duration-300 ease-out ${className}`}
+      ref={containerRef}
+      className={`relative ${className}`}
     >
+      {/* Top-Right Tactile Corner Page Lift */}
+      <div
+        className="corner-lift-layer absolute top-0 right-0 pointer-events-none z-30 overflow-hidden w-[96px] h-[96px] rounded-tr-[24px] sm:rounded-tr-[36px]"
+        aria-hidden="true"
+      >
+        <svg
+          className="w-full h-full overflow-visible"
+          viewBox="0 0 96 96"
+          fill="none"
+        >
+          <defs>
+            {/* Diffuse drop shadow cast by lifted corner onto page grid */}
+            <filter id="heroCornerShadow" x="-50%" y="-50%" width="220%" height="220%">
+              <feDropShadow dx="-3" dy="4.5" stdDeviation="3.5" floodColor="#061840" floodOpacity="0.32" />
+              <feDropShadow dx="-1" dy="1.5" stdDeviation="1.5" floodColor="#061840" floodOpacity="0.18" />
+            </filter>
+
+            {/* Notebook recessed bed revealed behind the lifted corner */}
+            <linearGradient id="cornerRecessGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#051532" />
+              <stop offset="50%" stopColor="#09275B" />
+              <stop offset="100%" stopColor="#0B3272" />
+            </linearGradient>
+
+            {/* Shadow cast right at the crease inside the gap */}
+            <linearGradient id="cornerCreaseShadow" x1="0%" y1="100%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="rgba(4, 16, 40, 0.42)" />
+              <stop offset="35%" stopColor="rgba(4, 16, 40, 0.1)" />
+              <stop offset="100%" stopColor="rgba(4, 16, 40, 0)" />
+            </linearGradient>
+
+            {/* Warm cream paper underside with natural specular curl sheen */}
+            <linearGradient id="paperFlapGrad" x1="100%" y1="0%" x2="35%" y2="70%">
+              <stop offset="0%" stopColor="#D8C4A7" />
+              <stop offset="25%" stopColor="#EAD9C1" />
+              <stop offset="55%" stopColor="#FFFDF9" />
+              <stop offset="85%" stopColor="#F5E8D3" />
+              <stop offset="100%" stopColor="#E4D0B5" />
+            </linearGradient>
+          </defs>
+
+          {/* Dark blue recessed backing revealed when corner uplifts */}
+          <path ref={cutoutRef} d="" fill="url(#cornerRecessGrad)" />
+          <path ref={creaseShadowRef} d="" fill="url(#cornerCreaseShadow)" />
+
+          {/* Curled paper flap on top */}
+          <path
+            ref={flapRef}
+            d=""
+            fill="url(#paperFlapGrad)"
+            stroke="rgba(11, 50, 114, 0.18)"
+            strokeWidth="0.8"
+            filter="url(#heroCornerShadow)"
+          />
+        </svg>
+      </div>
+
       {children}
     </div>
   )
