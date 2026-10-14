@@ -632,45 +632,58 @@ export function InteractiveIllustration({ isWakingUp, className = "" }) {
  * InteractiveHeroPage
  * Provides a tactile physical corner page lift whenever the mouse hovers over Page 1 of the diary.
  * The entire page sheet stays stationary (no whole-page shifting or translation).
- * Instead, only the top-right unbound corner of the cream paper sheet gracefully uplifts and curls
- * with supple paper spring physics, revealing the rich notebook backing beneath and casting a soft
- * diffuse drop shadow across the paper grid.
+/**
+ * InteractiveHeroPage
+ * Provides a tactile physical corner page lift whenever the mouse hovers over Page 1 of the diary.
+ * The entire page sheet stays stationary (no whole-page shifting or translation).
+ * Directional response:
+ * - If cursor enters/approaches from the right -> top-right corner curls up.
+ * - If cursor enters/approaches from the left -> top-left corner curls up.
+ * Both corners exhibit organic paper spring physics and settle completely flat on pointer leave.
  */
 export function InteractiveHeroPage({ children, className = "" }) {
   const containerRef = useRef(null)
-  const cutoutRef = useRef(null)
-  const creaseShadowRef = useRef(null)
-  const flapRef = useRef(null)
+
+  // Right corner refs
+  const rightCutoutRef = useRef(null)
+  const rightCreaseShadowRef = useRef(null)
+  const rightFlapRef = useRef(null)
+
+  // Left corner refs
+  const leftCutoutRef = useRef(null)
+  const leftCreaseShadowRef = useRef(null)
+  const leftFlapRef = useRef(null)
 
   const isHovered = useRef(false)
   const isRunning = useRef(false)
   const rafId = useRef(null)
 
-  // Spring physics state for corner curl size (s in px)
-  const currentS = useRef(0)
-  const targetS = useRef(0)
-  const vS = useRef(0)
+  // Spring physics state for right corner curl (s in px)
+  const rightCurrentS = useRef(0)
+  const rightTargetS = useRef(0)
+  const rightVS = useRef(0)
+
+  // Spring physics state for left corner curl (s in px)
+  const leftCurrentS = useRef(0)
+  const leftTargetS = useRef(0)
+  const leftVS = useRef(0)
 
   const W = 96 // Base dimension for corner curl viewBox
 
-  const renderCurl = (s) => {
-    if (!cutoutRef.current || !creaseShadowRef.current || !flapRef.current) return
+  const renderRightCurl = (s) => {
+    if (!rightCutoutRef.current || !rightCreaseShadowRef.current || !rightFlapRef.current) return
 
     if (s <= 0.4) {
-      cutoutRef.current.setAttribute('d', '')
-      creaseShadowRef.current.setAttribute('d', '')
-      flapRef.current.setAttribute('d', '')
+      rightCutoutRef.current.setAttribute('d', '')
+      rightCreaseShadowRef.current.setAttribute('d', '')
+      rightFlapRef.current.setAttribute('d', '')
       return
     }
 
-    // Cutout reveals dark blue cover well behind the lifted paper corner
     const cutoutPath = `M ${(W - s).toFixed(1)} 0 L ${W} 0 L ${W} ${s.toFixed(1)} Z`
-    cutoutRef.current.setAttribute('d', cutoutPath)
-    creaseShadowRef.current.setAttribute('d', cutoutPath)
+    rightCutoutRef.current.setAttribute('d', cutoutPath)
+    rightCreaseShadowRef.current.setAttribute('d', cutoutPath)
 
-    // Curled flap on top of the crease line
-    // Fold line runs from (W - s, 0) to (W, s)
-    // Curled tip arches down & left to (tipX, tipY)
     const tipX = W - s * 0.94
     const tipY = s * 0.94
     const c1X = W - s * 1.05
@@ -679,33 +692,68 @@ export function InteractiveHeroPage({ children, className = "" }) {
     const c2Y = s * 1.05
 
     const flapPath = `M ${(W - s).toFixed(1)} 0 Q ${c1X.toFixed(1)} ${c1Y.toFixed(1)} ${tipX.toFixed(1)} ${tipY.toFixed(1)} Q ${c2X.toFixed(1)} ${c2Y.toFixed(1)} ${W} ${s.toFixed(1)} Z`
-    flapRef.current.setAttribute('d', flapPath)
+    rightFlapRef.current.setAttribute('d', flapPath)
+  }
+
+  const renderLeftCurl = (s) => {
+    if (!leftCutoutRef.current || !leftCreaseShadowRef.current || !leftFlapRef.current) return
+
+    if (s <= 0.4) {
+      leftCutoutRef.current.setAttribute('d', '')
+      leftCreaseShadowRef.current.setAttribute('d', '')
+      leftFlapRef.current.setAttribute('d', '')
+      return
+    }
+
+    const cutoutPath = `M ${s.toFixed(1)} 0 L 0 0 L 0 ${s.toFixed(1)} Z`
+    leftCutoutRef.current.setAttribute('d', cutoutPath)
+    leftCreaseShadowRef.current.setAttribute('d', cutoutPath)
+
+    const tipX = s * 0.94
+    const tipY = s * 0.94
+    const c1X = s * 1.05
+    const c1Y = s * 0.46
+    const c2X = s * 0.46
+    const c2Y = s * 1.05
+
+    const flapPath = `M ${s.toFixed(1)} 0 Q ${c1X.toFixed(1)} ${c1Y.toFixed(1)} ${tipX.toFixed(1)} ${tipY.toFixed(1)} Q ${c2X.toFixed(1)} ${c2Y.toFixed(1)} 0 ${s.toFixed(1)} Z`
+    leftFlapRef.current.setAttribute('d', flapPath)
   }
 
   useEffect(() => {
     const el = containerRef.current
     if (!el) return
 
-    // Spring constants tuned for supple, authentic art paper
     const SPRING_K = 0.12
     const DAMPING = 0.76
 
     const update = () => {
-      const a = (targetS.current - currentS.current) * SPRING_K
-      vS.current = (vS.current + a) * DAMPING
-      currentS.current += vS.current
+      // Right corner update
+      const aR = (rightTargetS.current - rightCurrentS.current) * SPRING_K
+      rightVS.current = (rightVS.current + aR) * DAMPING
+      rightCurrentS.current += rightVS.current
+      renderRightCurl(rightCurrentS.current)
 
-      renderCurl(currentS.current)
+      // Left corner update
+      const aL = (leftTargetS.current - leftCurrentS.current) * SPRING_K
+      leftVS.current = (leftVS.current + aL) * DAMPING
+      leftCurrentS.current += leftVS.current
+      renderLeftCurl(leftCurrentS.current)
 
-      const isMoving =
-        Math.abs(targetS.current - currentS.current) > 0.1 ||
-        Math.abs(vS.current) > 0.04
+      const isMovingR =
+        Math.abs(rightTargetS.current - rightCurrentS.current) > 0.1 ||
+        Math.abs(rightVS.current) > 0.04
+      const isMovingL =
+        Math.abs(leftTargetS.current - leftCurrentS.current) > 0.1 ||
+        Math.abs(leftVS.current) > 0.04
 
-      if (isMoving) {
+      if (isMovingR || isMovingL) {
         rafId.current = requestAnimationFrame(update)
       } else {
-        currentS.current = targetS.current
-        renderCurl(currentS.current)
+        rightCurrentS.current = rightTargetS.current
+        leftCurrentS.current = leftTargetS.current
+        renderRightCurl(rightCurrentS.current)
+        renderLeftCurl(leftCurrentS.current)
         isRunning.current = false
       }
     }
@@ -717,37 +765,51 @@ export function InteractiveHeroPage({ children, className = "" }) {
       }
     }
 
+    const evaluateTargets = (e) => {
+      const rect = el.getBoundingClientRect()
+      if (rect.width === 0 || rect.height === 0) return
+
+      const normX = (e.clientX - rect.left) / rect.width
+
+      if (normX >= 0.5) {
+        // Cursor on right side -> right corner folds
+        const dx = rect.right - e.clientX
+        const dy = e.clientY - rect.top
+        const dist = Math.hypot(dx, dy)
+        const proximity = dist < 220 ? (1 - dist / 220) : 0
+
+        rightTargetS.current = 50 + proximity * 14
+        leftTargetS.current = 0
+      } else {
+        // Cursor on left side -> left corner folds
+        const dx = e.clientX - rect.left
+        const dy = e.clientY - rect.top
+        const dist = Math.hypot(dx, dy)
+        const proximity = dist < 220 ? (1 - dist / 220) : 0
+
+        leftTargetS.current = 50 + proximity * 14
+        rightTargetS.current = 0
+      }
+
+      start()
+    }
+
     const onPointerEnter = (e) => {
       if (e.pointerType === 'touch') return
       isHovered.current = true
-      targetS.current = 50
-      start()
+      evaluateTargets(e)
     }
 
     const onPointerMove = (e) => {
       if (e.pointerType === 'touch' || !isHovered.current) return
-      const rect = el.getBoundingClientRect()
-      if (rect.width === 0 || rect.height === 0) return
-
-      // Measure cursor proximity to top-right corner
-      const dx = rect.right - e.clientX
-      const dy = e.clientY - rect.top
-      const dist = Math.hypot(dx, dy)
-
-      // Supple paper life: as cursor approaches top-right corner, gently lift higher (up to 62px)
-      if (dist < 220) {
-        const proximity = 1 - dist / 220
-        targetS.current = 50 + proximity * 14
-      } else {
-        targetS.current = 50
-      }
-      start()
+      evaluateTargets(e)
     }
 
     const onPointerLeave = (e) => {
       if (e.pointerType === 'touch') return
       isHovered.current = false
-      targetS.current = 0
+      rightTargetS.current = 0
+      leftTargetS.current = 0
       start()
     }
 
@@ -770,7 +832,7 @@ export function InteractiveHeroPage({ children, className = "" }) {
     >
       {/* Top-Right Tactile Corner Page Lift */}
       <div
-        className="corner-lift-layer absolute top-0 right-0 pointer-events-none z-30 overflow-hidden w-[96px] h-[96px] rounded-tr-[24px] sm:rounded-tr-[36px]"
+        className="corner-lift-layer-right absolute top-0 right-0 pointer-events-none z-30 overflow-hidden w-[96px] h-[96px] rounded-tr-[24px] sm:rounded-tr-[36px]"
         aria-hidden="true"
       >
         <svg
@@ -779,28 +841,24 @@ export function InteractiveHeroPage({ children, className = "" }) {
           fill="none"
         >
           <defs>
-            {/* Diffuse drop shadow cast by lifted corner onto page grid */}
-            <filter id="heroCornerShadow" x="-50%" y="-50%" width="220%" height="220%">
+            <filter id="heroCornerShadowRight" x="-50%" y="-50%" width="220%" height="220%">
               <feDropShadow dx="-3" dy="4.5" stdDeviation="3.5" floodColor="#061840" floodOpacity="0.32" />
               <feDropShadow dx="-1" dy="1.5" stdDeviation="1.5" floodColor="#061840" floodOpacity="0.18" />
             </filter>
 
-            {/* Notebook recessed bed revealed behind the lifted corner */}
-            <linearGradient id="cornerRecessGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <linearGradient id="cornerRecessGradRight" x1="0%" y1="0%" x2="100%" y2="100%">
               <stop offset="0%" stopColor="#051532" />
               <stop offset="50%" stopColor="#09275B" />
               <stop offset="100%" stopColor="#0B3272" />
             </linearGradient>
 
-            {/* Shadow cast right at the crease inside the gap */}
-            <linearGradient id="cornerCreaseShadow" x1="0%" y1="100%" x2="100%" y2="0%">
+            <linearGradient id="cornerCreaseShadowRight" x1="0%" y1="100%" x2="100%" y2="0%">
               <stop offset="0%" stopColor="rgba(4, 16, 40, 0.42)" />
               <stop offset="35%" stopColor="rgba(4, 16, 40, 0.1)" />
               <stop offset="100%" stopColor="rgba(4, 16, 40, 0)" />
             </linearGradient>
 
-            {/* Warm cream paper underside with natural specular curl sheen */}
-            <linearGradient id="paperFlapGrad" x1="100%" y1="0%" x2="35%" y2="70%">
+            <linearGradient id="paperFlapGradRight" x1="100%" y1="0%" x2="35%" y2="70%">
               <stop offset="0%" stopColor="#D8C4A7" />
               <stop offset="25%" stopColor="#EAD9C1" />
               <stop offset="55%" stopColor="#FFFDF9" />
@@ -809,18 +867,65 @@ export function InteractiveHeroPage({ children, className = "" }) {
             </linearGradient>
           </defs>
 
-          {/* Dark blue recessed backing revealed when corner uplifts */}
-          <path ref={cutoutRef} d="" fill="url(#cornerRecessGrad)" />
-          <path ref={creaseShadowRef} d="" fill="url(#cornerCreaseShadow)" />
-
-          {/* Curled paper flap on top */}
+          <path ref={rightCutoutRef} d="" fill="url(#cornerRecessGradRight)" />
+          <path ref={rightCreaseShadowRef} d="" fill="url(#cornerCreaseShadowRight)" />
           <path
-            ref={flapRef}
+            ref={rightFlapRef}
             d=""
-            fill="url(#paperFlapGrad)"
+            fill="url(#paperFlapGradRight)"
             stroke="rgba(11, 50, 114, 0.18)"
             strokeWidth="0.8"
-            filter="url(#heroCornerShadow)"
+            filter="url(#heroCornerShadowRight)"
+          />
+        </svg>
+      </div>
+
+      {/* Top-Left Tactile Corner Page Lift */}
+      <div
+        className="corner-lift-layer-left absolute top-0 left-0 pointer-events-none z-30 overflow-hidden w-[96px] h-[96px] rounded-tl-[24px] sm:rounded-tl-[36px]"
+        aria-hidden="true"
+      >
+        <svg
+          className="w-full h-full overflow-visible"
+          viewBox="0 0 96 96"
+          fill="none"
+        >
+          <defs>
+            <filter id="heroCornerShadowLeft" x="-50%" y="-50%" width="220%" height="220%">
+              <feDropShadow dx="3" dy="4.5" stdDeviation="3.5" floodColor="#061840" floodOpacity="0.32" />
+              <feDropShadow dx="1" dy="1.5" stdDeviation="1.5" floodColor="#061840" floodOpacity="0.18" />
+            </filter>
+
+            <linearGradient id="cornerRecessGradLeft" x1="100%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stopColor="#051532" />
+              <stop offset="50%" stopColor="#09275B" />
+              <stop offset="100%" stopColor="#0B3272" />
+            </linearGradient>
+
+            <linearGradient id="cornerCreaseShadowLeft" x1="100%" y1="100%" x2="0%" y2="0%">
+              <stop offset="0%" stopColor="rgba(4, 16, 40, 0.42)" />
+              <stop offset="35%" stopColor="rgba(4, 16, 40, 0.1)" />
+              <stop offset="100%" stopColor="rgba(4, 16, 40, 0)" />
+            </linearGradient>
+
+            <linearGradient id="paperFlapGradLeft" x1="0%" y1="0%" x2="65%" y2="70%">
+              <stop offset="0%" stopColor="#D8C4A7" />
+              <stop offset="25%" stopColor="#EAD9C1" />
+              <stop offset="55%" stopColor="#FFFDF9" />
+              <stop offset="85%" stopColor="#F5E8D3" />
+              <stop offset="100%" stopColor="#E4D0B5" />
+            </linearGradient>
+          </defs>
+
+          <path ref={leftCutoutRef} d="" fill="url(#cornerRecessGradLeft)" />
+          <path ref={leftCreaseShadowRef} d="" fill="url(#cornerCreaseShadowLeft)" />
+          <path
+            ref={leftFlapRef}
+            d=""
+            fill="url(#paperFlapGradLeft)"
+            stroke="rgba(11, 50, 114, 0.18)"
+            strokeWidth="0.8"
+            filter="url(#heroCornerShadowLeft)"
           />
         </svg>
       </div>
