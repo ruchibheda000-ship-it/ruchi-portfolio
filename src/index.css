@@ -18,12 +18,20 @@
 }
 
 /* Global Textured Dark Midnight Blue Background */
+html {
+  overflow-x: clip;
+}
+
 html,
 body {
   background-color: #030d24;
   background-image: url('/dark-blue-texture.png');
   background-repeat: repeat;
   color: #F1E3CC;
+}
+
+.overflow-x-clip {
+  overflow-x: clip;
 }
 
 .bg-dark-blue-texture {

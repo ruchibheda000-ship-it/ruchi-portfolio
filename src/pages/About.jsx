@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 
 export default function About() {
   return (
-    <div className="min-h-screen bg-dark-blue-texture text-[#F1E3CC] font-sans selection:bg-[#E4BA83] selection:text-[#030d24] flex flex-col justify-between overflow-x-hidden">
+    <div className="min-h-screen bg-dark-blue-texture text-[#F1E3CC] font-sans selection:bg-[#E4BA83] selection:text-[#030d24] flex flex-col justify-between overflow-x-clip">
       
       {/* Editorial Navigation */}
       <Nav />

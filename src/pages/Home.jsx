@@ -63,7 +63,7 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-dark-blue-texture text-[#F1E3CC] font-body selection:bg-[#E4BA83] selection:text-[#030d24] relative overflow-x-hidden pb-24">
+    <div className="min-h-screen bg-dark-blue-texture text-[#F1E3CC] font-body selection:bg-[#E4BA83] selection:text-[#030d24] relative overflow-x-clip pb-24">
       
 
 
