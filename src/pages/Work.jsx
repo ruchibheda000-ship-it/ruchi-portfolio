@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import Nav from '../components/Nav'
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
+import CaseStudyModal from '../components/CaseStudyModal'
 
 const allProjects = [
   {
@@ -85,6 +86,21 @@ const allProjects = [
 
 export default function Work() {
   const [selectedFilter, setSelectedFilter] = useState('ALL')
+  const [searchParams, setSearchParams] = useSearchParams()
+
+  // Derive selected project directly from URL search params (?project=ease)
+  const currentProjectId = searchParams.get('project')
+  const selectedProject = currentProjectId
+    ? allProjects.find((p) => p.id === currentProjectId) || null
+    : null
+
+  const handleOpenCaseStudy = (project) => {
+    setSearchParams({ project: project.id })
+  }
+
+  const handleCloseCaseStudy = () => {
+    setSearchParams({})
+  }
 
   const filterOptions = ['ALL', 'PRODUCT DESIGN', 'UI/UX', 'SPATIAL & WAYFINDING', 'SYSTEMS']
 
@@ -174,81 +190,126 @@ export default function Work() {
 
           {/* Project Cards Stack */}
           <div className="space-y-8 relative z-10">
-            {filteredProjects.map((proj) => (
-              <div
-                key={proj.id}
-                className="group relative bg-[#061840]/60 text-[#F1E3CC] p-6 sm:p-10 rounded-md border border-[#0B3272] shadow-md hover:border-[#E4BA83]/60 hover:-translate-y-0.5 transition-all duration-300"
-              >
-                {/* Header Row */}
-                <div className="flex flex-wrap items-center justify-between gap-3 pb-4 mb-6 border-b border-[#0B3272]">
-                  <div className="flex items-center gap-3">
-                    <span className="font-mono text-xs font-bold px-2.5 py-0.5 rounded-full bg-[#0B3272] text-[#E4BA83]">
-                      {proj.number}
-                    </span>
-                    <span className="font-mono text-xs uppercase tracking-wider text-[#8DA1B4] font-medium">
-                      {proj.category}
-                    </span>
-                    <span className="opacity-30 font-mono text-xs">•</span>
-                    <span className="font-mono text-xs text-[#8DA1B4]/60">
-                      {proj.year}
-                    </span>
-                  </div>
-
-                  <div className="font-mono text-xs text-[#8DA1B4]">
-                    Role: <strong className="text-[#F1E3CC]">{proj.role}</strong>
-                  </div>
-                </div>
-
-                {/* Main Content Grid */}
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-start">
-                  
-                  {/* Left Column: Title & Overview */}
-                  <div className="lg:col-span-8">
-                    <h2 className="font-serif text-3xl sm:text-4xl font-normal tracking-tight text-[#F1E3CC] group-hover:text-[#E4BA83] transition-colors duration-200 mb-2">
-                      {proj.title}
-                    </h2>
-                    <div className="font-mono text-xs text-[#8DA1B4] uppercase tracking-wider mb-4">
-                      {proj.subtitle}
-                    </div>
-                    <p className="text-sm sm:text-base text-[#8DA1B4] leading-relaxed font-normal mb-5">
-                      {proj.overview}
-                    </p>
-                    <div className="p-3.5 bg-[#030d24] rounded border border-[#0B3272] text-xs sm:text-sm font-mono text-[#F1E3CC]">
-                      <strong className="text-[#E4BA83]">Impact:</strong> {proj.impact}
-                    </div>
-                  </div>
-
-                  {/* Right Column: Disciplines & Tags */}
-                  <div className="lg:col-span-4 flex flex-col justify-between h-full space-y-4 pt-1">
-                    <div>
-                      <div className="font-mono text-xs uppercase tracking-wider text-[#8DA1B4] mb-2.5 font-semibold">
-                        Disciplines & Systems:
-                      </div>
-                      <ul className="space-y-1.5 text-xs font-normal text-[#8DA1B4]">
-                        {proj.disciplines.map((d) => (
-                          <li key={d} className="flex items-center gap-2">
-                            <span className="text-[#E4BA83]">✦</span> {d}
-                          </li>
-                        ))}
-                      </ul>
+            {filteredProjects.map((proj) => {
+              const isEase = proj.id === 'ease'
+              return (
+                <div
+                  key={proj.id}
+                  onClick={() => isEase && handleOpenCaseStudy(proj)}
+                  className={`group relative bg-[#061840]/60 text-[#F1E3CC] p-6 sm:p-10 rounded-md border shadow-md transition-all duration-300 ${
+                    isEase
+                      ? 'border-[#E4BA83]/50 hover:border-[#E4BA83] hover:shadow-[0_10px_35px_rgba(228,186,131,0.15)] cursor-pointer hover:-translate-y-1'
+                      : 'border-[#0B3272] hover:border-[#0B3272]/80'
+                  }`}
+                >
+                  {/* Header Row */}
+                  <div className="flex flex-wrap items-center justify-between gap-3 pb-4 mb-6 border-b border-[#0B3272]">
+                    <div className="flex items-center gap-3">
+                      <span className="font-mono text-xs font-bold px-2.5 py-0.5 rounded-full bg-[#0B3272] text-[#E4BA83]">
+                        {proj.number}
+                      </span>
+                      <span className="font-mono text-xs uppercase tracking-wider text-[#8DA1B4] font-medium">
+                        {proj.category}
+                      </span>
+                      <span className="opacity-30 font-mono text-xs">•</span>
+                      <span className="font-mono text-xs text-[#8DA1B4]/60">
+                        {proj.year}
+                      </span>
                     </div>
 
-                    <div className="pt-4 border-t border-[#0B3272] flex flex-wrap gap-1.5">
-                      {proj.tags.map((tag) => (
-                        <span
-                          key={tag}
-                          className="text-[11px] font-mono text-[#8DA1B4] bg-[#0B3272]/40 px-2.5 py-0.5 rounded-full border border-[#0B3272]"
-                        >
-                          #{tag}
+                    <div className="flex items-center gap-3 font-mono text-xs text-[#8DA1B4]">
+                      {isEase && (
+                        <span className="font-mono text-[10px] sm:text-xs font-bold text-[#030d24] bg-[#E4BA83] px-3 py-0.5 rounded-full flex items-center gap-1.5 shadow">
+                          <span className="w-1.5 h-1.5 rounded-full bg-[#030d24] animate-ping" />
+                          <span>FEATURED CASE STUDY</span>
                         </span>
-                      ))}
+                      )}
+                      <div>
+                        Role: <strong className="text-[#F1E3CC]">{proj.role}</strong>
+                      </div>
                     </div>
                   </div>
 
-                </div>
+                  {/* Main Content Grid */}
+                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-start">
+                    {/* Left Column: Title & Overview */}
+                    <div className="lg:col-span-8">
+                      <h2 className="font-serif text-3xl sm:text-4xl font-normal tracking-tight text-[#F1E3CC] group-hover:text-[#E4BA83] transition-colors duration-200 mb-2 flex items-center gap-3">
+                        <span>{proj.title}</span>
+                        {isEase && (
+                          <span className="text-xs font-mono px-2 py-0.5 rounded bg-[#0B3272] text-[#E4BA83] font-bold">
+                            Interactive ↗
+                          </span>
+                        )}
+                      </h2>
+                      <div className="font-mono text-xs text-[#8DA1B4] uppercase tracking-wider mb-4">
+                        {proj.subtitle}
+                      </div>
+                      <p className="text-sm sm:text-base text-[#8DA1B4] leading-relaxed font-normal mb-5">
+                        {proj.overview}
+                      </p>
+                      <div className="p-3.5 bg-[#030d24] rounded border border-[#0B3272] text-xs sm:text-sm font-mono text-[#F1E3CC]">
+                        <strong className="text-[#E4BA83]">Impact:</strong> {proj.impact}
+                      </div>
+                    </div>
 
-              </div>
-            ))}
+                    {/* Right Column: Disciplines & Tags */}
+                    <div className="lg:col-span-4 flex flex-col justify-between h-full space-y-4 pt-1">
+                      <div>
+                        <div className="font-mono text-xs uppercase tracking-wider text-[#8DA1B4] mb-2.5 font-semibold">
+                          Disciplines & Systems:
+                        </div>
+                        <ul className="space-y-1.5 text-xs font-normal text-[#8DA1B4]">
+                          {proj.disciplines.map((d) => (
+                            <li key={d} className="flex items-center gap-2">
+                              <span className="text-[#E4BA83]">✦</span> {d}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+
+                      <div className="pt-4 border-t border-[#0B3272] flex flex-wrap gap-1.5">
+                        {proj.tags.map((tag) => (
+                          <span
+                            key={tag}
+                            className="text-[11px] font-mono text-[#8DA1B4] bg-[#0B3272]/40 px-2.5 py-0.5 rounded-full border border-[#0B3272]"
+                          >
+                            #{tag}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Bottom Interactive Bar */}
+                  <div className="mt-6 pt-5 border-t border-[#0B3272] flex flex-wrap items-center justify-between gap-4">
+                    {isEase ? (
+                      <div className="flex flex-wrap items-center justify-between w-full gap-4">
+                        <span className="font-mono text-xs text-[#E4BA83] flex items-center gap-2">
+                          <span className="w-2 h-2 rounded-full bg-[#E4BA83]"></span>
+                          <span>Complete 16-week design case study & interactive prototype ready to view</span>
+                        </span>
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            handleOpenCaseStudy(proj)
+                          }}
+                          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#E4BA83] text-[#030d24] font-serif font-bold text-xs sm:text-sm hover:bg-[#FFFED8] transition-all shadow-md cursor-pointer"
+                        >
+                          <span>Open Full Case Study</span>
+                          <span className="font-mono">↗</span>
+                        </button>
+                      </div>
+                    ) : (
+                      <span className="font-mono text-[11px] text-[#8DA1B4]/70">
+                        Archival Project • Comprehensive deep dive coming soon
+                      </span>
+                    )}
+                  </div>
+                </div>
+              )
+            })}
           </div>
 
         </div>
@@ -280,6 +341,13 @@ export default function Work() {
           <span>Mumbai, India • GMT +5:30</span>
         </div>
       </footer>
+
+      {/* Full-Screen Case Study Reader Modal */}
+      <CaseStudyModal
+        project={selectedProject}
+        isOpen={!!selectedProject}
+        onClose={handleCloseCaseStudy}
+      />
 
     </div>
   )

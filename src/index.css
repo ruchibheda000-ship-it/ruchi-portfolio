@@ -347,3 +347,32 @@ html {
   border: 1px dashed rgba(23, 60, 100, 0.35);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
 }
+
+/* Custom scrollbar for Case Study Reader */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #030d24;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #0B3272;
+  border-radius: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #E4BA83;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.animate-fadeIn {
+  animation: fadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
